@@ -1,3 +1,9 @@
+/**
+ * Functions that given an image it quantize the image and returns the image quantized in n bits
+ * @param {number[][]} image: image that has to be quantized. Format: [[R,G,B], ..., [R,G,B]]
+ * @param {number} n: number of bits
+ * @returns {number[][]} The quantized image with n bits, represented in the same format as the input image.
+ */
 function quantize(image, n) {
   var quantized_image = [];
 
