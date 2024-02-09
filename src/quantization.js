@@ -11,9 +11,9 @@ function quantize(image, n) {
     var pixelcolor = image[i];
 
     quantized_image.push([
-      Math.floor((pixelcolor[0] / 256) * n),
-      Math.floor((pixelcolor[1] / 256) * n),
-      Math.floor((pixelcolor[2] / 256) * n),
+      Math.floor((pixelcolor[0] / 256) * Math.pow(2, n)),
+      Math.floor((pixelcolor[1] / 256) * Math.pow(2, n)),
+      Math.floor((pixelcolor[2] / 256) * Math.pow(2, n)),
     ]);
   }
   return quantized_image;
