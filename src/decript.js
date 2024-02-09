@@ -8,10 +8,10 @@ function decript(image_to_decrypt) {
 
   for (let i = 0; i < image_to_decrypt.length; i++) {
     var elem_to_add = image_to_decrypt[i];
-    image_to_decrypt.push(elem_to_add[0]);
-    image_to_decrypt.push(elem_to_add[1]);
-    image_to_decrypt.push(elem_to_add[2]);
-    image_to_decrypt.push(255);
+    decripted_image.push(elem_to_add[0]);
+    decripted_image.push(elem_to_add[1]);
+    decripted_image.push(elem_to_add[2]);
+    decripted_image.push(255);
   }
 
   return decripted_image;
