@@ -1,4 +1,4 @@
-function getPixelArray(image, colorCount, quality) {
+function getPixelArray(image, quality) {
     const canvas = document.createElement("canvas")
     const context = canvas.getContext("2d")
     context.imageSmoothingEnabled = true;
@@ -14,11 +14,11 @@ function resizeImage(naturalWidth, naturalHeight, quality) {
         case 1:
             return { newWidth: naturalWidth, newHeight: naturalHeight }
         case 2:
-            return { newWidth: (naturalWidth * 75) / 100, newHeight: (naturalHeight * 75) / 100 }
+            return { newWidth: naturalWidth * 0.75, newHeight: naturalHeight * 0.75 }
         case 3:
-            return { newWidth: (naturalWidth * 50) / 100, newHeight: (naturalHeight * 50) / 100 }
+            return { newWidth: naturalWidth * 0.50, newHeight: naturalHeight * 0.50 }
         case 4:
-            return { newWidth: (naturalWidth * 25) / 100, newHeight: (naturalHeight * 25) / 100 }
+            return { newWidth: naturalWidth * 0.25, newHeight: naturalHeight * 0.25 }
     }
 }
 
@@ -35,7 +35,10 @@ function removeAlpha(colors, width, height) {
 }
 
 function convertRgbToHex(rgbColors) {
-    return "#" + convertToHex(rgbColors[0]) + convertToHex(rgbColors[1]) + convertToHex(rgbColors[2])
+    console.log(rgbColors)
+    for (let i = 0; i < rgbColors.length; i++) {
+        return "#" + convertToHex(rgbColors[i][0]) + convertToHex(rgbColors[i][1]) + convertToHex(rgbColors[i][2])
+    }
 }
 
 function convertToHex(c) {
