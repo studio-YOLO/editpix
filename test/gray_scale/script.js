@@ -1,54 +1,59 @@
-import ImagePalette from "../../src/image-palette.js";
+import convert_to_gray_scale from "../../src/convert_to_gray_scale.js";
 
-const imagePalette = new ImagePalette();
+// Funzione per caricare e visualizzare le immagini in scala di grigi
+function loadGrayScaleImages() {
+  // Array contenente i percorsi delle immagini
+  const imagePaths = [
+    "images/img1.jpg",
+    "images/img2.jpg",
+    "images/img3.jpeg",
+    "images/img4.webp",
+  ];
 
-const imagesUrl = [
-  "../images/img1.jpg",
-  "../images/img3.jpeg",
-  "../images/img4.webp",
-];
+  // Loop attraverso le immagini e carica le versioni in scala di grigi
+  imagePaths.forEach((path, index) => {
+    // Creazione di un nuovo elemento immagine
+    const img = document.createElement("img");
+    img.src = path;
 
-const images = [];
+    // Quando l'immagine è caricata, viene eseguita la conversione in scala di grigi
+    img.onload = () => {
+      // Creazione di un canvas per estrarre i dati dell'immagine
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.drawImage(img, 0, 0, img.width, img.height);
 
-imagesUrl.forEach((url) => {
-  let tmpImages = document.createElement("img");
-  tmpImages.src = url;
-  images.push(tmpImages);
-});
+      // Estrazione dei dati dell'immagine in formato RGBA
+      const imageData = ctx.getImageData(0, 0, img.width, img.height).data;
+      const rgbArray = [];
+      for (let i = 0; i < imageData.length; i += 4) {
+        rgbArray.push([imageData[i], imageData[i + 1], imageData[i + 2]]);
+      }
 
-images.forEach((image) => {
-  image.addEventListener("load", () => {
-    var canvas16 = canvasQuantization(image, 16);
-    var canvas8 = canvasQuantization(image, 8);
+      // Conversione in scala di grigi utilizzando la funzione
+      const grayScaleArray = convert_to_gray_scale(rgbArray);
 
-    var imgContainer = document.createElement("div");
-    imgContainer.style.display = "flex";
-    imgContainer.style.flexDirection = "row";
+      // Creazione di un nuovo canvas per visualizzare l'immagine in scala di grigi
+      const grayCanvas = document.createElement("canvas");
+      const grayCtx = grayCanvas.getContext("2d");
+      grayCanvas.width = img.width;
+      grayCanvas.height = img.height;
 
-    imgContainer.appendChild(image);
-    imgContainer.appendChild(canvas16);
-    imgContainer.appendChild(canvas8);
-    document.body.appendChild(imgContainer);
+      // Disegno dell'immagine in scala di grigi sul canvas
+      grayScaleArray.forEach((grayValue, i) => {
+        const x = i % img.width;
+        const y = Math.floor(i / img.width);
+        grayCtx.fillStyle = `rgb(${grayValue},${grayValue},${grayValue})`;
+        grayCtx.fillRect(x, y, 1, 1);
+      });
+
+      // Aggiunta del canvas alla pagina HTML
+      document.getElementById(`color${index + 1}`).appendChild(grayCanvas);
+    };
   });
-});
-
-function canvasQuantization(image, bit) {
-  let pixelArray = imagePalette.getPixelArray(image, 1, bit);
-  let canvas = document.createElement("canvas");
-  let context = canvas.getContext("2d");
-
-  canvas.width = image.naturalWidth;
-  canvas.height = image.naturalHeight;
-
-  let imageData = context.createImageData(
-    image.naturalWidth,
-    image.naturalHeight
-  );
-  for (let i = 0; i < imageData.data.length; i++) {
-    imageData.data[i] = pixelArray[i];
-  }
-
-  context.putImageData(imageData, 0, 0);
-
-  return canvas;
 }
+
+// Chiamata alla funzione per caricare e visualizzare le immagini in scala di grigi
+loadGrayScaleImages();
