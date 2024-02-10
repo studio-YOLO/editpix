@@ -11,12 +11,14 @@ function convert_to_rgb_from_gray(image_to_convert) {
         image_to_convert[0] / 0.299,
         image_to_convert[1] / 0.587,
         image_to_convert[2] / 0.114,
+        255,
       ]);
     else
       rgb_image.push([
         image_to_convert[4 * i] / 0.299,
         image_to_convert[4 * i + 1] / 0.587,
         image_to_convert[4 * i + 2] / 0.114,
+        255,
       ]);
   }
   return rgb_image;
