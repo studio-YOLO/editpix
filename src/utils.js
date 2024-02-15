@@ -1,4 +1,4 @@
-function getPixelArray(image, quality) {
+function getPixelArray(image, quality = 1) {
     const canvas = document.createElement("canvas")
     const context = canvas.getContext("2d")
     context.imageSmoothingEnabled = true;
@@ -34,19 +34,27 @@ function removeAlpha(colors, width, height) {
     return result
 }
 
-function convertRgbToHex(rgbColors) {
-    console.log(rgbColors)
-    for (let i = 0; i < rgbColors.length; i++) {
-        return "#" + convertToHex(rgbColors[i][0]) + convertToHex(rgbColors[i][1]) + convertToHex(rgbColors[i][2])
-    }
+function rgbToHex(rgbColors) {
+    let hexColors = [];
+    rgbColors.forEach(color => {
+        hexColors.push("#" + (1 << 24 | color[0] << 16 | color[1] << 8 | color[2]).toString(16).slice(1));
+    });
 }
 
-function convertToHex(c) {
-    let hex = c.toString(16);
-    return hex.length == 1 ? "0" + hex : hex;
+function hexToRgb(hexColors) {
+    let rgbColors = [];
+    hexColors.forEach(color => {
+        color = color.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i, (m, r, g, b) => r + r + g + g + b + b);
+        const match = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return match ? rgbColors.push([
+            parseInt(match[1], 16),
+            parseInt(match[2], 16),
+            parseInt(match[3], 16)
+        ]) : null;
+    });
 }
 
-function validation(quality, colorNumber, returnType) {
+function validate(quality, colorNumber, returnType) {
     if (quality < 1 || quality > 4) {
         throw new Error("The quality parameter is invalid: it must be a number between 1 and 4")
     }
@@ -60,6 +68,7 @@ function validation(quality, colorNumber, returnType) {
 
 export default {
     getPixelArray,
-    convertRgbToHex,
-    validation
+    rgbToHex,
+    hexToRgb,
+    validate
 };
