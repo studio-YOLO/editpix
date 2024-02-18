@@ -1,19 +1,21 @@
 import utils from "./utils.js"
-import convert_to_gray_scale from "./core/gray_scale.js";
-import convert_to_black_and_white from "./core/colors_to_black_and_white.js";
+import convertToGrayScale from "./core/gray_scale.js";
+import convertToBW from "./core/black_and_white.js";
+import convertFromGrayToRgb from "./core/gray_to_rgb.js";
 import kMeans from "./core/kmean.js";
 
 var EditPix = function () { };
 
 EditPix.prototype.getColorPalette = (image, colorNumber = 5, quality = 1) => {
-    utils.validate(quality, colorNumber, returnType);
-    const pixelArray = utils.getPixelArray(image, quality);
-    return kMeans(pixelArray, colorNumber);
+    utils.validate(quality, colorNumber);
+    const pixelArray = utils.removeAlpha(utils.getPixelArray(image));
+    return kMeans(pixelArray, 10);
 }
 
 EditPix.prototype.getDominantColor = (image, quality = 1) => {
-    utils.validate(quality, colorNumber, returnType);
-    const pixelArray = utils.getPixelArray(image, quality);
+    utils.validate(quality, 1);
+    image = utils.resizeByQuality(image, quality);
+    const pixelArray = utils.removeAlpha(utils.getPixelArray(image));
     return kMeans(pixelArray, 1);
 }
 
@@ -24,16 +26,30 @@ EditPix.prototype.getImageFromUrl = (url) => {
 }
 
 EditPix.prototype.toGrayScale = (image) => {
-    //TODO
+    const pixelArray = utils.getPixelArray(image);
+    return utils.convertToImage(convertToGrayScale(pixelArray), image.naturalWidth, image.naturalHeight);
 }
 
-
 EditPix.prototype.fromGrayScaleToRgb = (image) => {
-    //TODO
+    const pixelArray = utils.getPixelArray(image);
+    return utils.convertToImage(convertFromGrayToRgb(pixelArray), image.naturalWidth, image.naturalHeight);
 }
 
 EditPix.prototype.toBackWhite = (image) => {
-    //TODO
+    const pixelArray = utils.getPixelArray(image);
+    return utils.convertToImage(convertToBW(pixelArray), image.naturalWidth, image.naturalHeight);
+}
+
+EditPix.prototype.resizeByQuality = (image, quality) => {
+    return utils.resizeByQuality(image, quality);
+}
+
+EditPix.prototype.resizeByWidth = (image, widthPx) => {
+    return utils.resizeByWidth(image, widthPx);
+}
+
+EditPix.prototype.resizeByHeight = (image, heightPx) => {
+    return utils.resizeByWidth(image, heightPx);
 }
 
 EditPix.prototype.getHigherContrast = (color) => {
@@ -47,6 +63,5 @@ EditPix.prototype.convertToHex = (colors) => {
 EditPix.prototype.convertToRgb = (colors) => {
     return utils.hexToRgb(colors);
 }
-
 
 export default EditPix;

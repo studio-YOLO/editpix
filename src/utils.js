@@ -1,35 +1,68 @@
-function getPixelArray(image, quality = 1) {
-    const canvas = document.createElement("canvas")
-    const context = canvas.getContext("2d")
-    context.imageSmoothingEnabled = true;
-    const { newWidth, newHeight } = resizeImage(image.naturalWidth, image.naturalHeight, quality)
+function getPixelArray(image) {
+    const { canvas, context } = createCanvas();
+    canvas.width = image.naturalWidth;
+    canvas.height = image.naturalHeight;
+    context.drawImage(image, 0, 0, image.naturalWidth, image.naturalHeight);
+    return context.getImageData(0, 0, image.naturalWidth, image.naturalHeight).data;
+}
+
+function resizeByQuality(image, quality) {
+    const { canvas, context } = createCanvas();
+    const newWidth = image.naturalWidth * ((quality - 1) * 0.10);
+    const newHeight = image.naturalHeight * ((quality - 1) * 0.10);
     canvas.width = newWidth;
     canvas.height = newHeight;
     context.drawImage(image, 0, 0, newWidth, newHeight);
-    return removeAlpha(context.getImageData(0, 0, newWidth, newHeight).data, newWidth, newHeight);
+    let resizedImage = new Image();
+    resizedImage.src = canvas.toDataURL();
+    return resizedImage;
 }
 
-function resizeImage(naturalWidth, naturalHeight, quality) {
-    switch (quality) {
-        case 1:
-            return { newWidth: naturalWidth, newHeight: naturalHeight }
-        case 2:
-            return { newWidth: naturalWidth * 0.75, newHeight: naturalHeight * 0.75 }
-        case 3:
-            return { newWidth: naturalWidth * 0.50, newHeight: naturalHeight * 0.50 }
-        case 4:
-            return { newWidth: naturalWidth * 0.25, newHeight: naturalHeight * 0.25 }
-    }
+function resizeByWidth(image, newWidth) {
+    const { canvas, context } = createCanvas();
+    const newHeight = image.naturalHeight * (newWidth / image.naturalWidth);
+    canvas.width = newWidth;
+    canvas.height = newHeight;
+    context.drawImage(image, 0, 0, newWidth, newHeight);
+    let resizedImage = new Image();
+    resizedImage.src = canvas.toDataURL();
+    return resizedImage;
 }
 
-function removeAlpha(colors, width, height) {
+function resizeByHeight(image, newHeight) {
+    const { canvas, context } = createCanvas();
+    const newWidth = image.naturalWidth * (newHeight / image.naturalHeight);
+    canvas.width = newWidth;
+    canvas.height = newHeight;
+    context.drawImage(image, 0, 0, newWidth, newHeight);
+    let resizedImage = new Image();
+    resizedImage.src = canvas.toDataURL();
+    return resizedImage;
+}
+
+function createCanvas() {
+    const canvas = document.createElement("canvas")
+    const context = canvas.getContext("2d")
+    context.imageSmoothingEnabled = true;
+    return { canvas: canvas, context: context };
+}
+
+function convertToImage(pixelArray, width, height) {
+    const { canvas, context } = createCanvas();
+    canvas.width = width;
+    canvas.height = height;
+    let imageData = context.createImageData(width, height);
+    imageData.data.set(new Uint8ClampedArray(pixelArray));
+    context.putImageData(imageData, 0, 0);
+    let image = new Image();
+    image.src = canvas.toDataURL();
+    return image;
+}
+
+function removeAlpha(pixelArray) {
     let result = [];
-    for (var i = 0; i < width * height; i++) {
-        if (i == 0) {
-            result.push([colors[i], colors[i + 1], colors[i + 2]])
-        } else {
-            result.push([colors[i * 4], colors[i * 4 + 1], colors[i * 4 + 2]])
-        }
+    for (let i = 0; i < pixelArray.length / 4; i++) {
+        result.push([pixelArray[i * 4], pixelArray[i * 4 + 1], pixelArray[i * 4 + 2]]);
     }
     return result
 }
@@ -54,15 +87,12 @@ function hexToRgb(hexColors) {
     });
 }
 
-function validate(quality, colorNumber, returnType) {
-    if (quality < 1 || quality > 4) {
-        throw new Error("The quality parameter is invalid: it must be a number between 1 and 4")
+function validate(quality, colorNumber) {
+    if (quality < 1 || quality > 10) {
+        throw new Error("The quality parameter is invalid: it must be a number between 1 and 10")
     }
     if (colorNumber < 1 || colorNumber > 10) {
         throw new Error("color number invalid ")
-    }
-    if (returnType != "rgb" && returnType != "hex") {
-        throw new Error("ReturnType parameter is invalid: must be 'rgb' or 'hex' ")
     }
 }
 
@@ -70,5 +100,10 @@ export default {
     getPixelArray,
     rgbToHex,
     hexToRgb,
-    validate
+    validate,
+    resizeByQuality,
+    removeAlpha,
+    resizeByWidth,
+    resizeByHeight,
+    convertToImage
 };
