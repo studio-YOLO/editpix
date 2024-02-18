@@ -2,16 +2,16 @@
 function euclideanDistance(color1, color2) {
   return Math.sqrt(
     Math.pow(color1[0] - color2[0], 2) +
-      Math.pow(color1[1] - color2[1], 2) +
-      Math.pow(color1[2] - color2[2], 2)
+    Math.pow(color1[1] - color2[1], 2) +
+    Math.pow(color1[2] - color2[2], 2)
   );
 }
 
 // Funzione per inizializzare i centroidi casualmente
-function initializeCentroids(colors, colorNumber) {
+function initializeCentroids(colors, k) {
   const centroids = [];
   const indices = [];
-  for (let i = 0; i < colorNumber; i++) {
+  for (let i = 0; i < k; i++) {
     let index;
     do {
       index = Math.floor(Math.random() * colors.length);
@@ -41,9 +41,9 @@ function assignToCentroids(colors, centroids) {
 }
 
 // Funzione per calcolare i nuovi centroidi
-function calculateNewCentroids(colors, assignments, colorNumber) {
-  const newCentroids = Array.from({ length: colorNumber }, () => [0, 0, 0]);
-  const counts = Array.from({ length: colorNumber }, () => 0);
+function calculateNewCentroids(colors, assignments, k) {
+  const newCentroids = Array.from({ length: k }, () => [0, 0, 0]);
+  const counts = Array.from({ length: k }, () => 0);
 
   for (let i = 0; i < colors.length; i++) {
     const assignment = assignments[i];
@@ -53,11 +53,11 @@ function calculateNewCentroids(colors, assignments, colorNumber) {
     counts[assignment]++;
   }
 
-  for (let j = 0; j < colorNumber; j++) {
+  for (let j = 0; j < k; j++) {
     if (counts[j] > 0) {
-      newCentroids[j][0] /= counts[j];
-      newCentroids[j][1] /= counts[j];
-      newCentroids[j][2] /= counts[j];
+      newCentroids[j][0] = Math.round(newCentroids[j][0] / counts[j]);
+      newCentroids[j][1] = Math.round(newCentroids[j][1] / counts[j]);
+      newCentroids[j][2] = Math.round(newCentroids[j][2] / counts[j]);
     }
   }
 
@@ -65,8 +65,8 @@ function calculateNewCentroids(colors, assignments, colorNumber) {
 }
 
 // Funzione per eseguire l'algoritmo K-Means
-function kMeans(colors, colorNumber, maxIterations = 100) {
-  let centroids = initializeCentroids(colors, colorNumber);
+function kMeans(colors, k, maxIterations = 100) {
+  let centroids = initializeCentroids(colors, k);
   let iterations = 0;
   let previousAssignments;
   let assignments;
@@ -74,14 +74,14 @@ function kMeans(colors, colorNumber, maxIterations = 100) {
   do {
     previousAssignments = assignments;
     assignments = assignToCentroids(colors, centroids);
-    centroids = calculateNewCentroids(colors, assignments, colorNumber);
+    centroids = calculateNewCentroids(colors, assignments, k);
     iterations++;
   } while (
     iterations < maxIterations &&
     JSON.stringify(assignments) !== JSON.stringify(previousAssignments)
   );
 
-  return assignments.map((centroidIndex) => centroids[centroidIndex]);
+  return Array.from(new Set(assignments.map((centroidIndex) => centroids[centroidIndex])));
 }
 
 export default kMeans;
