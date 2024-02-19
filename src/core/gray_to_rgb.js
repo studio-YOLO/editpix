@@ -4,16 +4,16 @@
  *  @returns {number[][]} encrypted_image: gray scale  image in the format [R,G,B,alfa,...,R,G,B,alfa]
  */
 function convertFronGrayToRgb(pixelArray) {
-  var rgbPixelArray = [];
-  for (let i = 0; i < pixelArray.length / 4; i++) {
-    rgbPixelArray.push(
-      Math.round(pixelArray[4 * i] / 0.299),
-      Math.round(pixelArray[4 * i] / 0.587),
-      Math.round(pixelArray[4 * i] / 0.114),
-      pixelArray[4 * i + 3]
-    );
-  }
-  return rgbPixelArray;
+    var rgbPixelArray = [];
+    for (let i = 0; i < pixelArray.length / 4; i++) {
+        rgbPixelArray.push(
+            Math.round(pixelArray[4 * i] / 0.299),
+            Math.round(pixelArray[4 * i] / 0.587),
+            Math.round(pixelArray[4 * i] / 0.114),
+            pixelArray[4 * i + 3]
+        );
+    }
+    return rgbPixelArray;
 }
 
 export default convertFronGrayToRgb;

@@ -4,7 +4,7 @@
  *  @returns {number[]} color with the higher contrast of color in the format [R,G,B]
  */
 function higherColorContrast(color) {
-  return [255-color[0],255-color[1],255-color[2]];
+    return [255-color[0],255-color[1],255-color[2]];
 }
 
 export default higherColorContrast;

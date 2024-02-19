@@ -5,25 +5,25 @@
  * @returns {number[][]} The n most frequent colors
  */
 function findMostFrequentCombination(matrix, number_feature_result) {
-  var dict = {};
+    var dict = {};
 
-  for (let i = 0; i < matrix.length; i++) {
-    var key = matrix[i].toString();
+    for (let i = 0; i < matrix.length; i++) {
+        var key = matrix[i].toString();
 
-    if (key in dict) {
-      dict[key]++;
-    } else {
-      dict[key] = 1;
+        if (key in dict) {
+            dict[key]++;
+        } else {
+            dict[key] = 1;
+        }
     }
-  }
 
-  var sortedCombinations = Object.keys(dict).sort(function (a, b) {
-    return dict[a] - dict[b];
-  });
+    var sortedCombinations = Object.keys(dict).sort(function (a, b) {
+        return dict[a] - dict[b];
+    });
 
-  var result = sortedCombinations.slice(0, number_feature_result);
+    var result = sortedCombinations.slice(0, number_feature_result);
 
-  return result;
+    return result;
 }
 
 export default findMostFrequentCombination;
