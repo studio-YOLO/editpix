@@ -3,19 +3,21 @@ import convertToGrayScale from "./core/gray_scale.js";
 import convertToBW from "./core/black_and_white.js";
 import convertFromGrayToRgb from "./core/gray_to_rgb.js";
 import kMeans from "./core/kmean.js";
+import imageManager from "./image_manager.js";
+import higherColorContrast from "./core/higher_contrast.js";
 
 var EditPix = function () { };
 
 EditPix.prototype.getColorPalette = (image, colorNumber = 5, quality = 1) => {
     utils.validate(quality, colorNumber);
-    const pixelArray = utils.removeAlpha(utils.getPixelArray(image));
+    const pixelArray = utils.removeAlpha(imageManager.getPixelArray(image));
     return kMeans(pixelArray, 10);
 }
 
 EditPix.prototype.getDominantColor = (image, quality = 1) => {
     utils.validate(quality, 1);
-    image = utils.resizeByQuality(image, quality);
-    const pixelArray = utils.removeAlpha(utils.getPixelArray(image));
+    image = imageManager.resizeByQuality(image, quality);
+    const pixelArray = utils.removeAlpha(imageManager.getPixelArray(image));
     return kMeans(pixelArray, 1);
 }
 
@@ -26,34 +28,34 @@ EditPix.prototype.getImageFromUrl = (url) => {
 }
 
 EditPix.prototype.toGrayScale = (image) => {
-    const pixelArray = utils.getPixelArray(image);
-    return utils.convertToImage(convertToGrayScale(pixelArray), image.naturalWidth, image.naturalHeight);
+    const pixelArray = imageManager.getPixelArray(image);
+    return imageManager.convertToImage(convertToGrayScale(pixelArray), image.naturalWidth, image.naturalHeight);
 }
 
 EditPix.prototype.fromGrayScaleToRgb = (image) => {
-    const pixelArray = utils.getPixelArray(image);
-    return utils.convertToImage(convertFromGrayToRgb(pixelArray), image.naturalWidth, image.naturalHeight);
+    const pixelArray = imageManager.getPixelArray(image);
+    return imageManager.convertToImage(convertFromGrayToRgb(pixelArray), image.naturalWidth, image.naturalHeight);
 }
 
 EditPix.prototype.toBackWhite = (image) => {
-    const pixelArray = utils.getPixelArray(image);
-    return utils.convertToImage(convertToBW(pixelArray), image.naturalWidth, image.naturalHeight);
+    const pixelArray = imageManager.getPixelArray(image);
+    return imageManager.convertToImage(convertToBW(pixelArray), image.naturalWidth, image.naturalHeight);
 }
 
 EditPix.prototype.resizeByQuality = (image, quality) => {
-    return utils.resizeByQuality(image, quality);
+    return imageManager.resizeByQuality(image, quality);
 }
 
 EditPix.prototype.resizeByWidth = (image, widthPx) => {
-    return utils.resizeByWidth(image, widthPx);
+    return imageManager.resizeByWidth(image, widthPx);
 }
 
 EditPix.prototype.resizeByHeight = (image, heightPx) => {
-    return utils.resizeByWidth(image, heightPx);
+    return imageManager.resizeByHeight(image, heightPx);
 }
 
 EditPix.prototype.getHigherContrast = (color) => {
-    //TODO
+    return higherColorContrast(color);
 }
 
 EditPix.prototype.convertToHex = (colors) => {
