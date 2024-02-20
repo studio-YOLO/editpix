@@ -5,6 +5,7 @@ import convertFromGrayToRgb from "./core/gray_to_rgb.js";
 import kMeans from "./core/kmean.js";
 import imageManager from "./image_manager.js";
 import higherColorContrast from "./core/higher_contrast.js";
+import init, { k_means } from "./core/editpix_wasm.js"
 
 var EditPix = function () { };
 
@@ -12,6 +13,14 @@ EditPix.prototype.getColorPalette = (image, colorNumber = 5, quality = 1) => {
     utils.validate(quality, colorNumber);
     const pixelArray = utils.removeAlpha(imageManager.getPixelArray(image));
     return kMeans(pixelArray, 10);
+}
+
+EditPix.prototype.getColorPaletteWasm = async (image, colorNumber = 5, quality = 1) => {
+    utils.validate(quality, colorNumber);
+    const pixelArray = utils.removeAlphaSerialized(imageManager.getPixelArray(image));
+    await init();
+    let a = k_means(pixelArray, colorNumber, quality * 10);
+    return utils.deserializeArray(a);
 }
 
 EditPix.prototype.getDominantColor = (image, quality = 1) => {

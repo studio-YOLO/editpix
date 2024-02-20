@@ -6,6 +6,14 @@ function removeAlpha(pixelArray) {
     return result
 }
 
+function removeAlphaSerialized(pixelArray) {
+    let result = [];
+    for (let i = 0; i < pixelArray.length / 4; i++) {
+        result.push(pixelArray[i * 4], pixelArray[i * 4 + 1], pixelArray[i * 4 + 2]);
+    }
+    return result
+}
+
 function rgbToHex(rgbColors) {
     let hexColors = [];
     rgbColors.forEach(color => {
@@ -37,9 +45,19 @@ function validate(quality, colorNumber) {
     }
 }
 
+function deserializeArray(serializedArray, chunkSize) {
+    const result = [];
+    for (let i = 0; i < serializedArray.length; i += chunkSize) {
+        result.push(serializedArray.slice(i, i + chunkSize));
+    }
+    return result;
+}
+
 export default {
     rgbToHex,
     hexToRgb,
     validate,
-    removeAlpha
+    removeAlpha,
+    removeAlphaSerialized,
+    deserializeArray
 };
