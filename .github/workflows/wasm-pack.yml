@@ -1,0 +1,31 @@
+name: wasm-pack
+
+on:
+  push:
+    paths:
+      - 'lib/src/lib.rs'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+
+    - name: Install Rust and wasm-pack
+      uses: actions/setup-rust@v1
+      with:
+        rust-version: stable
+
+    - name: Compile Rust project with wasm-pack
+      run: |
+        wasm-pack build --release --target web --out-dir src/core
+
+    - name: Delete unnecessary files
+      run: |
+        rm src/core/editpix_wasm_bg.wasm.d.ts
+        rm src/core/editpix_wasm_bg.js
+        rm src/core/package.json
+        rm src/core/editpix_wasm.d.ts
+        rm src/core/.gitignore
