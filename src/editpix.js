@@ -59,11 +59,11 @@ EditPix.prototype.getHigherContrast = (color) => {
 }
 
 EditPix.prototype.convertToHex = (colors) => {
-    return utils.rgbToHex(colors);
+    return Array.isArray(colors[0]) ? utils.rgbToHex(colors) : utils.rgbToHex([colors]);
 }
 
 EditPix.prototype.convertToRgb = (colors) => {
-    return utils.hexToRgb(colors);
+    return Array.isArray(colors) ? utils.hexToRgb(colors) : utils.hexToRgb([colors]);
 }
 
 export default EditPix;
