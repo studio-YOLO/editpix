@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "A simple library for image manipulation.",
   "main": "editpix.js",
+  "type": "module",
   "scripts": {
-    "test": "jest"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
-  "type": "commonjs",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/studio-YOLO/editpix.git"
