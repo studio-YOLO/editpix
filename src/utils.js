@@ -35,7 +35,7 @@ function validate(quality, colorNumber) {
     if (quality < 1 || quality > 10) {
         throw new Error("The quality parameter is invalid: it must be a number between 1 and 10")
     }
-    if (colorNumber < 1 || colorNumber > 10) {
+    if (colorNumber < 1 || colorNumber > 15) {
         throw new Error("Color number is invalid.")
     }
 }

@@ -8,14 +8,21 @@ function getPixelArray(image) {
 
 function resizeByQuality(image, quality) {
     const { canvas, context } = createCanvas();
-    const newWidth = image.naturalWidth * ((quality - 1) * 0.10);
-    const newHeight = image.naturalHeight * ((quality - 1) * 0.10);
+    const newWidth = image.naturalWidth * (quality * 0.10);
+    const newHeight = image.naturalHeight * (quality * 0.10);
     canvas.width = newWidth;
     canvas.height = newHeight;
     context.drawImage(image, 0, 0, newWidth, newHeight);
-    let resizedImage = new Image();
-    resizedImage.src = canvas.toDataURL();
-    return resizedImage;
+    return new Promise((resolve, reject) => {
+        let resizedImage = new Image();
+        resizedImage.onload = () => {
+            resolve(resizedImage);
+        }
+        resizedImage.onerror = (error) => {
+            reject(error);
+        }
+        resizedImage.src = canvas.toDataURL();
+    })
 }
 
 function resizeByWidth(image, newWidth) {
@@ -24,9 +31,16 @@ function resizeByWidth(image, newWidth) {
     canvas.width = newWidth;
     canvas.height = newHeight;
     context.drawImage(image, 0, 0, newWidth, newHeight);
-    let resizedImage = new Image();
-    resizedImage.src = canvas.toDataURL();
-    return resizedImage;
+    return new Promise((resolve, reject) => {
+        let resizedImage = new Image();
+        resizedImage.onload = () => {
+            resolve(resizedImage);
+        }
+        resizedImage.onerror = (error) => {
+            reject(error);
+        }
+        resizedImage.src = canvas.toDataURL();
+    })
 }
 
 function resizeByHeight(image, newHeight) {
@@ -35,9 +49,16 @@ function resizeByHeight(image, newHeight) {
     canvas.width = newWidth;
     canvas.height = newHeight;
     context.drawImage(image, 0, 0, newWidth, newHeight);
-    let resizedImage = new Image();
-    resizedImage.src = canvas.toDataURL();
-    return resizedImage;
+    return new Promise((resolve, reject) => {
+        let resizedImage = new Image();
+        resizedImage.onload = () => {
+            resolve(resizedImage);
+        }
+        resizedImage.onerror = (error) => {
+            reject(error);
+        }
+        resizedImage.src = canvas.toDataURL();
+    })
 }
 
 function convertToImage(pixelArray, width, height) {
@@ -47,9 +68,16 @@ function convertToImage(pixelArray, width, height) {
     let imageData = context.createImageData(width, height);
     imageData.data.set(new Uint8ClampedArray(pixelArray));
     context.putImageData(imageData, 0, 0);
-    let image = new Image();
-    image.src = canvas.toDataURL();
-    return image;
+    return new Promise((resolve, reject) => {
+        let image = new Image();
+        image.onload = () => {
+            resolve(image);
+        }
+        image.onerror = (error) => {
+            reject(error);
+        }
+        image.src = canvas.toDataURL();
+    })
 }
 
 function createCanvas() {

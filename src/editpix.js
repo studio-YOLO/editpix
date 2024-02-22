@@ -9,22 +9,32 @@ import higherColorContrast from "./core/higher_contrast.js";
 var EditPix = function () { };
 
 EditPix.prototype.getColorPalette = (image, colorNumber = 5, quality = 1) => {
-    utils.validate(quality, colorNumber);
-    const pixelArray = utils.removeAlpha(imageManager.getPixelArray(image));
-    return kMeans(pixelArray, 10);
+    return new Promise((resolve, reject) => {
+        utils.validate(quality, colorNumber);
+        imageManager.resizeByQuality(image, quality)
+            .then(resizedImage => {
+                const pixelArray = utils.removeAlpha(imageManager.getPixelArray(resizedImage));
+                resolve(kMeans(pixelArray, colorNumber));
+            })
+            .catch(error => { reject(error) })
+    })
 }
 
-EditPix.prototype.getDominantColor = (image, quality = 1) => {
-    utils.validate(quality, 1);
-    image = imageManager.resizeByQuality(image, quality);
-    const pixelArray = utils.removeAlpha(imageManager.getPixelArray(image));
-    return kMeans(pixelArray, 1);
+EditPix.prototype.getDominantColor = function(image, quality = 1) {
+    return this.getColorPalette(image, 1, quality);
 }
 
 EditPix.prototype.getImageFromUrl = (url) => {
-    const image = new Image();
-    image.url = url;
-    return image;
+    return new Promise((resolve, reject) => {
+        const image = new Image();
+        image.onload = () => {
+            resolve(image);
+        }
+        image.onerror = () => {
+            reject(image);
+        }
+        image.src = url;
+    })
 }
 
 EditPix.prototype.toGrayScale = (image) => {
