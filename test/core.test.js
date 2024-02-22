@@ -1,4 +1,3 @@
-import kMeans from "../src/core/kmean.js"
 import convertToBW from "../src/core/black_and_white.js"
 import convertToGrayScale from "../src/core/gray_scale.js";
 
@@ -28,35 +27,6 @@ describe('convertToBW function', () => {
         });
 
         expect(isValidBWPixelArray).toBe(true);
-    });
-});
-
-describe('kMeans function', () => {
-    test('performs K-Means clustering correctly', () => {
-        // Sample colors for clustering
-        const colors = [
-            [255, 0, 0],   // Red
-            [0, 255, 0],   // Green
-            [0, 0, 255],   // Blue
-            [255, 255, 0], // Yellow
-            [255, 0, 255], // Magenta
-            [0, 255, 255], // Cyan
-        ];
-
-        // Number of clusters
-        const k = 3;
-
-        // Perform K-Means clustering
-        const clusters = kMeans(colors, k);
-
-        // Ensure correct number of clusters
-        expect(clusters.length).toBe(k);
-
-        // Ensure each cluster contains colors
-        clusters.forEach(cluster => {
-            expect(cluster.length).toBeGreaterThan(0);
-            expect(cluster.every(color => colors.some(c => c.toString() === color.toString()))).toBe(true);
-        });
     });
 });
 

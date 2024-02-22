@@ -97,12 +97,12 @@ describe('validate function', () => {
 
     test('throws error for invalid color number', () => {
         expect(() => utils.validate(5, 0)).toThrow(Error)
-        expect(() => utils.validate(5, 11)).toThrow(Error)
+        expect(() => utils.validate(5, 16)).toThrow(Error)
     });
 
     test('does not throw error for valid parameters', () => {
         expect(() => utils.validate(5, 5)).not.toThrowError();
         expect(() => utils.validate(1, 1)).not.toThrowError();
-        expect(() => utils.validate(10, 10)).not.toThrowError();
+        expect(() => utils.validate(10, 15)).not.toThrowError();
     });
 });
