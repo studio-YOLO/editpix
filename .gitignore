@@ -1,3 +1,6 @@
 node_modules
 coverage
 .DS_Store
+lib/target
+lib/pkg
+lib/Cargo.lock
