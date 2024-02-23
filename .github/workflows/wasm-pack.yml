@@ -1,0 +1,47 @@
+name: wasm-pack workflow
+on:
+  push:
+    paths:
+      - 'lib/src/lib.rs'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+
+    - name: Compile Rust project with wasm-pack
+      run: |
+        curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+        wasm-pack build lib/ --release --target web
+
+    - name: Copy necessary files
+      run: |
+        cp lib/pkg/editpix_wasm_bg.wasm src/core/editpix_wasm_bg.wasm
+        cp lib/pkg/editpix_wasm.js src/core/editpix_wasm.js
+        rm -r lib/pkg
+
+    - name: Check for changes
+      id: check_changes
+      run: |
+        if git diff --quiet --exit-code; then
+          echo "No changes detected. Exiting workflow."
+          echo "::set-output name=changes::false"
+          exit 0; # Exit with success code
+        else
+          echo "::set-output name=changes::true"
+        fi
+
+    - name: Commit build results
+      if: steps.check_changes.outputs.changes == 'true'
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add *
+        git commit -m "CI push"
+
+    - name: Push changes
+      if: steps.check_changes.outputs.changes == 'true'
+      uses: ad-m/github-push-action@master
