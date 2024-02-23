@@ -2,7 +2,7 @@ import EditPix from "../../src/editpix.js";
 
 const editpix = new EditPix();
 
-const url = "../images/img3.jpeg";
+const url = "images/img3.jpeg";
 
 var image = new Image();
 image.src = url;
@@ -17,11 +17,14 @@ image.onload = () => {
     // image dimension before resizing
     console.log("Dimension before resizing: " + image.naturalWidth + "x" + image.naturalHeight);
 
+    document.body.appendChild(image)
+
     // resize image by quality
-    editpix.resizeByQuality(image, 10)
+    editpix.resizeByQuality(image, 8)
         .then(resizedImage => {
             // image dimension after resizing
             console.log("Dimension after resizing by 90%: " + resizedImage.naturalWidth + "x" + resizedImage.naturalHeight);
+            document.body.appendChild(resizedImage)
         })
         .catch(error => { console.log(error) })
 
@@ -29,6 +32,7 @@ image.onload = () => {
     editpix.resizeByWidth(image, 100)
         .then(resizedImage => {
             console.log("Dimension after resizing width equals to 100px: " + resizedImage.naturalWidth + "x" + resizedImage.naturalHeight);
+            document.body.appendChild(resizedImage)
         })
         .catch(error => { console.log(error) })
 
@@ -36,6 +40,7 @@ image.onload = () => {
     editpix.resizeByHeight(image, 100)
         .then(resizedImage => {
             console.log("Dimension after resizing height equals to 100px: " + resizedImage.naturalWidth + "x" + resizedImage.naturalHeight);
+            document.body.appendChild(resizedImage)
         })
         .catch(error => { console.log(error) })
 };
