@@ -2,7 +2,7 @@ import EditPix from "../../src/editpix.js";
 
 const editpix = new EditPix();
 
-const url = "../images/img1.jpg";
+const url = "images/img1.jpg";
 
 var image = new Image();
 image.src = url;
@@ -13,7 +13,7 @@ container.classList.add("container")
 //waiting image load
 image.onload = () => {
     //calculate color palette
-    editpix.getColorPalette(image, 15,9)
+    editpix.getColorPalette(image, 15, 1)
         .then(colorPalette => {
             //log color palette in rbg format
             displayPalette(colorPalette);
