@@ -1,15 +1,16 @@
-module.exports = {
+{
     "env": {
         "browser": true,
         "es2021": true,
-        "node": true
+        "node": true,
+        "jest" : true
     },
     "extends": "eslint:recommended",
     "overrides": [
         {
             "env": {
                 "node": true,
-                "jest/globals": true
+                "jest": true
             },
             "files": [
                 ".eslintrc.{js,cjs}",
@@ -18,7 +19,7 @@ module.exports = {
             "parserOptions": {
                 "sourceType": "script"
             },
-            "plugins": ["jest"],
+            "plugins": ["jest"]
         }
     ],
     "parserOptions": {
@@ -26,6 +27,6 @@ module.exports = {
         "sourceType": "module"
     },
     "rules": {
-        "indent": ["error", 4],
+        "indent": ["error", 4]
     }
 }
