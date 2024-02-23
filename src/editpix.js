@@ -12,7 +12,7 @@ var EditPix = function () { };
 EditPix.prototype.getColorPalette = (image, colorNumber = 5, quality = 1) => {
     return new Promise((resolve, reject) => {
         utils.validate(quality, colorNumber);
-        imageManager.resizeByQuality(image, quality)
+        imageManager.resizeByPercentage(image, quality * 10)
             .then(resizedImage => {
                 const pixelArray = utils.removeAlpha(imageManager.getPixelArray(resizedImage));
                 resolve(kMeans(pixelArray, colorNumber));
@@ -21,27 +21,23 @@ EditPix.prototype.getColorPalette = (image, colorNumber = 5, quality = 1) => {
     })
 }
 
-EditPix.prototype.getColorPaletteWasm = async (image, colorNumber = 5, quality = 1) => {
-    utils.validate(quality, colorNumber);
+EditPix.prototype.getColorPaletteWasm = async (image, colorNumber = 5) => {
+    utils.validate(1, colorNumber);
     const pixelArray = utils.removeAlphaSerialized(imageManager.getPixelArray(image));
     await init();
-    let a = k_means(pixelArray, colorNumber, quality * 10);
+    let a = k_means(pixelArray, colorNumber, 100);
     return utils.deserializeArray(a);
 }
 
-EditPix.prototype.getDominantColor = function(image, quality = 1) {
+EditPix.prototype.getDominantColor = function (image, quality = 1) {
     return this.getColorPalette(image, 1, quality);
 }
 
 EditPix.prototype.getImageFromUrl = (url) => {
     return new Promise((resolve, reject) => {
         const image = new Image();
-        image.onload = () => {
-            resolve(image);
-        }
-        image.onerror = () => {
-            reject(image);
-        }
+        image.onload = () => { resolve(image) }
+        image.onerror = (error) => { reject(error) }
         image.src = url;
     })
 }
@@ -61,8 +57,8 @@ EditPix.prototype.toBackWhite = (image) => {
     return imageManager.convertToImage(convertToBW(pixelArray), image.naturalWidth, image.naturalHeight);
 }
 
-EditPix.prototype.resizeByQuality = (image, quality) => {
-    return imageManager.resizeByQuality(image, quality);
+EditPix.prototype.resizeByPercentage = (image, percentage) => {
+    return imageManager.resizeByPercentage(image, percentage);
 }
 
 EditPix.prototype.resizeByWidth = (image, widthPx) => {

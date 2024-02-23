@@ -1,9 +1,11 @@
 function removeAlpha(pixelArray) {
     let result = [];
     for (let i = 0; i < pixelArray.length / 4; i++) {
-        result.push([pixelArray[i * 4], pixelArray[i * 4 + 1], pixelArray[i * 4 + 2]]);
+        if(pixelArray[i * 4 + 3] >=127){
+            result.push([pixelArray[i * 4], pixelArray[i * 4 + 1], pixelArray[i * 4 + 2]]);
+        }
     }
-    return result
+    return result;
 }
 
 function removeAlphaSerialized(pixelArray) {
@@ -11,7 +13,7 @@ function removeAlphaSerialized(pixelArray) {
     for (let i = 0; i < pixelArray.length / 4; i++) {
         result.push(pixelArray[i * 4], pixelArray[i * 4 + 1], pixelArray[i * 4 + 2]);
     }
-    return result
+    return result;
 }
 
 function rgbToHex(rgbColors) {
@@ -48,10 +50,10 @@ function validate(quality, colorNumber) {
     }
 }
 
-function deserializeArray(serializedArray, chunkSize) {
+function deserializeArray(serializedArray) {
     const result = [];
-    for (let i = 0; i < serializedArray.length; i += chunkSize) {
-        result.push(serializedArray.slice(i, i + chunkSize));
+    for (let i = 0; i < serializedArray.length; i += 3) {
+        result.push(Array.from(serializedArray.slice(i, i + 3)));
     }
     return result;
 }
