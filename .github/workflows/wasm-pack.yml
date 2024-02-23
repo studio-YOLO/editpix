@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'lib/src/lib.rs'
+      - '.github/workflows/wasm-pack.yml'
 
 jobs:
   build:
@@ -17,11 +18,12 @@ jobs:
         curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
         wasm-pack build lib/ --release --target web
 
-    - name: Copy necessary files
+    - name: Copy necessary files and stage them
       run: |
         cp lib/pkg/editpix_wasm_bg.wasm src/core/editpix_wasm_bg.wasm
         cp lib/pkg/editpix_wasm.js src/core/editpix_wasm.js
         rm -r lib/pkg
+        git add *
 
     - name: Check for changes
       id: check_changes
@@ -39,7 +41,6 @@ jobs:
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git add *
         git commit -m "CI push"
 
     - name: Push changes
