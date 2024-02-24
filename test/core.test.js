@@ -1,5 +1,7 @@
 import convertToBW from "../src/core/black_and_white.js"
 import convertToGrayScale from "../src/core/gray_scale.js";
+import optimizeContrast from "../src/core/optimize_contrast.js";
+import setContrast from "../src/core/set_contrast.js";
 
 describe('convertToBW function', () => {
     test('converts pixel array to black and white correctly', () => {
@@ -57,3 +59,25 @@ describe('convertToGrayScale function', () => {
         }
     });
 });
+
+describe('optimizeContrast function', () => {
+    test('rescales input vector correctly', () => {
+        const pixelArray = [204, 33, 11, 33, 132, 4, 108, 13, 167, 50, 72, 141];    // RGBA values
+        const expectedOptimizedContrastArray = [255, 161, 0, 33, 0, 0, 255, 13, 124, 255, 160, 141];    //hand-computed rescaling
+        expect(optimizeContrast(pixelArray)).toEqual(expectedOptimizedContrastArray);
+    });
+
+    test('skips rescaling if array is already optimized', () => {
+        const pixelArray = [0, 0, 0, 0, 132, 4, 108, 0, 255, 255, 255, 0];  // RGBA values
+        const expectedOptimizedContrastArray = [0, 0, 0, 0, 132, 4, 108, 0, 255, 255, 255, 0];  // untouched vector
+        expect(optimizeContrast(pixelArray)).toEqual(expectedOptimizedContrastArray);
+    });
+});
+
+describe('setContrast function', () => {
+    test('rescales input vector correctly', () => {
+        const pixelArray = [0, 0, 0, 11, 255, 255, 255, 23, 2, 128, 47, 71];    // RGBA values
+        const expectedSetContrastArray = [2, 2, 2, 11, 253, 253, 253, 23, 2, 128, 10, 71];  //hand-computed rescaling
+        expect(setContrast(pixelArray, 10)).toEqual(expectedSetContrastArray);
+    });
+})
