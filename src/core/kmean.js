@@ -1,9 +1,8 @@
 function euclideanDistance(color1, color2) {
-    return Math.sqrt(
-        Math.pow(color1[0] - color2[0], 2) +
-        Math.pow(color1[1] - color2[1], 2) +
-        Math.pow(color1[2] - color2[2], 2)
-    );
+    return Math.hypot(
+        color1[0] - color2[0],
+        color1[1] - color2[1],
+        color1[2] - color2[2]);
 }
 
 function initializeCentroids(colors, k) {
@@ -51,9 +50,9 @@ function calculateNewCentroids(colors, assignments, k) {
 
     for (let j = 0; j < k; j++) {
         if (counts[j] > 0) {
-            newCentroids[j][0] = Math.round(newCentroids[j][0] / counts[j]);
-            newCentroids[j][1] = Math.round(newCentroids[j][1] / counts[j]);
-            newCentroids[j][2] = Math.round(newCentroids[j][2] / counts[j]);
+            newCentroids[j][0] = newCentroids[j][0] / counts[j];
+            newCentroids[j][1] = newCentroids[j][1] / counts[j];
+            newCentroids[j][2] = newCentroids[j][2] / counts[j];
         }
     }
 
@@ -76,7 +75,7 @@ function kMeans(colors, k, maxIterations = 100) {
         JSON.stringify(assignments) !== JSON.stringify(previousAssignments)
     );
 
-    return Array.from(new Set(assignments.map((centroidIndex) => centroids[centroidIndex])));
+    return [...new Set(assignments.map((centroidIndex) => centroids[centroidIndex]))];
 }
 
 export default kMeans;
