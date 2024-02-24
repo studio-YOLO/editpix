@@ -6,26 +6,24 @@ function getPixelArray(image) {
     return context.getImageData(0, 0, image.naturalWidth, image.naturalHeight).data;
 }
 
-function resizeByQuality(image, quality) {
+function resizeByPercentage(image, percentage) {
+    if (percentage < 1 || percentage > 100) throw new Error("The percentage value is incorrect: it must be between 1 and 100");
     const { canvas, context } = createCanvas();
-    const newWidth = image.naturalWidth * (quality * 0.10);
-    const newHeight = image.naturalHeight * (quality * 0.10);
+    const newWidth = image.naturalWidth * (percentage / 100);
+    const newHeight = image.naturalHeight * (percentage / 100);
     canvas.width = newWidth;
     canvas.height = newHeight;
     context.drawImage(image, 0, 0, newWidth, newHeight);
     return new Promise((resolve, reject) => {
         let resizedImage = new Image();
-        resizedImage.onload = () => {
-            resolve(resizedImage);
-        }
-        resizedImage.onerror = (error) => {
-            reject(error);
-        }
+        resizedImage.onload = () => { resolve(resizedImage) }
+        resizedImage.onerror = (error) => { reject(error) }
         resizedImage.src = canvas.toDataURL();
     })
 }
 
 function resizeByWidth(image, newWidth) {
+    if(newWidth < 0) throw new Error("The width entered is invalid: it must be positive");
     const { canvas, context } = createCanvas();
     const newHeight = image.naturalHeight * (newWidth / image.naturalWidth);
     canvas.width = newWidth;
@@ -33,17 +31,14 @@ function resizeByWidth(image, newWidth) {
     context.drawImage(image, 0, 0, newWidth, newHeight);
     return new Promise((resolve, reject) => {
         let resizedImage = new Image();
-        resizedImage.onload = () => {
-            resolve(resizedImage);
-        }
-        resizedImage.onerror = (error) => {
-            reject(error);
-        }
+        resizedImage.onload = () => { resolve(resizedImage) }
+        resizedImage.onerror = (error) => { reject(error) }
         resizedImage.src = canvas.toDataURL();
     })
 }
 
 function resizeByHeight(image, newHeight) {
+    if(newHeight < 0) throw new Error("the height entered is invalid: it must be positive");
     const { canvas, context } = createCanvas();
     const newWidth = image.naturalWidth * (newHeight / image.naturalHeight);
     canvas.width = newWidth;
@@ -51,12 +46,8 @@ function resizeByHeight(image, newHeight) {
     context.drawImage(image, 0, 0, newWidth, newHeight);
     return new Promise((resolve, reject) => {
         let resizedImage = new Image();
-        resizedImage.onload = () => {
-            resolve(resizedImage);
-        }
-        resizedImage.onerror = (error) => {
-            reject(error);
-        }
+        resizedImage.onload = () => { resolve(resizedImage) }
+        resizedImage.onerror = (error) => { reject(error) }
         resizedImage.src = canvas.toDataURL();
     })
 }
@@ -70,12 +61,8 @@ function convertToImage(pixelArray, width, height) {
     context.putImageData(imageData, 0, 0);
     return new Promise((resolve, reject) => {
         let image = new Image();
-        image.onload = () => {
-            resolve(image);
-        }
-        image.onerror = (error) => {
-            reject(error);
-        }
+        image.onload = () => { resolve(image) }
+        image.onerror = (error) => { reject(error) }
         image.src = canvas.toDataURL();
     })
 }
@@ -89,7 +76,7 @@ function createCanvas() {
 
 export default {
     getPixelArray,
-    resizeByQuality,
+    resizeByPercentage,
     resizeByWidth,
     resizeByHeight,
     convertToImage

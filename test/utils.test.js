@@ -75,7 +75,7 @@ describe('hexToRgb function', () => {
 
 describe('removeAlpha function', () => {
     test('removes alpha channel from pixel array', () => {
-        const pixelArray = [255, 0, 0, 255, 0, 255, 0, 128]; // RGBA values
+        const pixelArray = [255, 0, 0, 255, 0, 255, 0, 128,  0, 255, 0, 125]; // RGBA values
         const expectedResult = [
             [255, 0, 0],   // Red
             [0, 255, 0]    // Green

@@ -19,11 +19,11 @@ image.onload = () => {
 
     document.body.appendChild(image)
 
-    // resize image by quality
-    editpix.resizeByQuality(image, 8)
+    // resize image by percentage
+    editpix.resizeByPercentage(image, 80)
         .then(resizedImage => {
             // image dimension after resizing
-            console.log("Dimension after resizing by 90%: " + resizedImage.naturalWidth + "x" + resizedImage.naturalHeight);
+            console.log("Dimension after resizing by %: " + resizedImage.naturalWidth + "x" + resizedImage.naturalHeight);
             document.body.appendChild(resizedImage)
         })
         .catch(error => { console.log(error) })

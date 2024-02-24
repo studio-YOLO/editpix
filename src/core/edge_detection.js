@@ -197,9 +197,9 @@ function applyHysteresisThreshold(gradients, width, height) {
     return edgeImageData;
 }
 
-// Funzione principale per ottenere l'immagine dei bordi
 function getEdgeImage(imageData) {
     const edgeImageData = cannyEdgeDetection(imageData);
     return edgeImageData;
 }
 
+export default getEdgeImage;

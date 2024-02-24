@@ -1,13 +1,11 @@
-// Funzione per calcolare la distanza euclidea tra due colori
 function euclideanDistance(color1, color2) {
     return Math.sqrt(
         Math.pow(color1[0] - color2[0], 2) +
-    Math.pow(color1[1] - color2[1], 2) +
-    Math.pow(color1[2] - color2[2], 2)
+        Math.pow(color1[1] - color2[1], 2) +
+        Math.pow(color1[2] - color2[2], 2)
     );
 }
 
-// Funzione per inizializzare i centroidi casualmente
 function initializeCentroids(colors, k) {
     const centroids = [];
     const indices = [];
@@ -22,7 +20,6 @@ function initializeCentroids(colors, k) {
     return centroids;
 }
 
-// Funzione per assegnare i pixel ai centroidi più vicini
 function assignToCentroids(colors, centroids) {
     const assignments = [];
     for (let i = 0; i < colors.length; i++) {
@@ -40,7 +37,6 @@ function assignToCentroids(colors, centroids) {
     return assignments;
 }
 
-// Funzione per calcolare i nuovi centroidi
 function calculateNewCentroids(colors, assignments, k) {
     const newCentroids = Array.from({ length: k }, () => [0, 0, 0]);
     const counts = Array.from({ length: k }, () => 0);
@@ -64,7 +60,6 @@ function calculateNewCentroids(colors, assignments, k) {
     return newCentroids;
 }
 
-// Funzione per eseguire l'algoritmo K-Means
 function kMeans(colors, k, maxIterations = 100) {
     let centroids = initializeCentroids(colors, k);
     let iterations = 0;
@@ -78,7 +73,7 @@ function kMeans(colors, k, maxIterations = 100) {
         iterations++;
     } while (
         iterations < maxIterations &&
-    JSON.stringify(assignments) !== JSON.stringify(previousAssignments)
+        JSON.stringify(assignments) !== JSON.stringify(previousAssignments)
     );
 
     return Array.from(new Set(assignments.map((centroidIndex) => centroids[centroidIndex])));
