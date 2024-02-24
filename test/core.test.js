@@ -2,6 +2,7 @@ import convertToBW from "../src/core/black_and_white.js"
 import convertToGrayScale from "../src/core/gray_scale.js";
 import optimizeContrast from "../src/core/optimize_contrast.js";
 import setContrast from "../src/core/set_contrast.js";
+import adjustTemperature from "../src/core/adjust_temperature.js";
 
 describe('convertToBW function', () => {
     test('converts pixel array to black and white correctly', () => {
@@ -81,3 +82,35 @@ describe('setContrast function', () => {
         expect(setContrast(pixelArray, 10)).toEqual(expectedSetContrastArray);
     });
 })
+
+describe('adjustTemperature', () => {
+    test('should adjust temperature for cool colors (factor < 0)', () => {
+        const pixelArray = [100, 50, 150, 255, 200, 100, 50, 255]; // Example pixel array
+        const factor = -50; // Factor for cool colors
+        const expectedArray = [50, 50, 200, 255, 150, 100, 100, 255]; // Expected result after temperature adjustment
+
+        const result = adjustTemperature(pixelArray, factor);
+
+        expect(result).toEqual(expectedArray);
+    });
+
+    test('should adjust temperature for warm colors (factor > 0)', () => {
+        const pixelArray = [100, 50, 150, 255, 200, 100, 50, 255]; // Example pixel array
+        const factor = 50; // Factor for warm colors
+        const expectedArray = [150, 50, 100, 255, 250, 100, 0, 255]; // Expected result after temperature adjustment
+
+        const result = adjustTemperature(pixelArray, factor);
+
+        expect(result).toEqual(expectedArray);
+    });
+
+    test('should not adjust temperature if factor is 0', () => {
+        const pixelArray = [100, 50, 150, 255, 200, 100, 50, 255]; // Example pixel array
+        const factor = 0; // Factor is 0
+        const expectedArray = [...pixelArray]; // Should remain unchanged
+
+        const result = adjustTemperature(pixelArray, factor);
+
+        expect(result).toEqual(expectedArray);
+    });
+});
