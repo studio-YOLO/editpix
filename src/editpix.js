@@ -8,6 +8,7 @@ import higherColorContrast from "./core/higher_contrast.js";
 import init, { k_means } from "./core/editpix_wasm.js"
 import optimizeContrast from "./core/optimize_contrast.js";
 import setContrast from "./core/set_contrast.js";
+import adjustTemperature from "./core/adjust_temperature.js";
 
 var EditPix = function () { };
 
@@ -89,12 +90,19 @@ EditPix.prototype.toOptimizedContrast = (image) => {
 }
 
 EditPix.prototype.setContrast = (image, factor) => {
-    if(factor < -100 || factor > 100)
+    if (factor < -100 || factor > 100)
         throw new Error("Invalid contrast factor: must be a value between -100 and 100");
-    const adjustedFactor = factor/10 + 4.8;
+    const adjustedFactor = factor / 10 + 4.8;
     const pixelArray = imageManager.getPixelArray(image);
     const optimizedArray = optimizeContrast(pixelArray);
     return imageManager.convertToImage(setContrast(optimizedArray, adjustedFactor), image.naturalWidth, image.naturalHeight);
+}
+
+EditPix.prototype.adjustTemperature = (image, factor) => {
+    if (factor < -100 || factor > 100)
+        throw new Error("Invalid contrast factor: must be a value between -100 and 100");
+    const pixelArray = imageManager.getPixelArray(image);
+    return imageManager.convertToImage(adjustTemperature(pixelArray, factor), image.naturalWidth, image.naturalHeight);
 }
 
 export default EditPix;
