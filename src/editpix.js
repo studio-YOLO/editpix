@@ -7,8 +7,10 @@ import imageManager from "./image_manager.js";
 import higherColorContrast from "./core/higher_contrast.js";
 import init, { k_means } from "./core/editpix_wasm.js"
 import optimizeContrast from "./core/optimize_contrast.js";
-import setContrast from "./core/change_contrast.js";
-import adjustTemperature from "./core/change_temperature.js";
+import changeContrast from "./core/change_contrast.js";
+import changeTemperature from "./core/change_temperature.js";
+import changeSaturation from "./core/change_saturation.js";
+import changeBrightness from "./core/change_brightness.js";
 
 var EditPix = function () { };
 
@@ -89,20 +91,43 @@ EditPix.prototype.toOptimizedContrast = (image) => {
     return imageManager.convertToImage(optimizeContrast(pixelArray), image.naturalWidth, image.naturalHeight);
 }
 
-EditPix.prototype.setContrast = (image, factor) => {
+EditPix.prototype.changeContrast = (image, factor) => {
     if (factor < -100 || factor > 100)
         throw new Error("Invalid contrast factor: must be a value between -100 and 100");
     const adjustedFactor = factor / 10 + 4.8;
     const pixelArray = imageManager.getPixelArray(image);
     const optimizedArray = optimizeContrast(pixelArray);
-    return imageManager.convertToImage(setContrast(optimizedArray, adjustedFactor), image.naturalWidth, image.naturalHeight);
+    return imageManager.convertToImage(changeContrast(optimizedArray, adjustedFactor), image.naturalWidth, image.naturalHeight);
 }
 
-EditPix.prototype.adjustTemperature = (image, factor) => {
+EditPix.prototype.changeTemperature = (image, factor) => {
     if (factor < -100 || factor > 100)
         throw new Error("Invalid contrast factor: must be a value between -100 and 100");
     const pixelArray = imageManager.getPixelArray(image);
-    return imageManager.convertToImage(adjustTemperature(pixelArray, factor), image.naturalWidth, image.naturalHeight);
+    return imageManager.convertToImage(changeTemperature(pixelArray, factor), image.naturalWidth, image.naturalHeight);
+}
+
+EditPix.prototype.changeSaturation = (image, factor) => {
+    if (factor < -100 || factor > 100)
+        throw new Error("Invalid contrast factor: must be a value between -100 and 100");
+    const pixelArray = imageManager.getPixelArray(image);
+    return imageManager.convertToImage(changeSaturation(pixelArray, factor), image.naturalWidth, image.naturalHeight);
+
+}
+
+EditPix.prototype.changeBrightness = (image, factor) => {
+    if (factor < -100 || factor > 100)
+        throw new Error("Invalid contrast factor: must be a value between -100 and 100");
+    const pixelArray = imageManager.getPixelArray(image);
+    return imageManager.convertToImage(changeBrightness(pixelArray, factor), image.naturalWidth, image.naturalHeight);
+}
+
+EditPix.prototype.rgbToHsl = (r, g, b) => {
+    return utils.rgbToHsl(r, g, b);
+}
+
+EditPix.prototype.hslToRgb = (h, s, l) => {
+    return utils.hslToRgb(h, s, l);
 }
 
 export default EditPix;
