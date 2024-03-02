@@ -1,8 +1,8 @@
 import convertToBW from "../src/core/black_and_white.js"
 import convertToGrayScale from "../src/core/gray_scale.js";
 import optimizeContrast from "../src/core/optimize_contrast.js";
-import setContrast from "../src/core/set_contrast.js";
-import adjustTemperature from "../src/core/adjust_temperature.js";
+import changeContrast from "../src/core/change_contrast.js";
+import changeTemperature from "../src/core/change_temperature.js";
 
 describe('convertToBW function', () => {
     test('converts pixel array to black and white correctly', () => {
@@ -79,7 +79,7 @@ describe('setContrast function', () => {
     test('rescales input vector correctly', () => {
         const pixelArray = [0, 0, 0, 11, 255, 255, 255, 23, 2, 128, 47, 71];    // RGBA values
         const expectedSetContrastArray = [2, 2, 2, 11, 253, 253, 253, 23, 2, 128, 10, 71];  //hand-computed rescaling
-        expect(setContrast(pixelArray, 10)).toEqual(expectedSetContrastArray);
+        expect(changeContrast(pixelArray, 10)).toEqual(expectedSetContrastArray);
     });
 })
 
@@ -89,7 +89,7 @@ describe('adjustTemperature', () => {
         const factor = -50; // Factor for cool colors
         const expectedArray = [50, 50, 200, 255, 150, 100, 100, 255]; // Expected result after temperature adjustment
 
-        const result = adjustTemperature(pixelArray, factor);
+        const result = changeTemperature(pixelArray, factor);
 
         expect(result).toEqual(expectedArray);
     });
@@ -99,7 +99,7 @@ describe('adjustTemperature', () => {
         const factor = 50; // Factor for warm colors
         const expectedArray = [150, 50, 100, 255, 250, 100, 0, 255]; // Expected result after temperature adjustment
 
-        const result = adjustTemperature(pixelArray, factor);
+        const result = changeTemperature(pixelArray, factor);
 
         expect(result).toEqual(expectedArray);
     });
@@ -109,7 +109,7 @@ describe('adjustTemperature', () => {
         const factor = 0; // Factor is 0
         const expectedArray = [...pixelArray]; // Should remain unchanged
 
-        const result = adjustTemperature(pixelArray, factor);
+        const result = changeTemperature(pixelArray, factor);
 
         expect(result).toEqual(expectedArray);
     });

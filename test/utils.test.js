@@ -75,7 +75,7 @@ describe('hexToRgb function', () => {
 
 describe('removeAlpha function', () => {
     test('removes alpha channel from pixel array', () => {
-        const pixelArray = [255, 0, 0, 255, 0, 255, 0, 128,  0, 255, 0, 125]; // RGBA values
+        const pixelArray = [255, 0, 0, 255, 0, 255, 0, 128, 0, 255, 0, 125]; // RGBA values
         const expectedResult = [
             [255, 0, 0],   // Red
             [0, 255, 0]    // Green
@@ -104,5 +104,44 @@ describe('validate function', () => {
         expect(() => utils.validate(5, 5)).not.toThrowError();
         expect(() => utils.validate(1, 1)).not.toThrowError();
         expect(() => utils.validate(10, 15)).not.toThrowError();
+    });
+});
+
+describe('hslToRgb', () => {
+    test('Correctly converts HSL to RGB', () => {
+        expect(utils.hslToRgb(0, 100, 50)).toEqual([255, 0, 0]);
+        expect(utils.hslToRgb(120, 100, 50)).toEqual([0, 255, 0]);
+        expect(utils.hslToRgb(240, 100, 50)).toEqual([0, 0, 255]);
+    });
+
+    test('Correctly handles HSL with saturation or lightness at the limit', () => {
+        expect(utils.hslToRgb(0, 0, 0)).toEqual([0, 0, 0]);
+        expect(utils.hslToRgb(0, 100, 0)).toEqual([0, 0, 0]);
+        expect(utils.hslToRgb(0, 0, 100)).toEqual([255, 255, 255]);
+        expect(utils.hslToRgb(0, 100, 100)).toEqual([255, 255, 255]);
+    });
+
+    test('Throws an error for invalid HSL values', () => {
+        expect(() => utils.hslToRgb(-10, 100, 50)).toThrow(Error);
+        expect(() => utils.hslToRgb(361, 100, 50)).toThrow(Error);
+        expect(() => utils.hslToRgb(0, -10, 50)).toThrow(Error);
+        expect(() => utils.hslToRgb(0, 100, 101)).toThrow(Error);
+    });
+});
+
+describe('rgbToHsl', () => {
+    test('Correctly converts RGB to HSL', () => {
+        expect(utils.rgbToHsl(255, 0, 0)).toEqual([0, 100, 50]);
+        expect(utils.rgbToHsl(0, 255, 0)).toEqual([120, 100, 50]);
+        expect(utils.rgbToHsl(0, 0, 255)).toEqual([240, 100, 50]);
+        expect(utils.rgbToHsl(255, 255, 255)).toEqual([0, 0, 100]);
+        expect(utils.rgbToHsl(128, 128, 128)).toEqual([0, 0, 50]);
+    });
+
+    test('Throws an error for invalid RGB values', () => {
+        expect(() => utils.rgbToHsl(-10, 0, 0)).toThrow(Error);
+        expect(() => utils.rgbToHsl(256, 0, 0)).toThrow(Error);
+        expect(() => utils.rgbToHsl(0, 300, 0)).toThrow(Error);
+        expect(() => utils.rgbToHsl(0, 0, -20)).toThrow(Error);
     });
 });
