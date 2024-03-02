@@ -1,4 +1,4 @@
-function change_sharpness(pixelArray, width, height, sharpness_factor) {
+function changeSharpness(pixelArray, width, height, factor) {
     // Define a sharpening kernel
     const kernel = [
         [0, -1, 0],
@@ -6,7 +6,7 @@ function change_sharpness(pixelArray, width, height, sharpness_factor) {
         [0, -1, 0]
     ];
 
-    const tempPixelArray = pixelArray.slice();
+    const tempPixelArray = pixelArray.slice(); // ...pixelArray;
 
     for (let y = 1; y < height - 1; y++) {
         for (let x = 1; x < width - 1; x++) {
@@ -21,9 +21,9 @@ function change_sharpness(pixelArray, width, height, sharpness_factor) {
                 }
             }
             const index = (y * width + x) * 4;
-            pixelArray[index] = clamp(tempPixelArray[index] + sharpness_factor * sumR);
-            pixelArray[index + 1] = clamp(tempPixelArray[index + 1] + sharpness_factor * sumG);
-            pixelArray[index + 2] = clamp(tempPixelArray[index + 2] + sharpness_factor * sumB);
+            pixelArray[index] = clamp(tempPixelArray[index] + factor * sumR);
+            pixelArray[index + 1] = clamp(tempPixelArray[index + 1] + factor * sumG);
+            pixelArray[index + 2] = clamp(tempPixelArray[index + 2] + factor * sumB);
         }
     }
 
@@ -34,4 +34,4 @@ function clamp(value) {
     return Math.max(0, Math.min(255, value));
 }
 
-export default change_sharpness;
+export default changeSharpness;

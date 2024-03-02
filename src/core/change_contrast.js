@@ -4,7 +4,7 @@
  *  @param {number} factor: scale factor for the s-curve
  *  @returns {number[]} contrastArray: an array in the format [R, G, B, alpha,..., R, G, B, alpha]
  **/
-function setContrast(pixelArray, factor) {
+function changeContrast(pixelArray, factor) {
     const clip = (value) => {
         return Math.round(Math.min(Math.max(value, 0), 255));
     }
@@ -22,4 +22,4 @@ function setContrast(pixelArray, factor) {
     return newArray;
 }
 
-export default setContrast;
+export default changeContrast;

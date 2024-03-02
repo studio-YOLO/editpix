@@ -7,8 +7,8 @@ import imageManager from "./image_manager.js";
 import higherColorContrast from "./core/higher_contrast.js";
 import init, { k_means } from "./core/editpix_wasm.js"
 import optimizeContrast from "./core/optimize_contrast.js";
-import setContrast from "./core/set_contrast.js";
-import adjustTemperature from "./core/adjust_temperature.js";
+import setContrast from "./core/change_contrast.js";
+import adjustTemperature from "./core/change_temperature.js";
 
 var EditPix = function () { };
 
