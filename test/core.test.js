@@ -3,6 +3,7 @@ import convertToGrayScale from "../src/core/gray_scale.js";
 import optimizeContrast from "../src/core/optimize_contrast.js";
 import changeContrast from "../src/core/change_contrast.js";
 import changeTemperature from "../src/core/change_temperature.js";
+import changeOpacity from "../src/core/change_opacity.js";
 
 describe('convertToBW function', () => {
     test('converts pixel array to black and white correctly', () => {
@@ -112,5 +113,22 @@ describe('adjustTemperature', () => {
         const result = changeTemperature(pixelArray, factor);
 
         expect(result).toEqual(expectedArray);
+    });
+});
+
+describe('changeOpacity function', () => {
+    test('should correctly change the opacity of pixel array', () => {
+        // Example pixel array
+        const pixelArray = [100, 50, 150, 255, 200, 100, 50, 255];
+        // Expected opacity value
+        const alphaValue = 150;
+        // Expected array after opacity modification
+        const expectedArray = [100, 50, 150, alphaValue, 200, 100, 50, alphaValue];
+
+        // Execute the changeOpacity function
+        const modifiedArray = changeOpacity(pixelArray, alphaValue);
+
+        // Check that the array has correctly changed opacity
+        expect(modifiedArray).toEqual(expectedArray);
     });
 });

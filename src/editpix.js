@@ -11,6 +11,8 @@ import changeContrast from "./core/change_contrast.js";
 import changeTemperature from "./core/change_temperature.js";
 import changeSaturation from "./core/change_saturation.js";
 import changeBrightness from "./core/change_brightness.js";
+import toSepia from "./core/sepia.js";
+import changeOpacity from "./core/change_opacity.js";
 
 var EditPix = function () { };
 
@@ -128,6 +130,18 @@ EditPix.prototype.rgbToHsl = (r, g, b) => {
 
 EditPix.prototype.hslToRgb = (h, s, l) => {
     return utils.hslToRgb(h, s, l);
+}
+
+EditPix.prototype.toSepia = (image) => {
+    const pixelArray = imageManager.getPixelArray(image);
+    return imageManager.convertToImage(toSepia(pixelArray), image.naturalWidth, image.naturalHeight);
+}
+
+EditPix.prototype.changeOpacity = (image, alpha) => {
+    if (alpha < 0 || alpha > 255)
+        throw new Error("Invalid alpha value: must be between 0 and 255")
+    const pixelArray = imageManager.getPixelArray(image);
+    return imageManager.convertToImage(changeOpacity(pixelArray, alpha), image.naturalWidth, image.naturalHeight);
 }
 
 export default EditPix;
