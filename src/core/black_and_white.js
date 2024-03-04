@@ -1,19 +1,25 @@
 /**
- *  Functiom that given array in the format [R, G, B, alpha,..., R, G, B, alpha] it converts in white and black in the format of a list. Possible values are just 0 and 255
- *  @param {number[][]} pixelArray: image that has to be encrypt in the format [R, G, B, alpha,..., R, G, B, alpha]
- *  @returns {number[]} blackWhitePixelArray: black and white image in the format of a list. Possible values are just 0 and 255
+ *  Function to convert an image from color to black and white.
+ *  @param {number[]} pixelArray: Image pixel array in the format [R, G, B, alpha,..., R, G, B, alpha].
+ *  @returns {number[]} array of black and white image pixels.
  */
 function convertToBW(pixelArray) {
-    const blackWhitePixelArray = [];
-    for (let i = 0; i < pixelArray.length / 4; i++) {
+    for (let i = 0; i < pixelArray.length; i += 4) {
         const grayValue =
-            0.299 * pixelArray[i * 4] +
-            0.587 * pixelArray[i * 4 + 1] +
-            0.114 * pixelArray[i * 4 + 2];
-        if (grayValue >= 128) blackWhitePixelArray.push(255, 255, 255, pixelArray[i * 4 + 3]);
-        else blackWhitePixelArray.push(0, 0, 0, pixelArray[i * 4 + 3]);
+            0.299 * pixelArray[i] +
+            0.587 * pixelArray[i + 1] +
+            0.114 * pixelArray[i + 2];
+        if (grayValue >= 128) {
+            pixelArray[i] = 255;
+            pixelArray[i + 1] = 255;
+            pixelArray[i + 2] = 255;
+        }else {
+            pixelArray[i] = 0;
+            pixelArray[i + 1] = 0;
+            pixelArray[i + 2] = 0;
+        }
     }
-    return blackWhitePixelArray;
+    return pixelArray;
 }
 
 export default convertToBW;
