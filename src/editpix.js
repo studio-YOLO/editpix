@@ -1,7 +1,6 @@
 import utils from "./utils.js"
 import convertToGrayScale from "./core/gray_scale.js";
 import convertToBW from "./core/black_and_white.js";
-import convertFromGrayToRgb from "./core/gray_to_rgb.js";
 import kMeans from "./core/kmean.js";
 import imageManager from "./image_manager.js";
 import higherColorContrast from "./core/higher_contrast.js";
