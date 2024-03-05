@@ -53,11 +53,6 @@ EditPix.prototype.toGrayScale = (image) => {
     return imageManager.convertToImage(convertToGrayScale(pixelArray), image.naturalWidth, image.naturalHeight);
 }
 
-EditPix.prototype.fromGrayScaleToRgb = (image) => {
-    const pixelArray = imageManager.getPixelArray(image);
-    return imageManager.convertToImage(convertFromGrayToRgb(pixelArray), image.naturalWidth, image.naturalHeight);
-}
-
 EditPix.prototype.toBackWhite = (image) => {
     const pixelArray = imageManager.getPixelArray(image);
     return imageManager.convertToImage(convertToBW(pixelArray), image.naturalWidth, image.naturalHeight);
