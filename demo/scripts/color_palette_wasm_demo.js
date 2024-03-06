@@ -2,7 +2,7 @@ import EditPix from "../../src/editpix.js";
 
 const editpix = new EditPix();
 
-const url = "images/img1.jpg";
+const url = "images/img5.jpeg";
 
 var image = new Image();
 image.src = url;
@@ -12,15 +12,30 @@ container.classList.add("container")
 
 //waiting image load
 image.onload = () => {
-    //calculate color palette
-    editpix.getColorPaletteWasm(image, 13, 1)
+    console.log("Perché non va?");
+    let colorNumber = 5;
+
+    
+    let t2 = Date.now();
+    editpix.getColorPaletteWasm2(image, colorNumber)
         .then(colorPalette => {
+            let t3 = Date.now();
             console.log(colorPalette)
             displayPalette(colorPalette);
-        })
-
-
-
+            console.log("Ottimizzato: " + (t3-t2));
+    });
+    
+    
+    /*
+    let t2 = Date.now();
+    editpix.getColorPaletteWasm(image, colorNumber)
+        .then(colorPalette => {
+            let t3 = Date.now();
+            console.log(colorPalette)
+            displayPalette(colorPalette);
+            console.log("Originale: " + (t3-t2));
+    });
+    */
 
 };
 
