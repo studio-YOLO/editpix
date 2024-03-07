@@ -113,34 +113,34 @@ fn square_distance(color1: &[u8; 3], color2: &[u8; 3]) -> f64 {
     (color1[2] as f64 - color2[2] as f64).powi(2)
 }
 
-fn initialize_centroids2(colors: &Vec<[u8; 3]>, color_number: usize) -> Vec<[u8; 3]> {
-    let mut centroids: Vec<[u8; 3]>  = Vec::new();
-    let first_centroid = colors[colors.len() / 2];
-    centroids.push(first_centroid);
+fn initialize_centroids_pp(colors: &Vec<[u8; 3]>, color_number: usize) -> Vec<[u8; 3]> {
     let mut rng = thread_rng();
+    let mut centroids: Vec<[u8; 3]>  = Vec::new();
+    let first_centroid = colors[rng.gen_range(0..colors.len())];
+    centroids.push(first_centroid);
     
     for _i in 1..color_number {
-        let mut max_index: usize = 0;
         let distances = colors.iter().map(|x| {
             let partial_distances = centroids.iter().map(|y| square_distance(x, y));
             partial_distances.fold(f64::INFINITY, |a, b| a.min(b))
         });
         let total_weight = distances.clone().fold(0.0, |a, b| a + b);
-        let mut target = rng.gen::<f64>() * total_weight;
-        for (j, x) in distances.enumerate() {
-            if target < x {
-                max_index = j;
+        let distances: Vec<_> = distances.collect();
+        let target = rng.gen::<f64>() * total_weight;
+        let mut cumulative = 0.0;
+        for i in 0..colors.len() {
+            cumulative += distances[i];
+            if cumulative >= target {
+                centroids.push(colors[i]);
                 break;
             }
-            target -= x;
         }
-        centroids.push(colors[max_index]);
     }
 
     centroids
 }
 
-fn assign_to_centroids2(colors: &[[u8; 3]], centroids: Vec<[u8; 3]>) -> Vec<usize> {
+fn assign_to_centroids_pp(colors: &[[u8; 3]], centroids: Vec<[u8; 3]>) -> Vec<usize> {
     let mut assignments: Vec<usize> = Vec::new();
     for i in 0..colors.len() {
         let mut min_distance = f64::INFINITY;
@@ -159,7 +159,7 @@ fn assign_to_centroids2(colors: &[[u8; 3]], centroids: Vec<[u8; 3]>) -> Vec<usiz
 }
 
 #[wasm_bindgen]
-pub fn k_means2(colors_r: Vec<u8>, color_number: usize, max_iterations: usize) -> Vec<u8> {
+pub fn k_means_pp(colors_r: Vec<u8>, color_number: usize, max_iterations: usize) -> Vec<u8> {
     let colors: Vec<[u8; 3]> = colors_r
         .chunks_exact(3) // Get chunks of 3 elements
         .map(|chunk| {
@@ -170,7 +170,7 @@ pub fn k_means2(colors_r: Vec<u8>, color_number: usize, max_iterations: usize) -
         .collect();
 
     
-    let mut centroids = initialize_centroids2(&colors, color_number);
+    let mut centroids = initialize_centroids_pp(&colors, color_number);
     
     let mut iterations: usize = 0;
     let mut previous_assignments;
@@ -178,7 +178,7 @@ pub fn k_means2(colors_r: Vec<u8>, color_number: usize, max_iterations: usize) -
   
     loop {
         previous_assignments = assignments;
-        assignments = assign_to_centroids2(&colors, centroids);
+        assignments = assign_to_centroids_pp(&colors, centroids);
         centroids = calculate_new_centroids(&colors, &assignments, color_number);
         iterations += 1;
         if iterations > max_iterations || assignments == previous_assignments {
