@@ -4,7 +4,7 @@ import convertToBW from "./core/black_and_white.js";
 import kMeans from "./core/kmean.js";
 import imageManager from "./image_manager.js";
 import higherColorContrast from "./core/higher_contrast.js";
-import init, { k_means, k_means2 } from "./core/editpix_wasm.js"
+import init, { k_means, k_means_pp } from "./core/editpix_wasm.js"
 import optimizeContrast from "./core/optimize_contrast.js";
 import changeContrast from "./core/change_contrast.js";
 import changeTemperature from "./core/change_temperature.js";
@@ -27,20 +27,25 @@ EditPix.prototype.getColorPalette = (image, colorNumber = 5, quality = 1) => {
     })
 }
 
-EditPix.prototype.getColorPaletteWasm = async (image, colorNumber = 5) => {
-    utils.validate(1, colorNumber);
-    const pixelArray = utils.removeAlphaSerialized(imageManager.getPixelArray(image));
-    await init();
-    let a = k_means(pixelArray, colorNumber, 100);
-    return utils.deserializeArray(a);
-}
-
-EditPix.prototype.getColorPaletteWasm2 = async (image, colorNumber = 5) => {
-    utils.validate(1, colorNumber);
-    const pixelArray = utils.removeAlphaSerialized(imageManager.getPixelArray(image));
-    await init();
-    let a = k_means2(pixelArray, colorNumber, 100);
-    return utils.deserializeArray(a);
+EditPix.prototype.getColorPaletteWasm = async (image, colorNumber = 5, quality = 1, algorithm = "k-means++") => {
+    return new Promise((resolve, reject) => {
+        utils.validate(quality, colorNumber);
+        imageManager.resizeByPercentage(image, quality * 10)
+            .then(resizedImage => {
+                const pixelArray = utils.removeAlphaSerialized(imageManager.getPixelArray(resizedImage));
+                if (algorithm === "k-means") {
+                    init().then(() => {
+                        resolve(utils.deserializeArray(k_means(pixelArray, colorNumber, 100)));
+                    })
+                } else if (algorithm === "k-means++") {
+                    init().then(() => {
+                        resolve(utils.deserializeArray(k_means_pp(pixelArray, colorNumber, 100)));
+                    })
+                } else {
+                    throw new Error("Non-existent algorithm.");
+                }   
+            })
+    }).catch(error => { reject(error) })
 }
 
 EditPix.prototype.getDominantColor = function (image, quality = 1) {
