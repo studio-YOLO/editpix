@@ -4,6 +4,7 @@
 
 A powerful and versatile image editor for [insert your target audience/users].
 
+[key1](Assets/logo.png)
 ## Features
 
 ### Basic Editing:
