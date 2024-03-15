@@ -194,3 +194,102 @@ pub fn k_means_pp(colors_r: Vec<u8>, color_number: usize, max_iterations: usize)
     serialized_vector
 }
 
+
+
+
+// Sort an RGB pixel array by its channel with the highest variance
+fn sort_pixels(pixels: &Vec<[u8; 3]>, channel: usize) -> Vec<[u8; 3]> {
+    let mut px = pixels.to_owned();
+    px.sort_by(|a, b| a[channel].cmp(&b[channel]));
+    px
+}
+
+// Find the color channel with the highest variance 
+fn find_max_channel(pixels: &Vec<[u8; 3]>) -> usize {
+    let mut min = [255, 255, 255];
+    let mut max = [0, 0, 0];
+    for (_i, pixel) in pixels.iter().enumerate() {
+        for j in 0..3 {
+            if pixel[j] < min[j] {
+                min[j] = pixel[j];
+            }
+            if pixel[j] > max[j] {
+                max[j] = pixel[j];
+            }
+        }
+    }
+    let mut range = [0, 0, 0];
+    for j in 0..3 {
+        range[j] = max[j] - min[j];
+    }
+    let max_channel: usize = (0..3).into_iter().max().unwrap();
+    max_channel
+}
+
+// Find the average color of an RGB pixel array
+fn find_average_color(pixels: Vec<[u8; 3]>) -> [u8; 3] {
+    let mut sum: [f32; 3] = [0.0, 0.0, 0.0];
+    for pixel in &pixels {
+        for j in 0..3 {
+            sum[j] += pixel[j] as f32;
+        }
+    }
+    let avg: [u8; 3] = [(sum[0] / pixels.len() as f32) as u8, (sum[1] / pixels.len() as f32) as u8, (sum[2] / pixels.len() as f32) as u8];
+    avg
+}
+
+// Apply the median cut algorithm to an RGB pixel array and return a downsized color palette
+#[wasm_bindgen]
+pub fn median_cut(pixels_r: Vec<u8>, palette_size: usize) -> Vec<u8> {
+    // Turn the linear array into an array of RGB arrays
+    let pixels: Vec<[u8; 3]> = pixels_r
+        .chunks_exact(3) // Get chunks of 3 elements
+        .map(|chunk| {
+            let mut array: [u8; 3] = [0; 3];
+            array.copy_from_slice(chunk);
+            array
+        })
+        .collect();
+
+    // Initialize a queue of regions with all pixels
+    let mut queue = vec![pixels];
+    // Repeat the following loop until the queue reaches the correct size
+    while queue.len() < palette_size {
+        // Extract the region with the most pixels from the queue
+        let mut max_index = 0;
+        let mut max_size = 0;
+        for (i, region) in queue.iter().enumerate() {
+            if region.len() > max_size {
+                max_size = region.len();
+                max_index = i;
+            }
+        }
+        let region = queue.remove(max_index);
+        // Find the channel with the highest variance within the region
+        let channel = find_max_channel(&region);
+        // Sort the pixels in the region by that channel
+        let sorted: Vec<[u8; 3]> = sort_pixels(&region, channel).iter().cloned().collect();
+        // Find the average and bisect the region
+        let median = sorted.len() / 2;
+        let left = &sorted[..median];
+        let right = &sorted[median..];
+        // Add the two regions to the queue
+        queue.push(left.to_vec());
+        queue.push(right.to_vec());
+    }
+    // Compute the average color of each region and return the palette
+    let mut palette: Vec<[u8; 3]> = Vec::new();
+    for region in queue {
+        let color = find_average_color(region);
+        palette.push(color);
+    }
+   
+   // Serialize the array of arrays to get a linear array
+    let serialized_vector: Vec<u8> = palette
+        .into_iter()
+        .flat_map(|array| array.into_iter())
+        .collect();
+
+    serialized_vector
+}
+

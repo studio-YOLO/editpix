@@ -14,7 +14,7 @@ container.classList.add("container")
 image.onload = () => {
     console.log("Image loaded.");
     
-    editpix.getColorPaletteWasm(image, 15, 2)
+    editpix.getColorPaletteWasm(image, 15, 2, "median cut")
         .then(colorPalette => {
             console.log(colorPalette)
             displayPalette(colorPalette);
