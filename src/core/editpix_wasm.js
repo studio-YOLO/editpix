@@ -113,6 +113,27 @@ export function k_means_pp(colors_r, color_number, max_iterations) {
     }
 }
 
+/**
+* @param {Uint8Array} pixels_r
+* @param {number} palette_size
+* @returns {Uint8Array}
+*/
+export function median_cut(pixels_r, palette_size) {
+    try {
+        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+        const ptr0 = passArray8ToWasm0(pixels_r, wasm.__wbindgen_malloc);
+        const len0 = WASM_VECTOR_LEN;
+        wasm.median_cut(retptr, ptr0, len0, palette_size);
+        var r0 = getInt32Memory0()[retptr / 4 + 0];
+        var r1 = getInt32Memory0()[retptr / 4 + 1];
+        var v2 = getArrayU8FromWasm0(r0, r1).slice();
+        wasm.__wbindgen_free(r0, r1 * 1, 1);
+        return v2;
+    } finally {
+        wasm.__wbindgen_add_to_stack_pointer(16);
+    }
+}
+
 function handleError(f, args) {
     try {
         return f.apply(this, args);

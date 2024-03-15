@@ -4,7 +4,7 @@ import convertToBW from "./core/black_and_white.js";
 import kMeans from "./core/kmean.js";
 import imageManager from "./image_manager.js";
 import higherColorContrast from "./core/higher_contrast.js";
-import init, { k_means, k_means_pp } from "./core/editpix_wasm.js"
+import init, { k_means, k_means_pp, median_cut } from "./core/editpix_wasm.js"
 import optimizeContrast from "./core/optimize_contrast.js";
 import changeContrast from "./core/change_contrast.js";
 import changeTemperature from "./core/change_temperature.js";
@@ -40,6 +40,10 @@ EditPix.prototype.getColorPaletteWasm = async (image, colorNumber = 5, quality =
                 } else if (algorithm === "k-means++") {
                     init().then(() => {
                         resolve(utils.deserializeArray(k_means_pp(pixelArray, colorNumber, 100)));
+                    })
+                } else if (algorithm === "median cut") {
+                    init().then(() => {
+                        resolve(utils.deserializeArray(median_cut(pixelArray, colorNumber)));
                     })
                 } else {
                     throw new Error("Non-existent algorithm.");
