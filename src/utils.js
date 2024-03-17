@@ -89,9 +89,9 @@ function rgbToHsl(r, g, b) {
     }
 
     return [
-        h * 360,
-        s * 100,
-        l * 100
+        Math.round(h * 360),
+        Math.round(s * 100),
+        Math.round(l * 100)
     ];
 }
 
