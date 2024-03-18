@@ -12,6 +12,8 @@ import changeSaturation from "./core/change_saturation.js";
 import changeBrightness from "./core/change_brightness.js";
 import toSepia from "./core/sepia.js";
 import changeOpacity from "./core/change_opacity.js";
+import changeShadows from "./core/change_shadows.js";
+import changeExposure from "./core/change_exposure.js";
 
 var EditPix = function () { };
 
@@ -160,6 +162,13 @@ EditPix.prototype.changeShadows = (image, factor) => {
         throw new Error("Invalid shadow factor: must be a value between -100 and 100");
     const pixelArray = imageManager.getPixelArray(image);
     return imageManager.convertToImage(changeShadows(pixelArray, factor), image.naturalWidth, image.naturalHeight);
+}
+
+EditPix.prototype.changeExposure = (image, factor) => {
+    if (factor < -100 || factor > 100)
+        throw new Error("Invalid exposure factor: must be a value between -100 and 100");
+    const pixelArray = imageManager.getPixelArray(image);
+    return imageManager.convertToImage(changeExposure(pixelArray, factor), image.naturalWidth, image.naturalHeight);
 }
 
 export default EditPix;

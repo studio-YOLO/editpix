@@ -21,3 +21,5 @@ function changeExposure(pixelArray, factor) {
     }
     return pixelArray;
 }
+
+export default changeExposure;
