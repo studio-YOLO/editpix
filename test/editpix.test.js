@@ -41,3 +41,22 @@ describe('EditPix convertToHex method', () => {
         expect(editPix.convertToHex(rgbColor)).toEqual(expectedHexColor);
     });
 });
+
+describe('EditPix changeShadows method', () => {
+    test('should reject lower out-of-range factors', () => {
+        try {
+            const editPix = new EditPix();
+            editPix.changeShadows([0, 234, 87], 150);
+        } catch (e) {
+            expect(e).toEqual(new Error("Invalid shadow factor: must be a value between -100 and 100"));
+        }
+    });
+    test('should reject upper out-of-range factors', () => {
+        try {
+            const editPix = new EditPix(); 
+            editPix.changeShadows([0, 234, 87], -123);
+        } catch (e) {
+            expect(e).toEqual(new Error("Invalid shadow factor: must be a value between -100 and 100"));
+        }
+    });
+});
