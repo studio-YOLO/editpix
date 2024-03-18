@@ -12,16 +12,13 @@ container.classList.add("container")
 
 //waiting image load
 image.onload = () => {
-    //calculate color palette
-    editpix.getColorPaletteWasm(image, 13, 1)
+    console.log("Image loaded.");
+    
+    editpix.getColorPaletteWasm(image, 15, 2, "median cut")
         .then(colorPalette => {
             console.log(colorPalette)
             displayPalette(colorPalette);
-        })
-
-
-
-
+    });
 };
 
 
