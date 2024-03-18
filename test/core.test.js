@@ -5,6 +5,7 @@ import changeContrast from "../src/core/change_contrast.js";
 import changeTemperature from "../src/core/change_temperature.js";
 import changeOpacity from "../src/core/change_opacity.js";
 import higherColorContrast from "../src/core/higher_contrast.js";
+import changeTint from "../src/core/change_tint.js"
 
 describe('convertToBW function', () => {
     test('converts pixel array to black and white correctly', () => {
@@ -160,5 +161,30 @@ describe('higherColorContrast', () => {
         const result = higherColorContrast(mediumColor);
 
         expect(result).toEqual(expectedResult);
+    });
+});
+
+describe('changeTint', () => {
+    test('should not change anything if factor is 0', () => {
+        const testColor1 = [173, 114, 255];
+        const testColor2 = [173, 114, 255];
+        changeTint(testColor1, 0);
+        expect(testColor1[0]).toEqual(testColor2[0]);
+        expect(testColor1[1]).toEqual(testColor2[1]);
+        expect(testColor1[2]).toEqual(testColor2[2]);
+    });
+    test('should change color if factor is not 0, and only change g component', () => {
+        const testColor1 = [173, 114, 234];
+        const testColor2 = [173, 114, 234];
+        changeTint(testColor1, 50);
+        expect(testColor1[0]).toEqual(testColor2[0]);
+        expect(testColor1[1]).not.toEqual(testColor2[1]);
+        expect(testColor1[2]).toEqual(testColor2[2]);
+    });
+    test('should not change color if value is 255', () => {
+        const testColor1 = [173, 0, 255];
+        const testColor2 = [173, 0, 255];
+        changeTint(testColor1, 50);
+        expect(testColor1[1]).not.toEqual(testColor2[1]);
     });
 });
