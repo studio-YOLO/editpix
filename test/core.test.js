@@ -6,7 +6,8 @@ import changeTemperature from "../src/core/change_temperature.js";
 import changeOpacity from "../src/core/change_opacity.js";
 import changeShadows from "../src/core/change_shadows.js"
 import higherColorContrast from "../src/core/higher_contrast.js";
-import changeTint from "../src/core/change_tint.js"
+import changeExposure from "../src/core/change_exposure.js";
+import changeTint from "../src/core/change_tint.js";
 import changeSaturation from "../src/core/change_saturation.js"
 import changeBrightness from "../src/core/change_brightness.js";
 import utils from "../src/utils.js";
@@ -199,6 +200,30 @@ describe('higherColorContrast', () => {
         const result = higherColorContrast(mediumColor);
 
         expect(result).toEqual(expectedResult);
+    });
+});
+
+describe('changeExposure', () => {
+    test('should return an unchanged array if the factor is 0', () => {
+        const color = [67, 141, 23];
+        changeContrast(color, 0);
+        expect(color).toEqual([67, 141, 23]);
+    });
+    test('should return a brighter array for positive factors', () => {
+        const luma = (value) =>  (value[0] + value[1] + value[2])/3
+        const color = [67, 141, 23];
+        const luma1 = luma(color);
+        changeExposure(color, 20);
+        const luma2 = luma(color);
+        expect(luma1).toBeLessThan(luma2);
+    });
+    test('should return a darker array for positive factors', () => {
+        const luma = (value) =>  (value[0] + value[1] + value[2])/3
+        const color = [67, 141, 23];
+        const luma1 = luma(color);
+        changeExposure(color, -20);
+        const luma2 = luma(color);
+        expect(luma1).toBeGreaterThan(luma2);
     });
 });
 
