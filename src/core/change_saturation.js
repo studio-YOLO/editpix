@@ -7,6 +7,8 @@ import utils from "../utils.js";
  * @returns {number[]} pixel array of the saturated or desaturated image.
  */
 function changeSaturation(pixelArray, factor) {
+    if (factor == 0)
+        return pixelArray;
     for (let i = 0; i < pixelArray.length; i += 4) {
         const hsl = utils.rgbToHsl(pixelArray[i], pixelArray[i + 1], pixelArray[i + 2]);
         hsl[1] = Math.max(0, Math.min(100, hsl[1] += factor));

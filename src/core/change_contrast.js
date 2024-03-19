@@ -5,21 +5,16 @@
  *  @returns {number[]} contrastArray: an array in the format [R, G, B, alpha,..., R, G, B, alpha]
  **/
 function changeContrast(pixelArray, factor) {
-    const clip = (value) => {
-        return Math.round(Math.min(Math.max(value, 0), 255));
-    }
+    if (factor == 0)
+        return pixelArray;
     const sCurve = (x) => {
-        return clip(255 / (1 + Math.exp(-factor * (x - 128) / 255)));
+        return 255 / (1 + Math.exp(-factor * (x - 128) / 255));
     }
-    const newArray = [];
     for (let i = 0; i < pixelArray.length; i++) {
         if ((i+1) % 4 != 0)
-            newArray.push(sCurve(pixelArray[i]));
-        else
-            newArray.push(pixelArray[i]);
+            pixelArray[i] = sCurve(pixelArray[i]);
     }
-    
-    return newArray;
+    return pixelArray;
 }
 
 export default changeContrast;

@@ -123,7 +123,7 @@ EditPix.prototype.changeTemperature = (image, factor) => {
 
 EditPix.prototype.changeSaturation = (image, factor) => {
     if (factor < -100 || factor > 100)
-        throw new Error("Invalid contrast factor: must be a value between -100 and 100");
+        throw new Error("Invalid saturation factor: must be a value between -100 and 100");
     const pixelArray = imageManager.getPixelArray(image);
     return imageManager.convertToImage(changeSaturation(pixelArray, factor), image.naturalWidth, image.naturalHeight);
 
@@ -131,7 +131,7 @@ EditPix.prototype.changeSaturation = (image, factor) => {
 
 EditPix.prototype.changeBrightness = (image, factor) => {
     if (factor < -100 || factor > 100)
-        throw new Error("Invalid contrast factor: must be a value between -100 and 100");
+        throw new Error("Invalid brightness factor: must be a value between -100 and 100");
     const pixelArray = imageManager.getPixelArray(image);
     return imageManager.convertToImage(changeBrightness(pixelArray, factor), image.naturalWidth, image.naturalHeight);
 }
@@ -161,6 +161,13 @@ EditPix.prototype.changeTint = (image, factor) => {
         throw new Error("Invalid tint factor: must be a value between -100 and 100");
     const pixelArray = imageManager.getPixelArray(image);
     return imageManager.convertToImage(changeTint(pixelArray, factor), image.naturalWidth, image.naturalHeight);
+}
+
+EditPix.prototype.changeShadows = (image, factor) => {
+    if (factor < -100 || factor > 100)
+        throw new Error("Invalid shadow factor: must be a value between -100 and 100");
+    const pixelArray = imageManager.getPixelArray(image);
+    return imageManager.convertToImage(changeShadows(pixelArray, factor), image.naturalWidth, image.naturalHeight);
 }
 
 export default EditPix;
