@@ -6,7 +6,8 @@ import changeTemperature from "../src/core/change_temperature.js";
 import changeOpacity from "../src/core/change_opacity.js";
 import changeShadows from "../src/core/change_shadows.js"
 import higherColorContrast from "../src/core/higher_contrast.js";
-import changeExposure from "../src/core/change_exposure.js"
+import changeExposure from "../src/core/change_exposure.js";
+import changeTint from "../src/core/change_tint.js";
 import changeSaturation from "../src/core/change_saturation.js"
 import changeBrightness from "../src/core/change_brightness.js";
 import utils from "../src/utils.js";
@@ -230,7 +231,7 @@ describe('changeSaturation', () => {
     test('should not change anything if factor is 0', () => {
         const testColor1 = [173, 114, 255];
         const testColor2 = [173, 114, 255];
-        changeSaturation(testColor1, 0);
+        changeSaturation(testColor1, 0)
         expect(testColor1[0]).toEqual(testColor2[0]);
         expect(testColor1[1]).toEqual(testColor2[1]);
         expect(testColor1[2]).toEqual(testColor2[2]);
@@ -256,6 +257,28 @@ describe('changeSaturation', () => {
         changeSaturation(testColor1, -50);
         expect(utils.rgbToHsl(testColor2[0], testColor2[1], testColor2[2])[1])
             .toBeGreaterThan(utils.rgbToHsl(testColor1[0], testColor1[1], testColor1[2])[1]);
+    });
+});
+
+describe('changeTint', () => {
+    test('should not change anything if factor is 0', () => {
+        const testColor1 = [173, 114, 255];
+        const testColor2 = [173, 114, 255];
+        changeTint(testColor1, 0);
+    });
+    test('should change color if factor is not 0, and only change g component', () => {
+        const testColor1 = [173, 114, 234];
+        const testColor2 = [173, 114, 234];
+        changeTint(testColor1, 50);
+        expect(testColor1[0]).toEqual(testColor2[0]);
+        expect(testColor1[1]).not.toEqual(testColor2[1]);
+        expect(testColor1[2]).toEqual(testColor2[2]);
+    });
+    test('should not change color if value is 255', () => {
+        const testColor1 = [173, 0, 255];
+        const testColor2 = [173, 0, 255];
+        changeTint(testColor1, 50);
+        expect(testColor1[1]).not.toEqual(testColor2[1]);
     });
 });
 

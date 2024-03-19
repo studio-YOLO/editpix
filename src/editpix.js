@@ -14,6 +14,7 @@ import toSepia from "./core/sepia.js";
 import changeOpacity from "./core/change_opacity.js";
 import changeShadows from "./core/change_shadows.js";
 import changeExposure from "./core/change_exposure.js";
+import changeTint from "./core/change_tint.js"
 
 var EditPix = function () { };
 
@@ -155,6 +156,13 @@ EditPix.prototype.changeOpacity = (image, alpha) => {
         throw new Error("Invalid alpha value: must be between 0 and 255")
     const pixelArray = imageManager.getPixelArray(image);
     return imageManager.convertToImage(changeOpacity(pixelArray, alpha), image.naturalWidth, image.naturalHeight);
+}
+
+EditPix.prototype.changeTint = (image, factor) => {
+    if (factor < -100 || factor > 100)
+        throw new Error("Invalid tint factor: must be a value between -100 and 100");
+    const pixelArray = imageManager.getPixelArray(image);
+    return imageManager.convertToImage(changeTint(pixelArray, factor), image.naturalWidth, image.naturalHeight);
 }
 
 EditPix.prototype.changeShadows = (image, factor) => {

@@ -6,18 +6,10 @@
  */
 function changeTint(pixelArray, tint) {
     for (let i = 0; i < pixelArray.length; i += 4) {
-        const r = pixelArray[i];
-        const g = pixelArray[i + 1];
-        const b = pixelArray[i + 2];
-        
-        // Apply tint adjustment to each channel
-        const newR = Math.max(0, Math.min(255, r + (255 - r) * (tint / 100)));
-        const newG = Math.max(0, Math.min(255, g + (255 - g) * (tint / 100)));
-        const newB = Math.max(0, Math.min(255, b + (255 - b) * (tint / 100)));
-
-        pixelArray[i] = newR;
-        pixelArray[i + 1] = newG;
-        pixelArray[i + 2] = newB;
+        // Apply tint adjustment
+        pixelArray[i + 1] += (255 - pixelArray[i + 1]) * (tint / 255);
     }
     return pixelArray;
 }
+
+export default changeTint;
