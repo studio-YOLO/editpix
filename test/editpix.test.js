@@ -79,3 +79,60 @@ describe('EditPix changeExposure method', () => {
         }
     });
 });
+
+describe('EditPix changeContrast method', () => {
+    test('should reject lower out-of-range factors', () => {
+        try {
+            const editPix = new EditPix();
+            editPix.changeContrast([0, 234, 87], 150);
+        } catch (e) {
+            expect(e).toEqual(new Error("Invalid contrast factor: must be a value between -100 and 100"));
+        }
+    });
+    test('should reject upper out-of-range factors', () => {
+        try {
+            const editPix = new EditPix(); 
+            editPix.changeContrast([0, 234, 87], -123);
+        } catch (e) {
+            expect(e).toEqual(new Error("Invalid contrast factor: must be a value between -100 and 100"));
+        }
+    });
+});
+
+describe('EditPix changeSaturation method', () => {
+    test('should reject lower out-of-range factors', () => {
+        try {
+            const editPix = new EditPix();
+            editPix.changeSaturation([0, 234, 87], 150);
+        } catch (e) {
+            expect(e).toEqual(new Error("Invalid saturation factor: must be a value between -100 and 100"));
+        }
+    });
+    test('should reject upper out-of-range factors', () => {
+        try {
+            const editPix = new EditPix(); 
+            editPix.changeSaturation([0, 234, 87], -123);
+        } catch (e) {
+            expect(e).toEqual(new Error("Invalid saturation factor: must be a value between -100 and 100"));
+        }
+    });
+});
+
+describe('EditPix changeBrightness method', () => {
+    test('should reject lower out-of-range factors', () => {
+        try {
+            const editPix = new EditPix();
+            editPix.changeBrightness([0, 234, 87], 150);
+        } catch (e) {
+            expect(e).toEqual(new Error("Invalid brightness factor: must be a value between -100 and 100"));
+        }
+    });
+    test('should reject upper out-of-range factors', () => {
+        try {
+            const editPix = new EditPix(); 
+            editPix.changeBrightness([0, 234, 87], -123);
+        } catch (e) {
+            expect(e).toEqual(new Error("Invalid brightness factor: must be a value between -100 and 100"));
+        }
+    });
+});
