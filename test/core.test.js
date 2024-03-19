@@ -6,6 +6,9 @@ import changeTemperature from "../src/core/change_temperature.js";
 import changeOpacity from "../src/core/change_opacity.js";
 import changeShadows from "../src/core/change_shadows.js"
 import higherColorContrast from "../src/core/higher_contrast.js";
+import changeSaturation from "../src/core/change_saturation.js"
+import changeBrightness from "../src/core/change_brightness.js";
+import utils from "../src/utils.js";
 
 describe('convertToBW function', () => {
     test('converts pixel array to black and white correctly', () => {
@@ -67,7 +70,7 @@ describe('convertToGrayScale function', () => {
 describe('optimizeContrast function', () => {
     test('rescales input vector correctly', () => {
         const pixelArray = [204, 33, 11, 33, 132, 4, 108, 13, 167, 50, 72, 141];    // RGBA values
-        const expectedOptimizedContrastArray = [255, 161, 0, 33, 0, 0, 255, 13, 124, 255, 160, 141];    //hand-computed rescaling
+        const expectedOptimizedContrastArray = [255, 161, 0, 33, 0, 0, 255, 13, 124, 255, 160, 141];    // hand-computed rescaling
         expect(optimizeContrast(pixelArray)).toEqual(expectedOptimizedContrastArray);
     });
 
@@ -78,11 +81,17 @@ describe('optimizeContrast function', () => {
     });
 });
 
-describe('setContrast function', () => {
+describe('changeContrast function', () => {
+    test('does not change anything if factor is 0', () => {
+        const pixelArray = [0, 0, 0, 11, 255, 255, 255, 23, 2, 128, 47, 71];    // RGBA values
+        const expectedContrastArray = [0, 0, 0, 11, 255, 255, 255, 23, 2, 128, 47, 71];  // untouched vector
+        expect(changeContrast(pixelArray, 0)).toEqual(expectedContrastArray);
+    });
     test('rescales input vector correctly', () => {
         const pixelArray = [0, 0, 0, 11, 255, 255, 255, 23, 2, 128, 47, 71];    // RGBA values
-        const expectedSetContrastArray = [2, 2, 2, 11, 253, 253, 253, 23, 2, 128, 10, 71];  //hand-computed rescaling
-        expect(changeContrast(pixelArray, 10)).toEqual(expectedSetContrastArray);
+        const expectedSetContrastArray = [2, 2, 2, 11, 253, 253, 253, 23, 2, 128, 10, 71];  // hand-computed rescaling
+        expect(changeContrast(pixelArray, 10).map((value) => Math.round(value))) // round values
+            .toEqual(expectedSetContrastArray);
     });
 })
 
@@ -160,6 +169,8 @@ describe('changeShadows', () => {
         expect(testColor1[0]).toEqual(testColor2[0]);
         expect(testColor1[1]).toEqual(testColor2[1]);
         expect(testColor1[2]).toEqual(testColor2[2]);
+    });
+});
 
 describe('higherColorContrast', () => {
     test('should return color with higher contrast for dark input color', () => {
@@ -187,5 +198,73 @@ describe('higherColorContrast', () => {
         const result = higherColorContrast(mediumColor);
 
         expect(result).toEqual(expectedResult);
+    });
+});
+
+describe('changeSaturation', () => {
+    test('should not change anything if factor is 0', () => {
+        const testColor1 = [173, 114, 255];
+        const testColor2 = [173, 114, 255];
+        changeSaturation(testColor1, 0);
+        expect(testColor1[0]).toEqual(testColor2[0]);
+        expect(testColor1[1]).toEqual(testColor2[1]);
+        expect(testColor1[2]).toEqual(testColor2[2]);
+    });
+    test('should change something if factor is not 0', () => {
+        const testColor1 = [173, 114, 234];
+        const testColor2 = [173, 114, 234];
+        changeSaturation(testColor1, 50);
+        expect(testColor1[0]).not.toEqual(testColor2[0]);
+        expect(testColor1[1]).not.toEqual(testColor2[1]);
+        expect(testColor1[2]).not.toEqual(testColor2[2]);
+    });
+    test('should increase saturation for positive factors', () => {
+        const testColor1 = [173, 114, 234];
+        const testColor2 = [173, 114, 234];
+        changeSaturation(testColor1, 50);
+        expect(utils.rgbToHsl(testColor2[0], testColor2[1], testColor2[2])[1])
+            .toBeLessThan(utils.rgbToHsl(testColor1[0], testColor1[1], testColor1[2])[1]);
+    });
+    test('should decrease saturation for negative factors', () => {
+        const testColor1 = [173, 114, 234];
+        const testColor2 = [173, 114, 234];
+        changeSaturation(testColor1, -50);
+        expect(utils.rgbToHsl(testColor2[0], testColor2[1], testColor2[2])[1])
+            .toBeGreaterThan(utils.rgbToHsl(testColor1[0], testColor1[1], testColor1[2])[1]);
+    });
+});
+
+describe('changeBrightness', () => {
+    test('should not change anything if factor is 0', () => {
+        const testColor1 = [173, 114, 255];
+        const testColor2 = [173, 114, 255];
+        changeBrightness(testColor1, 0);
+        expect(testColor1[0]).toEqual(testColor2[0]);
+        expect(testColor1[1]).toEqual(testColor2[1]);
+        expect(testColor1[2]).toEqual(testColor2[2]);
+    });
+    test('should change something if factor is not 0', () => {
+        const testColor1 = [173, 114, 234];
+        const testColor2 = [173, 114, 234];
+        changeBrightness(testColor1, 50);
+        expect(testColor1[0]).not.toEqual(testColor2[0]);
+        expect(testColor1[1]).not.toEqual(testColor2[1]);
+        expect(testColor1[2]).not.toEqual(testColor2[2]);
+    });
+    test('should clip to 0 at the bottom', () => {
+        const testColor1 = [11, 13, 7];
+        const testColor2 = [0, 0, 0];
+        changeBrightness(testColor1, -80);
+        expect(testColor1[0]).toEqual(testColor2[0]);
+        expect(testColor1[1]).toEqual(testColor2[1]);
+        expect(testColor1[2]).toEqual(testColor2[2]);
+    });
+    test('should clip to 255 at the top', () => {
+        const testColor1 = [243, 210, 251];
+        const testColor2 = [255, 255, 255];
+        changeBrightness(testColor1, 100);
+        expect(testColor1[0]).toEqual(testColor2[0]);
+        expect(testColor1[1]).toEqual(testColor2[1]);
+        expect(testColor1[2]).toEqual(testColor2[2]);
     });
 });
