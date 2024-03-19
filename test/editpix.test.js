@@ -76,7 +76,8 @@ describe('EditPix changeShadows method', () => {
             const editPix = new EditPix(); 
             editPix.changeShadow([0, 234, 87], -123);
         } catch (e) {
-            expect(e).toEqual(new Error("Invalid shado factor: must be a value between -100 and 100"));
+            expect(e).toEqual(new Error("Invalid shadow factor: must be a value between -100 and 100"));
+        }
     });
 });
 
@@ -152,6 +153,25 @@ describe('EditPix changeBrightness method', () => {
             editPix.changeBrightness([0, 234, 87], -123);
         } catch (e) {
             expect(e).toEqual(new Error("Invalid brightness factor: must be a value between -100 and 100"));
+        }
+    });
+});
+
+describe('EditPix changeHighlights method', () => {
+    test('should reject lower out-of-range factors', () => {
+        try {
+            const editPix = new EditPix();
+            editPix.changeHighlights([0, 234, 87], 150);
+        } catch (e) {
+            expect(e).toEqual(new Error("Invalid highlight factor: must be a value between -100 and 100"));
+        }
+    });
+    test('should reject upper out-of-range factors', () => {
+        try {
+            const editPix = new EditPix(); 
+            editPix.changeHighlights([0, 234, 87], -123);
+        } catch (e) {
+            expect(e).toEqual(new Error("Invalid highlight factor: must be a value between -100 and 100"));
         }
     });
 });

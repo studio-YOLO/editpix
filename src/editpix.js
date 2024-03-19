@@ -15,6 +15,7 @@ import changeOpacity from "./core/change_opacity.js";
 import changeShadows from "./core/change_shadows.js";
 import changeExposure from "./core/change_exposure.js";
 import changeTint from "./core/change_tint.js"
+import changeHighlights from "./core/change_highlights.js";
 
 var EditPix = function () { };
 
@@ -177,6 +178,13 @@ EditPix.prototype.changeExposure = (image, factor) => {
         throw new Error("Invalid exposure factor: must be a value between -100 and 100");
     const pixelArray = imageManager.getPixelArray(image);
     return imageManager.convertToImage(changeExposure(pixelArray, factor), image.naturalWidth, image.naturalHeight);
+}
+
+EditPix.prototype.changeHighlights = (image, factor) => {
+    if (factor < -100 || factor > 100)
+        throw new Error("Invalid shadow factor: must be a value between -100 and 100");
+    const pixelArray = imageManager.getPixelArray(image);
+    return imageManager.convertToImage(changeHighlights(pixelArray, factor), image.naturalWidth, image.naturalHeight);
 }
 
 export default EditPix;
