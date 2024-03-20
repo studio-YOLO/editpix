@@ -10,6 +10,7 @@ import changeExposure from "../src/core/change_exposure.js";
 import changeTint from "../src/core/change_tint.js";
 import changeSaturation from "../src/core/change_saturation.js"
 import changeBrightness from "../src/core/change_brightness.js";
+import changeHighlights from "../src/core/change_highlights.js"
 import utils from "../src/utils.js";
 
 describe('convertToBW function', () => {
@@ -311,6 +312,33 @@ describe('changeBrightness', () => {
         const testColor1 = [243, 210, 251];
         const testColor2 = [255, 255, 255];
         changeBrightness(testColor1, 100);
+        expect(testColor1[0]).toEqual(testColor2[0]);
+        expect(testColor1[1]).toEqual(testColor2[1]);
+        expect(testColor1[2]).toEqual(testColor2[2]);
+    });
+});
+
+describe('changeHiglights', () => {
+    test('should return a darkened array if factor is negative and area is a highlight', () => {
+        const testColor1 = [243, 131, 187];
+        const testColor1 = [243, 131, 187];
+        changeHighlights(testColor1, -10);
+        expect(testColor1[0]).toBeLessThan(testColor2[0]);
+        expect(testColor1[1]).toBeLessThan(testColor2[1]);
+        expect(testColor1[2]).toBeLessThan(testColor2[2]);
+    });
+    test('should return an unchanged array if factor is 0', () => {
+        const testColor1 = [234, 112, 8];
+        const testColor2 = [234, 112, 8];
+        changeHighlights(testColor1, 0);
+        expect(testColor1[0]).toEqual(testColor2[0]);
+        expect(testColor1[1]).toEqual(testColor2[1]);
+        expect(testColor1[2]).toEqual(testColor2[2]);
+    });
+    test('should only darken highlights (luma > 128)', () => {
+        const testColor1 = [111, 23, 47];
+        const testColor2 = [111, 23, 47];
+        changeShadows(testColor1, -5);
         expect(testColor1[0]).toEqual(testColor2[0]);
         expect(testColor1[1]).toEqual(testColor2[1]);
         expect(testColor1[2]).toEqual(testColor2[2]);
