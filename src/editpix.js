@@ -16,6 +16,7 @@ import changeShadows from "./core/change_shadows.js";
 import changeExposure from "./core/change_exposure.js";
 import changeTint from "./core/change_tint.js"
 import changeHighlights from "./core/change_highlights.js";
+import changeSharpness from "./core/change_highlights.js";
 
 var EditPix = function () { };
 
@@ -185,6 +186,13 @@ EditPix.prototype.changeHighlights = (image, factor) => {
         throw new Error("Invalid shadow factor: must be a value between -100 and 100");
     const pixelArray = imageManager.getPixelArray(image);
     return imageManager.convertToImage(changeHighlights(pixelArray, factor), image.naturalWidth, image.naturalHeight);
+}
+
+EditPix.prototype.changeSharpness = (image, factor) => {
+    if (factor < -100 || factor > 100)
+        throw new Error("Invalid sharpness factor: must be a value between -100 and 100");
+    const pixelArray = imageManager.getPixelArray(image);
+    return imageManager.convertToImage(changeSharpness(pixelArray, factor), image.naturalWidth, image.naturalHeight);
 }
 
 export default EditPix;
