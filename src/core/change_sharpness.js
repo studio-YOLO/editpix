@@ -6,7 +6,7 @@ function changeSharpness(pixelArray, width, height, factor) {
         [0, -1, 0]
     ];
 
-    const tempPixelArray = pixelArray.slice(); // ...pixelArray;
+    const tempPixelArray = [...pixelArray];
 
     for (let y = 1; y < height - 1; y++) {
         for (let x = 1; x < width - 1; x++) {
@@ -21,17 +21,13 @@ function changeSharpness(pixelArray, width, height, factor) {
                 }
             }
             const index = (y * width + x) * 4;
-            pixelArray[index] = clamp(tempPixelArray[index] + factor * sumR);
-            pixelArray[index + 1] = clamp(tempPixelArray[index + 1] + factor * sumG);
-            pixelArray[index + 2] = clamp(tempPixelArray[index + 2] + factor * sumB);
+            pixelArray[index] = tempPixelArray[index] + factor * sumR;
+            pixelArray[index + 1] = tempPixelArray[index + 1] + factor * sumG;
+            pixelArray[index + 2] = tempPixelArray[index + 2] + factor * sumB;
         }
     }
 
     return pixelArray;
-}
-
-function clamp(value) {
-    return Math.max(0, Math.min(255, value));
 }
 
 export default changeSharpness;
