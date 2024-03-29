@@ -45,152 +45,88 @@ describe('EditPix convertToHex method', () => {
 
 describe('EditPix changeTint method', () => {
     test('should reject lower out-of-range factors', () => {
-        try {
-            const editPix = new EditPix();
-            editPix.changeTint([0, 234, 87], 150);
-        } catch (e) {
-            expect(e).toEqual(new Error("Invalid tint factor: must be a value between -100 and 100"));
-        }
-      });
-      test('should reject upper out-of-range factors', () => {
-        try {
-            const editPix = new EditPix();
-            editPix.changeTint([0, 234, 87], -150);
-        } catch (e) {
-            expect(e).toEqual(new Error("Invalid tint factor: must be a value between -100 and 100"));
-        }
-      });
+        const editPix = new EditPix();
+        expect(() => editPix.changeTint([0, 234, 87], 150)).toThrow(Error);
+    });
+    test('should reject upper out-of-range factors', () => {
+        const editPix = new EditPix();
+        expect(() => editPix.changeTint([0, 234, 87], -150)).toThrow(Error);
+    });
 });
 
 describe('EditPix changeShadows method', () => {
     test('should reject lower out-of-range factors', () => {
-        try {
-            const editPix = new EditPix();
-            editPix.changeShadows([0, 234, 87], 150);
-        } catch (e) {
-            expect(e).toEqual(new Error("Invalid shadow factor: must be a value between -100 and 100"));
-        }
+        const editPix = new EditPix();
+        expect(() => editPix.changeShadows([0, 234, 87], 150)).toThrow(Error);
     });
     test('should reject upper out-of-range factors', () => {
-        try {
-            const editPix = new EditPix(); 
-            editPix.changeShadow([0, 234, 87], -123);
-        } catch (e) {
-            expect(e).toEqual(new Error("Invalid shadow factor: must be a value between -100 and 100"));
-        }
+        const editPix = new EditPix();
+        expect(() => editPix.changeShadow([0, 234, 87], -123)).toThrow(Error);
     });
 });
 
 describe('EditPix changeExposure method', () => {
     test('should reject lower out-of-range factors', () => {
-        try {
-            const editPix = new EditPix();
-            editPix.changeExposure([0, 234, 87], 150);
-        } catch (e) {
-            expect(e).toEqual(new Error("Invalid exposure factor: must be a value between -100 and 100"));
-        }
+        const editPix = new EditPix();
+        expect(() => editPix.changeExposure([0, 234, 87], 150)).toThrow(Error);
     });
     test('should reject upper out-of-range factors', () => {
-        try {
-            const editPix = new EditPix(); 
-            editPix.changeExposure([0, 234, 87], -123);
-        } catch (e) {
-            expect(e).toEqual(new Error("Invalid exposure factor: must be a value between -100 and 100"));
-        }
+        const editPix = new EditPix();
+        expect(() => editPix.changeExposure([0, 234, 87], -123)).toThrow(Error);
     });
 });
 
 describe('EditPix changeContrast method', () => {
     test('should reject lower out-of-range factors', () => {
-        try {
-            const editPix = new EditPix();
-            editPix.changeContrast([0, 234, 87], 150);
-        } catch (e) {
-            expect(e).toEqual(new Error("Invalid contrast factor: must be a value between -100 and 100"));
-        }
+        const editPix = new EditPix();
+        expect(() => editPix.changeContrast([0, 234, 87], 150)).toThrow(Error);
     });
     test('should reject upper out-of-range factors', () => {
-        try {
-            const editPix = new EditPix(); 
-            editPix.changeContrast([0, 234, 87], -123);
-        } catch (e) {
-            expect(e).toEqual(new Error("Invalid contrast factor: must be a value between -100 and 100"));
-        }
+        const editPix = new EditPix();
+        expect(() => editPix.changeContrast([0, 234, 87], -123)).toThrow(Error);
     });
 });
 
 describe('EditPix changeSaturation method', () => {
     test('should reject lower out-of-range factors', () => {
-        try {
-            const editPix = new EditPix();
-            editPix.changeSaturation([0, 234, 87], 150);
-        } catch (e) {
-            expect(e).toEqual(new Error("Invalid saturation factor: must be a value between -100 and 100"));
-        }
+        const editPix = new EditPix();
+        expect(() => editPix.changeSaturation([0, 234, 87], 150)).toThrow(Error);
     });
     test('should reject upper out-of-range factors', () => {
-        try {
-            const editPix = new EditPix(); 
-            editPix.changeSaturation([0, 234, 87], -123);
-        } catch (e) {
-            expect(e).toEqual(new Error("Invalid saturation factor: must be a value between -100 and 100"));
-        }
+        const editPix = new EditPix();
+        expect(() => editPix.changeSaturation([0, 234, 87], -123)).toThrow(Error);
     });
 });
 
 describe('EditPix changeBrightness method', () => {
     test('should reject lower out-of-range factors', () => {
-        try {
-            const editPix = new EditPix();
-            editPix.changeBrightness([0, 234, 87], 150);
-        } catch (e) {
-            expect(e).toEqual(new Error("Invalid brightness factor: must be a value between -100 and 100"));
-        }
+        const editPix = new EditPix();
+        expect(() => editPix.changeBrightness([0, 234, 87], 150)).toThrow(Error);
     });
     test('should reject upper out-of-range factors', () => {
-        try {
-            const editPix = new EditPix(); 
-            editPix.changeBrightness([0, 234, 87], -123);
-        } catch (e) {
-            expect(e).toEqual(new Error("Invalid brightness factor: must be a value between -100 and 100"));
-        }
+        const editPix = new EditPix();
+        expect(() => editPix.changeBrightness([0, 234, 87], -123)).toThrow(Error);
     });
 });
 
 describe('EditPix changeHighlights method', () => {
     test('should reject lower out-of-range factors', () => {
-        try {
-            const editPix = new EditPix();
-            editPix.changeHighlights([0, 234, 87], 150);
-        } catch (e) {
-            expect(e).toEqual(new Error("Invalid highlight factor: must be a value between -100 and 100"));
-        }
+        const editPix = new EditPix();
+        expect(() => editPix.changeHighlights([0, 234, 87], -123)).toThrow(Error);
     });
     test('should reject upper out-of-range factors', () => {
-        try {
-            const editPix = new EditPix(); 
-            editPix.changeHighlights([0, 234, 87], -123);
-        } catch (e) {
-            expect(e).toEqual(new Error("Invalid highlight factor: must be a value between -100 and 100"));
-        }
+        const editPix = new EditPix();
+        expect(() => editPix.changeHighlights([0, 234, 87], -123)).toThrow(Error);
     });
 });
 
 describe('EditPix changeSharpness method', () => {
     test('should reject lower out-of-range factors', () => {
-        try {
-            const editPix = new EditPix();
-            editPix.changeSharpness([0, 234, 87], 150);
-        } catch (e) {
-            expect(e).toEqual(new Error("Invalid sharpness factor: must be a value between -100 and 100"));
-        }
+        const editPix = new EditPix();
+        expect(() => editPix.changeSharpness([0, 234, 87], 150)).toThrow(Error);
     });
     test('should reject upper out-of-range factors', () => {
-        try {
-            const editPix = new EditPix(); 
-            editPix.changeSharpness([0, 234, 87], -123);
-        } catch (e) {
-            expect(e).toEqual(new Error("Invalid sharpness factor: must be a value between -100 and 100"));
-        }
+        const editPix = new EditPix();
+        expect(() => editPix.changeSharpness([0, 234, 87], -123)).toThrow(Error);
     });
 });

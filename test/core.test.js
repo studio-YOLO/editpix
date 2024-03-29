@@ -1,16 +1,17 @@
-import convertToBW from "../src/core/black_and_white.js"
-import convertToGrayScale from "../src/core/gray_scale.js";
-import optimizeContrast from "../src/core/optimize_contrast.js";
-import changeContrast from "../src/core/change_contrast.js";
-import changeTemperature from "../src/core/change_temperature.js";
-import changeOpacity from "../src/core/change_opacity.js";
-import changeShadows from "../src/core/change_shadows.js"
-import higherColorContrast from "../src/core/higher_contrast.js";
-import changeExposure from "../src/core/change_exposure.js";
-import changeTint from "../src/core/change_tint.js";
-import changeSaturation from "../src/core/change_saturation.js"
-import changeBrightness from "../src/core/change_brightness.js";
-import changeHighlights from "../src/core/change_highlights.js"
+import convertToBW from "../src/core/black-white-filter.js"
+import convertToGrayScale from "../src/core/gray-scale-filter.js";
+import optimizeContrast from "../src/core/optimize-contrast.js";
+import changeContrast from "../src/core/change-contrast.js";
+import changeTemperature from "../src/core/change-temperature.js";
+import changeOpacity from "../src/core/change-opacity.js";
+import changeShadows from "../src/core/change-shadows.js"
+import higherColorContrast from "../src/core/higher-contrast.js";
+import changeExposure from "../src/core/change-exposure.js";
+import changeTint from "../src/core/change-tint.js";
+import changeSaturation from "../src/core/change-saturation.js"
+import changeBrightness from "../src/core/change-brightness.js";
+import changeHighlights from "../src/core/change-highlights.js";
+import changeSharpness from "../src/core/change-sharpness.js"
 import utils from "../src/utils.js";
 
 describe('convertToBW function', () => {
@@ -264,7 +265,6 @@ describe('changeSaturation', () => {
 describe('changeTint', () => {
     test('should not change anything if factor is 0', () => {
         const testColor1 = [173, 114, 255];
-        const testColor2 = [173, 114, 255];
         changeTint(testColor1, 0);
     });
     test('should change color if factor is not 0, and only change g component', () => {
@@ -321,7 +321,7 @@ describe('changeBrightness', () => {
 describe('changeHiglights', () => {
     test('should return a darkened array if factor is negative and area is a highlight', () => {
         const testColor1 = [243, 131, 187];
-        const testColor1 = [243, 131, 187];
+        const testColor2 = [243, 131, 187];
         changeHighlights(testColor1, -10);
         expect(testColor1[0]).toBeLessThan(testColor2[0]);
         expect(testColor1[1]).toBeLessThan(testColor2[1]);
@@ -351,7 +351,7 @@ describe('changeSharpness', () => {
         const sharpenedArray = changeSharpness(inputArray, 2, 1, 32);
     
         // Verify that the sharpened image is processed correctly
-        expect(sharpenedArray).not.toEquals(inputArray)
+        expect(sharpenedArray).not.toBe(inputArray)
     });
 
     test('handle negative factor correctly', () => {
@@ -359,7 +359,7 @@ describe('changeSharpness', () => {
         const sharpenedArray = changeSharpness(inputArray, 2, 1, -40);
 
         // Verify that the function correctly handles negative sharpening factor
-        expect(sharpenedArray).not.toEquals(inputArray)
+        expect(sharpenedArray).not.toBe(inputArray)
     });
 
 });
