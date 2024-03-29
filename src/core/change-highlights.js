@@ -4,14 +4,14 @@
  *  @param {number[]} factor: the shadow brightening/darkening parameter that will be applied to the image
  *  @returns {number[]} outputArray: pixel array of the modified image
  */
- function changeHighlights(pixelArray, factor) {
-    for (let i = 0; i < pixelArray.length; i+=4) {
+function changeHighlights(pixelArray, factor) {
+    for (let i = 0; i < pixelArray.length; i += 4) {
         const luminance = (pixelArray[i] + pixelArray[i + 1] + pixelArray[i + 2]) / 3;
 
         if (luminance > 128) {
-            pixelArray[i] += factor * (255 - luminance)/128; 
-            pixelArray[i + 1] += factor * (255 - luminance)/128; 
-            pixelArray[i + 2] += factor * (255 - luminance)/128; 
+            pixelArray[i] += factor * (255 - luminance) / 128;
+            pixelArray[i + 1] += factor * (255 - luminance) / 128;
+            pixelArray[i + 2] += factor * (255 - luminance) / 128;
         }
     }
     return pixelArray;

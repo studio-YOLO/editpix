@@ -1,22 +1,22 @@
 import utils from "./utils.js"
-import convertToGrayScale from "./core/gray_scale.js";
-import convertToBW from "./core/black_and_white.js";
+import convertToGrayScale from "./core/gray-scale-filter.js";
+import convertToBW from "./core/black-white-filter.js";
 import kMeans from "./core/kmean.js";
-import imageManager from "./image_manager.js";
-import higherColorContrast from "./core/higher_contrast.js";
+import imageManager from "./image-manager.js";
+import higherColorContrast from "./core/higher-contrast.js";
 import init, { k_means, k_means_pp, median_cut } from "./core/editpix_wasm.js"
-import optimizeContrast from "./core/optimize_contrast.js";
-import changeContrast from "./core/change_contrast.js";
-import changeTemperature from "./core/change_temperature.js";
-import changeSaturation from "./core/change_saturation.js";
-import changeBrightness from "./core/change_brightness.js";
-import toSepia from "./core/sepia.js";
-import changeOpacity from "./core/change_opacity.js";
-import changeShadows from "./core/change_shadows.js";
-import changeExposure from "./core/change_exposure.js";
-import changeTint from "./core/change_tint.js"
-import changeHighlights from "./core/change_highlights.js";
-import changeSharpness from "./core/change_highlights.js";
+import optimizeContrast from "./core/optimize-contrast.js";
+import changeContrast from "./core/change-contrast.js";
+import changeTemperature from "./core/change-temperature.js";
+import changeSaturation from "./core/change-saturation.js";
+import changeBrightness from "./core/change-brightness.js";
+import toSepia from "./core/sepia-filter.js";
+import changeOpacity from "./core/change-opacity.js";
+import changeShadows from "./core/change-shadows.js";
+import changeExposure from "./core/change-exposure.js";
+import changeTint from "./core/change-tint.js"
+import changeHighlights from "./core/change-highlights.js";
+import changeSharpness from "./core/change-sharpness.js";
 
 var EditPix = function () { };
 
@@ -53,8 +53,8 @@ EditPix.prototype.getColorPaletteWasm = async (image, colorNumber = 5, quality =
                 } else {
                     throw new Error("Non-existent algorithm.");
                 }   
-            })
-    }).catch(error => { reject(error) })
+            }).catch(error => { reject(error) })
+    })
 }
 
 EditPix.prototype.getDominantColor = function (image, quality = 1) {
