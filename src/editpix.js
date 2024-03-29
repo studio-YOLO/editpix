@@ -52,7 +52,7 @@ EditPix.prototype.getColorPaletteWasm = async (image, colorNumber = 5, quality =
                     })
                 } else {
                     throw new Error("Non-existent algorithm.");
-                }   
+                }
             }).catch(error => { reject(error) })
     })
 }
@@ -72,12 +72,14 @@ EditPix.prototype.getImageFromUrl = (url) => {
 
 EditPix.prototype.toGrayScale = (image) => {
     const pixelArray = imageManager.getPixelArray(image);
-    return imageManager.convertToImage(convertToGrayScale(pixelArray), image.naturalWidth, image.naturalHeight);
+    const imageType = imageManager.getImageType(image.src);
+    return imageManager.convertToImage(convertToGrayScale(pixelArray), image.naturalWidth, image.naturalHeight, imageType);
 }
 
 EditPix.prototype.toBackWhite = (image) => {
     const pixelArray = imageManager.getPixelArray(image);
-    return imageManager.convertToImage(convertToBW(pixelArray), image.naturalWidth, image.naturalHeight);
+    const imageType = imageManager.getImageType(image.src);
+    return imageManager.convertToImage(convertToBW(pixelArray), image.naturalWidth, image.naturalHeight, imageType);
 }
 
 EditPix.prototype.resizeByPercentage = (image, percentage) => {
@@ -106,7 +108,8 @@ EditPix.prototype.convertToRgb = (colors) => {
 
 EditPix.prototype.toOptimizedContrast = (image) => {
     const pixelArray = imageManager.getPixelArray(image);
-    return imageManager.convertToImage(optimizeContrast(pixelArray), image.naturalWidth, image.naturalHeight);
+    const imageType = imageManager.getImageType(image.src);
+    return imageManager.convertToImage(optimizeContrast(pixelArray), image.naturalWidth, image.naturalHeight, imageType);
 }
 
 EditPix.prototype.changeContrast = (image, factor) => {
@@ -115,21 +118,24 @@ EditPix.prototype.changeContrast = (image, factor) => {
     const adjustedFactor = factor / 10 + 4.8;
     const pixelArray = imageManager.getPixelArray(image);
     const optimizedArray = optimizeContrast(pixelArray);
-    return imageManager.convertToImage(changeContrast(optimizedArray, adjustedFactor), image.naturalWidth, image.naturalHeight);
+    const imageType = imageManager.getImageType(image.src);
+    return imageManager.convertToImage(changeContrast(optimizedArray, adjustedFactor), image.naturalWidth, image.naturalHeight, imageType);
 }
 
 EditPix.prototype.changeTemperature = (image, factor) => {
     if (factor < -100 || factor > 100)
         throw new Error("Invalid contrast factor: must be a value between -100 and 100");
     const pixelArray = imageManager.getPixelArray(image);
-    return imageManager.convertToImage(changeTemperature(pixelArray, factor), image.naturalWidth, image.naturalHeight);
+    const imageType = imageManager.getImageType(image.src);
+    return imageManager.convertToImage(changeTemperature(pixelArray, factor), image.naturalWidth, image.naturalHeight, imageType);
 }
 
 EditPix.prototype.changeSaturation = (image, factor) => {
     if (factor < -100 || factor > 100)
         throw new Error("Invalid saturation factor: must be a value between -100 and 100");
     const pixelArray = imageManager.getPixelArray(image);
-    return imageManager.convertToImage(changeSaturation(pixelArray, factor), image.naturalWidth, image.naturalHeight);
+    const imageType = imageManager.getImageType(image.src);
+    return imageManager.convertToImage(changeSaturation(pixelArray, factor), image.naturalWidth, image.naturalHeight, imageType);
 
 }
 
@@ -137,7 +143,8 @@ EditPix.prototype.changeBrightness = (image, factor) => {
     if (factor < -100 || factor > 100)
         throw new Error("Invalid brightness factor: must be a value between -100 and 100");
     const pixelArray = imageManager.getPixelArray(image);
-    return imageManager.convertToImage(changeBrightness(pixelArray, factor), image.naturalWidth, image.naturalHeight);
+    const imageType = imageManager.getImageType(image.src);
+    return imageManager.convertToImage(changeBrightness(pixelArray, factor), image.naturalWidth, image.naturalHeight, imageType);
 }
 
 EditPix.prototype.rgbToHsl = (r, g, b) => {
@@ -150,49 +157,55 @@ EditPix.prototype.hslToRgb = (h, s, l) => {
 
 EditPix.prototype.toSepia = (image) => {
     const pixelArray = imageManager.getPixelArray(image);
-    return imageManager.convertToImage(toSepia(pixelArray), image.naturalWidth, image.naturalHeight);
+    const imageType = imageManager.getImageType(image.src);
+    return imageManager.convertToImage(toSepia(pixelArray), image.naturalWidth, image.naturalHeight, imageType);
 }
 
 EditPix.prototype.changeOpacity = (image, alpha) => {
     if (alpha < 0 || alpha > 255)
         throw new Error("Invalid alpha value: must be between 0 and 255")
     const pixelArray = imageManager.getPixelArray(image);
-    return imageManager.convertToImage(changeOpacity(pixelArray, alpha), image.naturalWidth, image.naturalHeight);
+    return imageManager.convertToImage(changeOpacity(pixelArray, alpha), image.naturalWidth, image.naturalHeight, "png");
 }
 
 EditPix.prototype.changeTint = (image, factor) => {
     if (factor < -100 || factor > 100)
         throw new Error("Invalid tint factor: must be a value between -100 and 100");
     const pixelArray = imageManager.getPixelArray(image);
-    return imageManager.convertToImage(changeTint(pixelArray, factor), image.naturalWidth, image.naturalHeight);
+    const imageType = imageManager.getImageType(image.src);
+    return imageManager.convertToImage(changeTint(pixelArray, factor), image.naturalWidth, image.naturalHeight, imageType);
 }
 
 EditPix.prototype.changeShadows = (image, factor) => {
     if (factor < -100 || factor > 100)
         throw new Error("Invalid shadow factor: must be a value between -100 and 100");
     const pixelArray = imageManager.getPixelArray(image);
-    return imageManager.convertToImage(changeShadows(pixelArray, factor), image.naturalWidth, image.naturalHeight);
+    const imageType = imageManager.getImageType(image.src);
+    return imageManager.convertToImage(changeShadows(pixelArray, factor), image.naturalWidth, image.naturalHeight, imageType);
 }
 
 EditPix.prototype.changeExposure = (image, factor) => {
     if (factor < -100 || factor > 100)
         throw new Error("Invalid exposure factor: must be a value between -100 and 100");
     const pixelArray = imageManager.getPixelArray(image);
-    return imageManager.convertToImage(changeExposure(pixelArray, factor), image.naturalWidth, image.naturalHeight);
+    const imageType = imageManager.getImageType(image.src);
+    return imageManager.convertToImage(changeExposure(pixelArray, factor), image.naturalWidth, image.naturalHeight, imageType);
 }
 
 EditPix.prototype.changeHighlights = (image, factor) => {
     if (factor < -100 || factor > 100)
         throw new Error("Invalid shadow factor: must be a value between -100 and 100");
     const pixelArray = imageManager.getPixelArray(image);
-    return imageManager.convertToImage(changeHighlights(pixelArray, factor), image.naturalWidth, image.naturalHeight);
+    const imageType = imageManager.getImageType(image.src);
+    return imageManager.convertToImage(changeHighlights(pixelArray, factor), image.naturalWidth, image.naturalHeight, imageType);
 }
 
 EditPix.prototype.changeSharpness = (image, factor) => {
     if (factor < -100 || factor > 100)
         throw new Error("Invalid sharpness factor: must be a value between -100 and 100");
     const pixelArray = imageManager.getPixelArray(image);
-    return imageManager.convertToImage(changeSharpness(pixelArray, factor), image.naturalWidth, image.naturalHeight);
+    const imageType = imageManager.getImageType(image.src);
+    return imageManager.convertToImage(changeSharpness(pixelArray, factor), image.naturalWidth, image.naturalHeight, imageType);
 }
 
 export default EditPix;
