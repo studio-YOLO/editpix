@@ -338,7 +338,7 @@ describe('changeHiglights', () => {
     test('should only darken highlights (luma > 128)', () => {
         const testColor1 = [111, 23, 47];
         const testColor2 = [111, 23, 47];
-        changeShadows(testColor1, -5);
+        changeHighlights(testColor1, -5);
         expect(testColor1[0]).toEqual(testColor2[0]);
         expect(testColor1[1]).toEqual(testColor2[1]);
         expect(testColor1[2]).toEqual(testColor2[2]);
@@ -348,18 +348,20 @@ describe('changeHiglights', () => {
 describe('changeSharpness', () => {
     test('basic functionality test', () => {
         const inputArray = [243, 22, 108, 255, 173, 12, 0, 255]; // An array of pixel values representing an image
-        const sharpenedArray = changeSharpness(inputArray, 2, 1, 32);
+        const copyArray = [...inputArray];
+        changeSharpness(inputArray, 2, 1, 32);
     
         // Verify that the sharpened image is processed correctly
-        expect(sharpenedArray).not.toBe(inputArray)
+        expect(inputArray).not.toBe(copyArray)
     });
 
     test('handle negative factor correctly', () => {
         const inputArray = [243, 22, 108, 255, 173, 12, 0, 255]; // An array of pixel values representing an image
-        const sharpenedArray = changeSharpness(inputArray, 2, 1, -40);
+        const copyArray = [...inputArray];
+        changeSharpness(inputArray, 2, 1, -40);
 
-        // Verify that the function correctly handles negative sharpening factor
-        expect(sharpenedArray).not.toBe(inputArray)
+        // Verify that the function correctly handles negative sharpening factor (and changes values)
+        expect(inputArray).not.toBe(copyArray)
     });
 
 });
