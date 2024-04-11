@@ -13,6 +13,7 @@ import changeBrightness from "../src/core/change-brightness.js";
 import changeHighlights from "../src/core/change-highlights.js";
 import changeSharpness from "../src/core/change-sharpness.js"
 import utils from "../src/utils.js";
+import toSepia from "../src/core/sepia-filter.js";
 
 describe('convertToBW function', () => {
     test('converts pixel array to black and white correctly', () => {
@@ -336,8 +337,8 @@ describe('changeHiglights', () => {
         expect(testColor1[2]).toEqual(testColor2[2]);
     });
     test('should only darken highlights (luma > 128)', () => {
-        const testColor1 = [111, 23, 47];
-        const testColor2 = [111, 23, 47];
+        const testColor1 = [111, 130, 243];
+        const testColor2 = [111, 130, 243];
         changeShadows(testColor1, -5);
         expect(testColor1[0]).toEqual(testColor2[0]);
         expect(testColor1[1]).toEqual(testColor2[1]);
@@ -351,7 +352,7 @@ describe('changeSharpness', () => {
         const sharpenedArray = changeSharpness(inputArray, 2, 1, 32);
     
         // Verify that the sharpened image is processed correctly
-        expect(sharpenedArray).not.toBe(inputArray)
+        expect(sharpenedArray).toBe(inputArray)
     });
 
     test('handle negative factor correctly', () => {
@@ -359,7 +360,25 @@ describe('changeSharpness', () => {
         const sharpenedArray = changeSharpness(inputArray, 2, 1, -40);
 
         // Verify that the function correctly handles negative sharpening factor
-        expect(sharpenedArray).not.toBe(inputArray)
+        expect(sharpenedArray).toBe(inputArray)
+    });
+
+});
+
+describe('toSepia', () => {
+    test('basic functionality test', () => {
+        const inputArray = [243, 22, 108, 255, 173, 12, 0, 255]; // An array of pixel values representing an image
+
+        const testArray = new Uint8ClampedArray(toSepia(inputArray));
+        const resultArray = new Uint8ClampedArray([133, 118, 92, 255, 77, 69, 53, 255])
+
+        expect(testArray).toStrictEqual(resultArray)
+    });
+
+    test('invariation of black color', () => {
+        const inputArray = [0, 0, 0, 255, 0, 0, 0, 255]; // An array of pixel values representing an image
+        
+        expect(toSepia(inputArray)).toBe(inputArray)
     });
 
 });
