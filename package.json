@@ -1,8 +1,8 @@
 {
   "name": "editpix",
   "version": "1.0.0",
-  "description": "A simple library for image manipulation.",
-  "main": "editpix.js",
+  "description": "Simple JavaScript library for image editing.",
+  "main": "src/editpix.js",
   "type": "module",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
@@ -11,8 +11,21 @@
     "type": "git",
     "url": "git+https://github.com/studio-YOLO/editpix.git"
   },
+  "keywords": [
+    "image",
+    "images",
+    "editing",
+    "image editing",
+    "color palette",
+    "wasm",
+    "javascript",
+    "image filters",
+    "filters",
+    "resize",
+    "image resize"
+  ],
   "author": "Studio YOLO",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/studio-YOLO/editpix/issues"
   },
