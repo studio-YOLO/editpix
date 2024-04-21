@@ -10,6 +10,66 @@ A powerful and versatile image editing library for the browser.
 Adjust brightness, contrast, saturation, and other image parameters.
 Apply filters and effects for creative transformations.
 
+## Installation
+
+### Using in the browser
+#### Install with npm
+
+``` bash
+npm i editpix
+```
+In your html file:
+
+```html
+<script type="module" src="example.js"></script>
+```
+In your javascript file 
+```javascript
+import EditPix from './node_modules/editpix/src/editpix.js';
+
+const editpix = new Editpix();
+
+// use library
+```
+
+#### Load from CDN. 
+
+In your html file:
+
+```html
+<script type="module" src="example.js"></script>
+```
+
+In your javascript file 
+```javascript
+import EditPix from 'https://cdn.jsdelivr.net/npm/editpix/+esm';
+
+const editpix = new Editpix();
+
+// use library
+```
+
+### Using in Vue.js
+
+#### Install with npm
+```bash
+npm i editpix
+```
+
+#### Import in your component
+```javascript
+<script setup>
+
+import EditPix from "editpix"
+
+const editpix = new EditPix()
+
+//use library
+
+</script>
+```
+
+
 ## Features
 
 - edit directly within the browser, without the need for Node
