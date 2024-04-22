@@ -1,7 +1,8 @@
 # EditPix
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![NPM Test on Main](https://github.com/studio-YOLO/editpix/actions/workflows/main.yml/badge.svg)](https://github.com/studio-YOLO/editpix/actions/workflows/main.yml)
-[![npm](https://img.shields.io/npm/dy/editpix.svg)](https://www.npmjs.com/package/editpix)
+[![npm](https://img.shields.io/npm/dm/editpix.svg)](https://www.npmjs.com/package/editpix)
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/editpix/badge)](https://www.jsdelivr.com/package/npm/editpix)
 
 A powerful and versatile image editing library for the browser.
 
@@ -145,7 +146,7 @@ image.onload = () => {
 
 ## Contributing
 
-We welcome contributions! Please follow our [Code of Conduct](CODE_OF_CONDUCT.md).
+We welcome contributions! Please follow our [Code of Conduct](CODE_OF_CONDUCT.md) and our [Contributing guidelines](CONTRIBUTING.md).
 
 ## Contributors
 [![Contributors](https://contrib.rocks/image?repo=studio-YOLO/editpix)](https://github.com/studio-YOLO/editpix/graphs/contributors)
