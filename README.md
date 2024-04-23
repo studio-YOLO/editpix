@@ -1,10 +1,16 @@
-# EditPix
+
+<div align="center">
+
+![Image](/assets/editpix-logo.svg)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![NPM Test on Main](https://github.com/studio-YOLO/editpix/actions/workflows/main.yml/badge.svg)](https://github.com/studio-YOLO/editpix/actions/workflows/main.yml)
 [![npm](https://img.shields.io/npm/dm/editpix.svg)](https://www.npmjs.com/package/editpix)
 [![jsDelivr](https://data.jsdelivr.com/v1/package/npm/editpix/badge)](https://www.jsdelivr.com/package/npm/editpix)
 
 A powerful and versatile image editing library for the browser.
+
+</div>
 
 ## Basic Editing
 
@@ -13,36 +19,44 @@ Apply filters and effects for creative transformations.
 
 ## Installation
 
-### Using in the browser
-#### Install with npm
+EditPix supports multiple different installation paths
 
-``` bash
+## Using in the browser
+
+### Install with npm
+
+```bash
 npm i editpix
 ```
-In your html file:
+
+In your HTML file load the script as a module:
 
 ```html
 <script type="module" src="example.js"></script>
 ```
-In your javascript file 
-```javascript
+
+In your JavaScript file import library and use it:
+
+```jsx
 import EditPix from './node_modules/editpix/src/editpix.js';
 
 const editpix = new Editpix();
 
 // use library
 ```
+<br>
 
-#### Load from CDN. 
+### Load from CDN
 
-In your html file:
+In your HTML file load the script as a module:
 
 ```html
 <script type="module" src="example.js"></script>
 ```
 
-In your javascript file 
-```javascript
+In your JavaScript file import library from CDN and use it:
+
+```jsx
 import EditPix from 'https://cdn.jsdelivr.net/npm/editpix/+esm';
 
 const editpix = new Editpix();
@@ -50,15 +64,23 @@ const editpix = new Editpix();
 // use library
 ```
 
-### Using in Vue.js
+You can also choose the version of the library you prefer by specifying it in the URL
 
-#### Install with npm
+```jsx
+import EditPix from 'https://cdn.jsdelivr.net/npm/editpix@[version]/+esm';
+```
+
+## Using with Vue.js
+
+### Install with npm
+
 ```bash
 npm i editpix
 ```
 
-#### Import in your component
-```javascript
+### Import and use in your component
+
+```jsx
 <script setup>
 
 import EditPix from "editpix"
@@ -69,6 +91,9 @@ const editpix = new EditPix()
 
 </script>
 ```
+
+If it is useful to you, at the [following link](https://github.com/studio-YOLO/editpix-vuejs-demo) you can find a small example on how you can use EditPix with Vue.js 3 and the Composition API.
+
 
 
 ## Features
