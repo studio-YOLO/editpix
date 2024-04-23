@@ -1,12 +1,11 @@
-# Contributing to ScrapeGraphAI
+# Contributing to EditPix
 
-Thank you for your interest in contributing to **ScrapeGraphAI**! We welcome contributions from the community to help improve and grow the project. This document outlines the guidelines and steps for contributing.
+Thank you for your interest in contributing to **EditPix**! We welcome contributions from the community to help improve and grow the project. This document outlines the guidelines and steps for contributing.
 
 ## Table of Contents
 
 - [Getting Started](#getting-started)
 - [Contributing Guidelines](#contributing-guidelines)
-- [Code Style](#code-style)
 - [Submitting a Pull Request](#submitting-a-pull-request)
 - [Reporting Issues](#reporting-issues)
 - [License](#license)
@@ -26,22 +25,11 @@ To get started with contributing, follow these steps:
 
 ## Contributing Guidelines
 
-Please adhere to the following guidelines when contributing to AmazScraper:
+Please adhere to the following guidelines when contributing to EditPix:
 
-- Follow the code style and formatting guidelines specified in the [Code Style](#code-style) section.
 - Make sure your changes are well-documented and include any necessary updates to the project's documentation.
 - Write clear and concise commit messages that describe the purpose of your changes.
 - Be respectful and considerate towards other contributors and maintainers.
-
-## Code Style
-
-Please make sure to format your code accordingly before submitting a pull request.
-
-### Python
-
-- [Style Guide for Python Code](https://www.python.org/dev/peps/pep-0008/)
-- [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html)
-- [The Hitchhiker's Guide to Python](https://docs.python-guide.org/writing/style/)
 
 ## Submitting a Pull Request
 
@@ -61,7 +49,7 @@ If you encounter any issues or have suggestions for improvements, please open an
 
 ## License
 
-AmazScraper is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for more information.
+EditPix is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for more information.
 By contributing to this project, you agree to license your contributions under the same license.
 
 Can't wait to see your contributions! :smile:
