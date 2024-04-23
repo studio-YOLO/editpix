@@ -10,32 +10,34 @@
 
 A powerful and versatile image editing library for the browser.
 
-</div>
-
-## Basic Editing
-
 Adjust brightness, contrast, saturation, and other image parameters.
 Apply filters and effects for creative transformations.
 
+A complete list of the available features is available [below](#Features).
+
+</div>
+
+---
+
 ## Installation
 
-EditPix supports multiple different installation paths
+EditPix supports multiple different installation methods.
 
-## Using in the browser
+### Usage in the browser 
 
-### Install with npm
+#### Installing from `npm` 
 
 ```bash
 npm i editpix
 ```
 
-In your HTML file load the script as a module:
+In your HTML file, load the script as a module:
 
 ```html
 <script type="module" src="example.js"></script>
 ```
 
-In your JavaScript file import library and use it:
+In your JavaScript file, import the library and use it:
 
 ```jsx
 import EditPix from './node_modules/editpix/src/editpix.js';
@@ -44,17 +46,18 @@ const editpix = new Editpix();
 
 // use library
 ```
-<br>
+<br />
 
-### Load from CDN
 
-In your HTML file load the script as a module:
+### Loading from a CDN
+
+In your HTML file, load the script as a module:
 
 ```html
 <script type="module" src="example.js"></script>
 ```
 
-In your JavaScript file import library from CDN and use it:
+In your JavaScript file, import the library from the CDN and use it:
 
 ```jsx
 import EditPix from 'https://cdn.jsdelivr.net/npm/editpix/+esm';
@@ -64,15 +67,17 @@ const editpix = new Editpix();
 // use library
 ```
 
-You can also choose the version of the library you prefer by specifying it in the URL
+
+You can also choose the version of the library you prefer by specifying it in the URL:
 
 ```jsx
 import EditPix from 'https://cdn.jsdelivr.net/npm/editpix@[version]/+esm';
 ```
 
-## Using with Vue.js
 
-### Install with npm
+### Usage in Vue.js
+
+#### Installing from `npm`
 
 ```bash
 npm i editpix
@@ -95,17 +100,18 @@ const editpix = new EditPix()
 If it is useful to you, at the [following link](https://github.com/studio-YOLO/editpix-vuejs-demo) you can find a small example on how you can use EditPix with Vue.js 3 and the Composition API.
 
 
+---
 
 ## Features
 
 - edit directly within the browser, without the need for Node
-- easy to use functions that do exactly what you'd expect from them
+- easy to use functions, that do exactly what you'd expect from them
 
 **Currently implemented features:**
 - colorspace transforms:
-    - RGB
-    - HSL
-    - HEX
+    - RGB (to and from HSL, HEX)
+    - HSL (to and from RGB)
+    - HEX (to and from RGB)
     - higher contrast
 - color filters:
     - black and white
@@ -115,7 +121,10 @@ If it is useful to you, at the [following link](https://github.com/studio-YOLO/e
     - saturation
     - temperature
     - tint
-- image resizing
+- image resizing:
+    - by target width
+    - by target height
+    - by percentage
 - value adjustments:
     - brightness
     - contrast
@@ -129,21 +138,20 @@ If it is useful to you, at the [following link](https://github.com/studio-YOLO/e
     - extract dominant color
 
 ## Project structure
-+ `demo/` - collection of demo scripts of all features.
++ `demo/` - a collection of demo scripts of all features.
 + `lib/` - rust code for functions in wasm.
 + `src/core/` - all the functions for image editing.
 + `src/editpix.js` - main class of the library where all the functionality is grouped.
-+ `src/image-manager.js` - image-related functions such as resizing or image-to-pixelArray conversion.
++ `src/image-manager.js` - image-related functions such as resizing and image-to-pixelArray conversion.
 + `src/utils.js` - utility functions shared between features.
 + `test/` - Node unit tests using Jest.
 
 
 ## Basic Usage
 
-Short tutorial on loading an image, performing simple edits, and saving.
-Examples:
+Here's a short tutorial / example on loading an image, performing simple edits, and then saving.
 
-```javascript
+```jsx
 import EditPix from "./src/editpix.js";
 
 const editpix = new EditPix();
