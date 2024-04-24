@@ -11,12 +11,12 @@ function changeBrightness(pixelArray, factor) {
         return pixelArray;
     for (let i = 0; i < pixelArray.length; i += 4) {
         const hsl = utils.rgbToHsl(pixelArray[i], pixelArray[i + 1], pixelArray[i + 2]);
-        hsl[2] = Math.max(0, Math.min(100, hsl[2] += factor));
-        const rgb = utils.hslToRgb(hsl[0], hsl[1], hsl[2]);
+        hsl.l = Math.max(0, Math.min(100, hsl.l += factor));
+        const rgb = utils.hslToRgb(hsl.h, hsl.s, hsl.l);
 
-        pixelArray[i] = rgb[0];
-        pixelArray[i + 1] = rgb[1];
-        pixelArray[i + 2] = rgb[2];
+        pixelArray[i] = rgb.r;
+        pixelArray[i + 1] = rgb.g;
+        pixelArray[i + 2] = rgb.b;
     }
     return pixelArray;
 }

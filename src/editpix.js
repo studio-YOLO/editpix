@@ -99,6 +99,10 @@ EditPix.prototype.getHigherContrast = (color) => {
 }
 
 EditPix.prototype.rgbToHex = (r, g, b) => {
+    if (r < 0 || r > 255 ||
+        g < 0 || g > 255 ||
+        b < 0 || b > 255)
+        throw new Error("RGB format is invalid.");
     return utils.rgbToHex(r, g, b);
 }
 
@@ -148,10 +152,18 @@ EditPix.prototype.changeBrightness = (image, factor) => {
 }
 
 EditPix.prototype.rgbToHsl = (r, g, b) => {
+    if (r < 0 || r > 255 ||
+        g < 0 || g > 255 ||
+        b < 0 || b > 255)
+        throw new Error("RGB format is invalid.");
     return utils.rgbToHsl(r, g, b);
 }
 
 EditPix.prototype.hslToRgb = (h, s, l) => {
+    if (h < 0 || h > 360 ||
+        s < 0 || s > 100 ||
+        l < 0 || l > 100)
+        throw new Error("HSL format is invalid.");
     return utils.hslToRgb(h, s, l);
 }
 
