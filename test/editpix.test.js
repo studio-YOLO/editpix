@@ -1,44 +1,39 @@
 import EditPix from "../src/editpix.js"
 
-describe('EditPix convertToRgb method', () => {
-    test('converts hex colors to RGB correctly for array input', () => {
+describe('rgbToHex', () => {
+    test('Converts RGB to hexadecimal color for valid inputs', () => {
         const editPix = new EditPix();
-        const hexColors = ['#ff0000', '#00ff00', '#0000ff']; // Red, Green, Blue
-        const expectedRgbColors = [
-            [255, 0, 0],
-            [0, 255, 0],
-            [0, 0, 255]
-        ];
-        expect(editPix.convertToRgb(hexColors)).toEqual(expectedRgbColors);
+        expect(editPix.rgbToHex(255, 0, 0)).toBe("#ff0000");
+        expect(editPix.rgbToHex(0, 255, 0)).toBe("#00ff00");
+        expect(editPix.rgbToHex(0, 0, 255)).toBe("#0000ff");
+        // Add more test cases for valid inputs as needed
     });
 
-    test('converts hex colors to RGB correctly for single color input', () => {
+    test('Throws error for invalid RGB inputs', () => {
         const editPix = new EditPix();
-        const hexColor = '#ff0000'; // Red
-        const expectedRgbColor = [[255, 0, 0]];
-        expect(editPix.convertToRgb(hexColor)).toEqual(expectedRgbColor);
-    });
-
-    test('throws an error for invalid hex color input', () => {
-        const editPix = new EditPix();
-        const invalidHexColor = 'invalid_hex_color';
-        expect(() => editPix.convertToRgb(invalidHexColor)).toThrow(Error);
+        // Test invalid RGB inputs
+        expect(() => editPix.rgbToHex(-1, 0, 0)).toThrow(Error);
+        expect(() => editPix.rgbToHex(256, 0, 0)).toThrow(Error);
+        expect(() => editPix.rgbToHex(0, -1, 0)).toThrow(Error);
+        expect(() => editPix.rgbToHex(0, 256, 0)).toThrow(Error);
+        expect(() => editPix.rgbToHex(0, 0, -1)).toThrow(Error);
+        expect(() => editPix.rgbToHex(0, 0, 256)).toThrow(Error);
+        // Add more test cases for invalid inputs as needed
     });
 });
 
-describe('EditPix convertToHex method', () => {
-    test('converts RGB colors to hex correctly for array input', () => {
+describe('EditPix.hexToRgb', () => {
+    test('Converts hexadecimal color to RGB', () => {
         const editPix = new EditPix();
-        const rgbColors = [[255, 0, 0], [0, 255, 0], [0, 0, 255]]; // Red, Green, Blue
-        const expectedHexColors = ['#ff0000', '#00ff00', '#0000ff'];
-        expect(editPix.convertToHex(rgbColors)).toEqual(expectedHexColors);
-    });
+        // Test valid hexadecimal color inputs
+        expect(editPix.hexToRgb('#ff0000')).toEqual({ r: 255, g: 0, b: 0 });
+        expect(editPix.hexToRgb('#00ff00')).toEqual({ r: 0, g: 255, b: 0 });
+        expect(editPix.hexToRgb('#0000ff')).toEqual({ r: 0, g: 0, b: 255 });
 
-    test('converts RGB colors to hex correctly for single color input', () => {
-        const editPix = new EditPix();
-        const rgbColor = [255, 0, 0]; // Red
-        const expectedHexColor = ['#ff0000'];
-        expect(editPix.convertToHex(rgbColor)).toEqual(expectedHexColor);
+        // Test invalid hexadecimal color inputs
+        expect(() => editPix.hexToRgb('#FF00')).toThrow("Invalid hex color: #FF00");
+        expect(() => editPix.hexToRgb('#00GG00')).toThrow("Invalid hex color: #00GG00");
+        // Add more test cases for invalid inputs as needed
     });
 });
 

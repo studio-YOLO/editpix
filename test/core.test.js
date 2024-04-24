@@ -251,15 +251,15 @@ describe('changeSaturation', () => {
         const testColor1 = [173, 114, 234];
         const testColor2 = [173, 114, 234];
         changeSaturation(testColor1, 50);
-        expect(utils.rgbToHsl(testColor2[0], testColor2[1], testColor2[2])[1])
-            .toBeLessThan(utils.rgbToHsl(testColor1[0], testColor1[1], testColor1[2])[1]);
+        expect(utils.rgbToHsl(testColor2[0], testColor2[1], testColor2[2]).s)
+            .toBeLessThan(utils.rgbToHsl(testColor1[0], testColor1[1], testColor1[2]).s);
     });
     test('should decrease saturation for negative factors', () => {
         const testColor1 = [173, 114, 234];
         const testColor2 = [173, 114, 234];
         changeSaturation(testColor1, -50);
-        expect(utils.rgbToHsl(testColor2[0], testColor2[1], testColor2[2])[1])
-            .toBeGreaterThan(utils.rgbToHsl(testColor1[0], testColor1[1], testColor1[2])[1]);
+        expect(utils.rgbToHsl(testColor2[0], testColor2[1], testColor2[2]).s)
+            .toBeGreaterThan(utils.rgbToHsl(testColor1[0], testColor1[1], testColor1[2]).s);
     });
 });
 

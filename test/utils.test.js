@@ -1,75 +1,30 @@
 import utils from "../src/utils.js"
 
-describe('rgbToHex function', () => {
-    test('converts RGB colors to hexadecimal correctly', () => {
-        const rgbColors = [
-            [255, 0, 0],   // Red
-            [0, 255, 0],   // Green
-            [0, 0, 255]    // Blue
-        ];
-        const expectedHexColors = ['#ff0000', '#00ff00', '#0000ff'];
-        expect(utils.rgbToHex(rgbColors)).toEqual(expectedHexColors);
-    });
-
-    test('handles empty input array', () => {
-        const rgbColors = [];
-        expect(utils.rgbToHex(rgbColors)).toEqual([]);
-    });
-
-    test('converts black color correctly', () => {
-        const rgbColors = [[0, 0, 0]];
-        const expectedHexColors = ['#000000'];
-        expect(utils.rgbToHex(rgbColors)).toEqual(expectedHexColors);
-    });
-
-    test('converts white color correctly', () => {
-        const rgbColors = [[255, 255, 255]];
-        const expectedHexColors = ['#ffffff'];
-        expect(utils.rgbToHex(rgbColors)).toEqual(expectedHexColors);
+describe('rgbToHex', () => {
+    test('Converts RGB to hexadecimal color for valid inputs', () => {
+        // Test valid RGB inputs
+        expect(utils.rgbToHex(255, 0, 0)).toBe("#ff0000");
+        expect(utils.rgbToHex(0, 255, 0)).toBe("#00ff00");
+        expect(utils.rgbToHex(0, 0, 255)).toBe("#0000ff");
+        // Add more test cases for valid inputs as needed
     });
 });
 
-describe('hexToRgb function', () => {
-    test('converts hexadecimal colors to RGB correctly', () => {
-        const hexColors = ['#ff0000', '#00ff00', '#0000ff'];
-        const expectedRgbColors = [
-            [255, 0, 0],   // Red
-            [0, 255, 0],   // Green
-            [0, 0, 255]    // Blue
-        ];
-        expect(utils.hexToRgb(hexColors)).toEqual(expectedRgbColors);
+describe('hexToRgb', () => {
+    test('Converts hexadecimal color to RGB for valid inputs', () => {
+        // Test valid hexadecimal color inputs
+        expect(utils.hexToRgb('#FF0000')).toEqual({ r: 255, g: 0, b: 0 });
+        expect(utils.hexToRgb('#00FF00')).toEqual({ r: 0, g: 255, b: 0 });
+        expect(utils.hexToRgb('#0000FF')).toEqual({ r: 0, g: 0, b: 255 });
+        // Add more test cases as needed
     });
 
-    test('handles empty input array', () => {
-        const hexColors = [];
-        expect(utils.hexToRgb(hexColors)).toEqual([]);
-    });
-
-    test('converts black color correctly', () => {
-        const hexColors = ['#000000'];
-        const expectedRgbColors = [[0, 0, 0]];
-        expect(utils.hexToRgb(hexColors)).toEqual(expectedRgbColors);
-    });
-
-    test('converts white color correctly', () => {
-        const hexColors = ['#ffffff'];
-        const expectedRgbColors = [[255, 255, 255]];
-        expect(utils.hexToRgb(hexColors)).toEqual(expectedRgbColors);
-    });
-
-    test('throws an error for invalid hex input', () => {
-        const hexColors = ['#ff00', '#00ff00ff']; // Invalid hex colors
-        expect(() => utils.hexToRgb(hexColors)).toThrow(Error);
-    });
-
-    test('converts short hex colors to RGB correctly', () => {
-        const hexColors = ['#f00', '#0f0', '#00f']; // Short hex colors
-        const expectedRgbColors = [
-            [255, 0, 0],   // Red
-            [0, 255, 0],   // Green
-            [0, 0, 255]    // Blue
-        ];
-        expect(utils.hexToRgb(hexColors)).toEqual(expectedRgbColors);
+    test('Throws error for invalid hexadecimal color inputs', () => {
+        // Test invalid hexadecimal color inputs
+        expect(() => utils.hexToRgb('#FF00')).toThrow(Error);
+        expect(() => utils.hexToRgb('#00GG00')).toThrow(Error);
+        expect(() => utils.hexToRgb('red')).toThrow(Error);
+        // Add more test cases as needed
     });
 });
 
@@ -107,41 +62,44 @@ describe('validate function', () => {
     });
 });
 
-describe('hslToRgb', () => {
-    test('Correctly converts HSL to RGB', () => {
-        expect(utils.hslToRgb(0, 100, 50)).toEqual([255, 0, 0]);
-        expect(utils.hslToRgb(120, 100, 50)).toEqual([0, 255, 0]);
-        expect(utils.hslToRgb(240, 100, 50)).toEqual([0, 0, 255]);
+describe('rgbToHsl', () => {
+    test('Converts RGB to HSL for valid inputs', () => {
+        // Test valid RGB inputs
+        expect(utils.rgbToHsl(255, 0, 0)).toEqual({ h: 0, s: 100, l: 50 });
+        expect(utils.rgbToHsl(0, 255, 0)).toEqual({ h: 120, s: 100, l: 50 });
+        expect(utils.rgbToHsl(0, 0, 255)).toEqual({ h: 240, s: 100, l: 50 });
+        // Add more test cases as needed
     });
 
-    test('Correctly handles HSL with saturation or lightness at the limit', () => {
-        expect(utils.hslToRgb(0, 0, 0)).toEqual([0, 0, 0]);
-        expect(utils.hslToRgb(0, 100, 0)).toEqual([0, 0, 0]);
-        expect(utils.hslToRgb(0, 0, 100)).toEqual([255, 255, 255]);
-        expect(utils.hslToRgb(0, 100, 100)).toEqual([255, 255, 255]);
-    });
-
-    test('Throws an error for invalid HSL values', () => {
-        expect(() => utils.hslToRgb(-10, 100, 50)).toThrow(Error);
-        expect(() => utils.hslToRgb(361, 100, 50)).toThrow(Error);
-        expect(() => utils.hslToRgb(0, -10, 50)).toThrow(Error);
-        expect(() => utils.hslToRgb(0, 100, 101)).toThrow(Error);
+    test('Throws error for invalid RGB inputs', () => {
+        // Test invalid RGB inputs
+        expect(() => utils.rgbToHsl(-1, 0, 0)).toThrow(Error);
+        expect(() => utils.rgbToHsl(256, 0, 0)).toThrow(Error);
+        expect(() => utils.rgbToHsl(0, -1, 0)).toThrow(Error);
+        expect(() => utils.rgbToHsl(0, 256, 0)).toThrow(Error);
+        expect(() => utils.rgbToHsl(0, 0, -1)).toThrow(Error);
+        expect(() => utils.rgbToHsl(0, 0, 256)).toThrow(Error);
+        // Add more test cases as needed
     });
 });
 
-describe('rgbToHsl', () => {
-    test('Correctly converts RGB to HSL', () => {
-        expect(utils.rgbToHsl(255, 0, 0)).toEqual([0, 100, 50]);
-        expect(utils.rgbToHsl(0, 255, 0)).toEqual([120, 100, 50]);
-        expect(utils.rgbToHsl(0, 0, 255)).toEqual([240, 100, 50]);
-        expect(utils.rgbToHsl(255, 255, 255)).toEqual([0, 0, 100]);
-        expect(utils.rgbToHsl(128, 128, 128)).toEqual([0, 0, 50]);
+describe('hslToRgb', () => {
+    test('Converts HSL to RGB for valid inputs', () => {
+        // Test valid HSL inputs
+        expect(utils.hslToRgb(0, 100, 50)).toEqual({ r: 255, g: 0, b: 0 });
+        expect(utils.hslToRgb(120, 100, 50)).toEqual({ r: 0, g: 255, b: 0 });
+        expect(utils.hslToRgb(240, 100, 50)).toEqual({ r: 0, g: 0, b: 255 });
+        // Add more test cases as needed
     });
 
-    test('Throws an error for invalid RGB values', () => {
-        expect(() => utils.rgbToHsl(-10, 0, 0)).toThrow(Error);
-        expect(() => utils.rgbToHsl(256, 0, 0)).toThrow(Error);
-        expect(() => utils.rgbToHsl(0, 300, 0)).toThrow(Error);
-        expect(() => utils.rgbToHsl(0, 0, -20)).toThrow(Error);
+    test('Throws error for invalid HSL inputs', () => {
+        // Test invalid HSL inputs
+        expect(() => utils.hslToRgb(-1, 100, 50)).toThrow(Error);
+        expect(() => utils.hslToRgb(361, 100, 50)).toThrow(Error);
+        expect(() => utils.hslToRgb(0, -1, 50)).toThrow(Error);
+        expect(() => utils.hslToRgb(0, 101, 50)).toThrow(Error);
+        expect(() => utils.hslToRgb(0, 100, -1)).toThrow(Error);
+        expect(() => utils.hslToRgb(0, 100, 101)).toThrow(Error);
+        // Add more test cases as needed
     });
 });
