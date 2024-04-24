@@ -23,9 +23,12 @@ A complete list of the available features is available [below](#Features).
 
 EditPix supports multiple different installation methods.
 
-### Usage in the browser 
 
-#### Installing from `npm` 
+### Usage in the browser 
+For use in the browser the library can be installed via [npm](#installing-from-npm) or loaded via [CDN](#loading-from-a-cdn).
+
+
+### Installing from `npm` 
 
 ```bash
 npm i editpix
@@ -46,9 +49,6 @@ const editpix = new Editpix();
 
 // use library
 ```
-<br />
-
-
 ### Loading from a CDN
 
 In your HTML file, load the script as a module:
@@ -74,16 +74,17 @@ You can also choose the version of the library you prefer by specifying it in th
 import EditPix from 'https://cdn.jsdelivr.net/npm/editpix@[version]/+esm';
 ```
 
+<br>
 
 ### Usage in Vue.js
 
-#### Installing from `npm`
+ Installing from `npm`
 
 ```bash
 npm i editpix
 ```
 
-### Import and use in your component
+Import and use in your component:
 
 ```jsx
 <script setup>
@@ -104,38 +105,38 @@ If it is useful to you, at the [following link](https://github.com/studio-YOLO/e
 
 ## Features
 
-- edit directly within the browser, without the need for Node
-- easy to use functions, that do exactly what you'd expect from them
+- Edit directly within the browser, without the need for Node
+- Easy to use functions, that do exactly what you'd expect from them
 
 **Currently implemented features:**
-- colorspace transforms:
+- Colorspace transforms:
     - RGB (to and from HSL, HEX)
     - HSL (to and from RGB)
     - HEX (to and from RGB)
-    - higher contrast
-- color filters:
-    - black and white
-    - grayscale
-    - sepia
-- color adjustments:
-    - saturation
-    - temperature
-    - tint
-- image resizing:
-    - by target width
-    - by target height
-    - by percentage
-- value adjustments:
-    - brightness
-    - contrast
-    - exposure
-    - opacity
-    - shadows
-    - highlights
-    - sharpness
-- other tools:
-    - extract color palette
-    - extract dominant color
+    - Higher contrast
+- Color filters:
+    - Black and white
+    - Grayscale
+    - Sepia
+- Color adjustments:
+    - Saturation
+    - Temperature
+    - Tint
+- Image resizing:
+    - By target width
+    - By target height
+    - By percentage
+- Value adjustments:
+    - Brightness
+    - Contrast
+    - Exposure
+    - Opacity
+    - Shadows
+    - Highlights
+    - Sharpness
+- Other tools:
+    - Extract color palette
+    - Extract dominant color
 
 ## Project structure
 + `demo/` - a collection of demo scripts of all features.
