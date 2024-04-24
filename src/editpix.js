@@ -98,12 +98,12 @@ EditPix.prototype.getHigherContrast = (color) => {
     return higherColorContrast(color);
 }
 
-EditPix.prototype.convertToHex = (colors) => {
-    return Array.isArray(colors[0]) ? utils.rgbToHex(colors) : utils.rgbToHex([colors]);
+EditPix.prototype.rgbToHex = (r, g, b) => {
+    return utils.rgbToHex(r, g, b);
 }
 
-EditPix.prototype.convertToRgb = (colors) => {
-    return Array.isArray(colors) ? utils.hexToRgb(colors) : utils.hexToRgb([colors]);
+EditPix.prototype.hexToRgb = (hexColor) => {
+    return utils.hexToRgb(hexColor);
 }
 
 EditPix.prototype.toOptimizedContrast = (image) => {

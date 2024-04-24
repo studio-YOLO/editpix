@@ -16,29 +16,21 @@ function removeAlphaSerialized(pixelArray) {
     return result;
 }
 
-function rgbToHex(rgbColors) {
-    let hexColors = [];
-    rgbColors.forEach(color => {
-        hexColors.push("#" + (1 << 24 | color[0] << 16 | color[1] << 8 | color[2]).toString(16).slice(1));
-    });
-    return hexColors;
+function rgbToHex(r, g, b) {
+    return "#" + (1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1);
 }
 
-function hexToRgb(hexColors) {
-    let rgbColors = [];
-    hexColors.forEach(color => {
-        color = color.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i, (m, r, g, b) => r + r + g + g + b + b);
-        const match = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(color);
-        if (!match) {
-            throw new Error("Invalid hex color: " + color);
-        }
-        rgbColors.push([
-            parseInt(match[1], 16),
-            parseInt(match[2], 16),
-            parseInt(match[3], 16)
-        ]);
-    });
-    return rgbColors;
+function hexToRgb(hexColor) {
+    hexColor = hexColor.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i, (m, r, g, b) => r + r + g + g + b + b);
+    const match = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hexColor);
+    if (!match) {
+        throw new Error("Invalid hex color: " + hexColor);
+    }
+    return {
+        r: parseInt(match[1], 16),
+        g: parseInt(match[2], 16),
+        b: parseInt(match[3], 16)
+    }
 }
 
 function validate(quality, colorNumber) {
@@ -81,18 +73,18 @@ function rgbToHsl(r, g, b) {
         const d = max - min;
         s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
         switch (max) {
-        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-        case g: h = (b - r) / d + 2; break;
-        case b: h = (r - g) / d + 4; break;
+            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+            case g: h = (b - r) / d + 2; break;
+            case b: h = (r - g) / d + 4; break;
         }
         h /= 6;
     }
 
-    return [
-        Math.round(h * 360),
-        Math.round(s * 100),
-        Math.round(l * 100)
-    ];
+    return {
+        h: Math.round(h * 360),
+        s: Math.round(s * 100),
+        l: Math.round(l * 100)
+    };
 }
 
 /**
@@ -111,7 +103,11 @@ function hslToRgb(h, s, l) {
     const a = s * Math.min(l, 1 - l);
     const f = n =>
         l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
-    return [255 * f(0), 255 * f(8), 255 * f(4)];
+    return {
+        r: 255 * f(0),
+        g: 255 * f(8),
+        b: 255 * f(4)
+    };
 }
 
 export default {
