@@ -1,6 +1,6 @@
 {
   "name": "editpix",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simple JavaScript library for image editing.",
   "main": "src/editpix.js",
   "type": "module",
@@ -13,23 +13,23 @@
   },
   "keywords": [
     "image",
-    "images",
     "editing",
     "image editing",
-    "color palette",
-    "wasm",
-    "javascript",
-    "image filters",
-    "filters",
-    "resize",
-    "image resize"
+    "color adjustment",
+    "image adjustment",
+    "image resizing",
+    "colorspace transformation",
+    "library",
+    "canvas",
+    "photo",
+    "picture"
   ],
   "author": "Studio YOLO",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/studio-YOLO/editpix/issues"
   },
-  "homepage": "https://github.com/studio-YOLO/editpix#readme",
+  "homepage": "https://studio-yolo.github.io/editpix-doc/",
   "devDependencies": {
     "eslint": "^8.56.0",
     "eslint-plugin-jest": "^27.9.0",
