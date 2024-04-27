@@ -4,9 +4,9 @@
 ![Image](/assets/editpix-logo.svg)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![NPM Test on Main](https://github.com/studio-YOLO/editpix/actions/workflows/main.yml/badge.svg)](https://github.com/studio-YOLO/editpix/actions/workflows/main.yml)
-[![npm](https://img.shields.io/npm/dm/editpix.svg)](https://www.npmjs.com/package/editpix)
-[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/editpix/badge)](https://www.jsdelivr.com/package/npm/editpix)
+[![Test on Main](https://github.com/studio-YOLO/editpix/actions/workflows/main.yml/badge.svg)](https://github.com/studio-YOLO/editpix/actions/workflows/main.yml)
+[![npm](https://img.shields.io/npm/dm/editpix?logo=npm)](https://www.npmjs.com/package/editpix)
+[![jsDelivr](https://img.shields.io/jsdelivr/npm/hm/editpix?logo=jsdeliver)](https://www.jsdelivr.com/package/npm/editpix)
 
 A powerful and versatile image editing library for the browser.
 
@@ -18,6 +18,9 @@ A complete list of the available features is available [below](#Features).
 </div>
 
 ---
+
+## Documentation
+Please follow the documentation at the [following link](https://studio-yolo.github.io/editpix-doc/).
 
 ## Installation
 
@@ -113,7 +116,6 @@ If it is useful to you, at the [following link](https://github.com/studio-YOLO/e
     - RGB (to and from HSL, HEX)
     - HSL (to and from RGB)
     - HEX (to and from RGB)
-    - Higher contrast
 - Color filters:
     - Black and white
     - Grayscale
@@ -153,8 +155,6 @@ If it is useful to you, at the [following link](https://github.com/studio-YOLO/e
 Here's a short tutorial / example on loading an image, performing simple edits, and then saving.
 
 ```jsx
-import EditPix from "./src/editpix.js";
-
 const editpix = new EditPix();
 
 // image url
