@@ -6,13 +6,13 @@ const editpix = new EditPix();
 const hexColor = "#78828c";
 
 //convert color from hex to rgb
-const rgbColor = editpix.convertToRgb(hexColor);
+const rgbColor = editpix.hexToRgb(hexColor);
 
 //get the higher contrast color
-const higherColorContrastRgb = editpix.getHigherContrast(rgbColor);
+const higherColorContrastRgb = editpix.getHigherContrast(rgbColor.r, rgbColor.g, rgbColor.b);
 
 //convert higher contrast color from rgb to hex
-const higherColorContrastHex = editpix.convertToHex(higherColorContrastRgb);
+const higherColorContrastHex = editpix.rgbToHex(higherColorContrastRgb.r, higherColorContrastRgb.g, higherColorContrastRgb.b);
 
 
 //display results
