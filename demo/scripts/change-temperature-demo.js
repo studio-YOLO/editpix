@@ -11,25 +11,25 @@ image.src = url;
 image.onload = () => {
     document.body.appendChild(image);
 
-    editpix.adjustTemperature(image, 20)
+    editpix.changeTemperature(image, 20)
         .then(highContrastImage => {
             document.body.appendChild(highContrastImage);
         })
         .catch(error => { console.log(error) })
 
-    editpix.adjustTemperature(image, 50)
+    editpix.changeTemperature(image, 50)
         .then(highContrastImage => {
             document.body.appendChild(highContrastImage);
         })
         .catch(error => { console.log(error) })
 
-    editpix.adjustTemperature(image, -20)
+    editpix.changeTemperature(image, -20)
         .then(highContrastImage => {
             document.body.appendChild(highContrastImage);
         })
         .catch(error => { console.log(error) })
 
-    editpix.adjustTemperature(image, -50)
+    editpix.changeTemperature(image, -50)
         .then(highContrastImage => {
             document.body.appendChild(highContrastImage);
         })
