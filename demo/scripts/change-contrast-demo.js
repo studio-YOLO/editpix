@@ -10,7 +10,7 @@ image.src = url;
 //waiting image load
 image.onload = () => {
 
-    editpix.setContrast(image, 2)
+    editpix.changeContrast(image, 2)
         .then(highContrastImage => {
             document.body.appendChild(image);
             document.body.appendChild(highContrastImage);
