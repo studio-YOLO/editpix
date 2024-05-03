@@ -1,4 +1,4 @@
-import EditPix from "../src/editpix.js"
+import EditPix from "../../src/editpix.js"
 
 describe('rgbToHex', () => {
     test('Converts RGB to hexadecimal color for valid inputs', () => {

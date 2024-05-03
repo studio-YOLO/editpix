@@ -1,4 +1,4 @@
-import utils from "../src/utils.js"
+import utils from "../../src/utils.js"
 
 describe('rgbToHex', () => {
     test('Converts RGB to hexadecimal color for valid inputs', () => {
