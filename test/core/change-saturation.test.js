@@ -1,5 +1,5 @@
 import changeSaturation from "../../src/core/change-saturation.js"
-import utils from "../../src/utils.js";
+import {rgbToHsl, hslToRgb} from "../../src/core/colorspace-conversion.js";
 
 describe('changeSaturation', () => {
     test('should not change anything if factor is 0', () => {
@@ -22,14 +22,14 @@ describe('changeSaturation', () => {
         const testColor1 = [173, 114, 234];
         const testColor2 = [173, 114, 234];
         changeSaturation(testColor1, 50);
-        expect(utils.rgbToHsl(testColor2[0], testColor2[1], testColor2[2]).s)
-            .toBeLessThan(utils.rgbToHsl(testColor1[0], testColor1[1], testColor1[2]).s);
+        expect(rgbToHsl(testColor2[0], testColor2[1], testColor2[2]).s)
+            .toBeLessThan(rgbToHsl(testColor1[0], testColor1[1], testColor1[2]).s);
     });
     test('should decrease saturation for negative factors', () => {
         const testColor1 = [173, 114, 234];
         const testColor2 = [173, 114, 234];
         changeSaturation(testColor1, -50);
-        expect(utils.rgbToHsl(testColor2[0], testColor2[1], testColor2[2]).s)
-            .toBeGreaterThan(utils.rgbToHsl(testColor1[0], testColor1[1], testColor1[2]).s);
+        expect(rgbToHsl(testColor2[0], testColor2[1], testColor2[2]).s)
+            .toBeGreaterThan(rgbToHsl(testColor1[0], testColor1[1], testColor1[2]).s);
     });
 });

@@ -1,5 +1,4 @@
 import ImageManager from "./image-manager.js";
-
 import changeBrightness from "./core/change-brightness.js";
 import changeContrast from "./core/change-contrast.js";
 import changeExposure from "./core/change-exposure.js";
@@ -17,6 +16,7 @@ import init, { k_means, k_means_pp, median_cut } from "./core/editpix_wasm.js";
 import optimizeContrast from "./core/optimize-contrast.js";
 import toSepia from "./core/sepia-filter.js";
 import utils from "./utils.js";
+import { hexToRgb, rgbToHex, rgbToHsl, hslToRgb } from "./core/colorspace-conversion.js"
 
 export default class EditPix {
 
@@ -73,11 +73,11 @@ export default class EditPix {
             g < 0 || g > 255 ||
             b < 0 || b > 255)
             throw new Error("RGB format is invalid.");
-        return utils.rgbToHex(r, g, b);
+        return rgbToHex(r, g, b);
     }
 
     hexToRgb(hexColor) {
-        return utils.hexToRgb(hexColor);
+        return hexToRgb(hexColor);
     }
 
     rgbToHsl(r, g, b) {
@@ -89,7 +89,7 @@ export default class EditPix {
             g < 0 || g > 255 ||
             b < 0 || b > 255)
             throw new Error("RGB format is invalid.");
-        return utils.rgbToHsl(r, g, b);
+        return rgbToHsl(r, g, b);
     }
 
     hslToRgb(h, s, l) {
@@ -101,7 +101,7 @@ export default class EditPix {
             s < 0 || s > 100 ||
             l < 0 || l > 100)
             throw new Error("HSL format is invalid.");
-        return utils.hslToRgb(h, s, l);
+        return hslToRgb(h, s, l);
     }
 
     async toOptimizedContrast(image) {
