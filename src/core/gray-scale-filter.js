@@ -3,7 +3,7 @@
  *  @param {number[]} pixelArray: Image pixel array in the format [R, G, B, alpha,..., R, G, B, alpha].
  *  @returns {number[]} array of grayscale pixels of an image.
  */
-function convertToGrayScale(pixelArray) {
+function toGrayScale(pixelArray) {
     for (let i = 0; i < pixelArray.length; i += 4) {
         const grayValue =
             0.299 * pixelArray[i] +
@@ -17,4 +17,4 @@ function convertToGrayScale(pixelArray) {
     return pixelArray;
 }
 
-export default convertToGrayScale;
+export default toGrayScale;
