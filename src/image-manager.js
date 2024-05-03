@@ -12,8 +12,8 @@ ImageManager.prototype.getPixelArray = async function (image) {
 }
 
 ImageManager.prototype.resizeByPercentage = async function (image, percentage) {
-    const newWidth = image.naturalWidth * (percentage / 100);
-    const newHeight = image.naturalHeight * (percentage / 100);
+    const newWidth = image.naturalWidth + image.naturalWidth * (percentage / 100);
+    const newHeight = image.naturalHeight + image.naturalHeight * (percentage / 100);
     this.canvas.width = newWidth;
     this.canvas.height = newHeight;
     this.context.drawImage(image, 0, 0, newWidth, newHeight);

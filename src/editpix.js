@@ -82,8 +82,6 @@ EditPix.prototype.toSepia = async function (image) {
 }
 
 EditPix.prototype.resizeByPercentage = async function (image, percentage) {
-    if (percentage < 1 || percentage > 100)
-        throw new Error("The percentage value is incorrect: it must be between 1 and 100");
     return this.imageManager.resizeByPercentage(image, percentage);
 }
 
