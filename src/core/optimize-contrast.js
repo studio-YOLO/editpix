@@ -1,9 +1,14 @@
-
 /**
- *  Function that, given an array in the format [R, G, B, alpha,..., R, G, B, alpha], rescales each of its color channels to use the full 0-255 range
- *  @param {number[]} pixelArray: image that has to be encrypted in the format [R, G, B, alpha,..., R, G, B, alpha]
- *  @returns {number[]} optimizedArray: an array in the format [R, G, B, alpha,..., R, G, B, alpha]
- **/
+ * Optimizes contrast in an RGBA pixel array.
+ * 
+ * @param {number[]} pixelArray - An array representing pixel data in RGBA format.
+ * @returns {number[]} An optimized pixel array with adjusted color values to enhance contrast.
+ * 
+ * @description This function optimizes contrast in an RGBA pixel array by rescaling the color 
+ * values of each channel (red, green, blue) individually. 
+ * Finally, it reconstructs the pixel array with the adjusted color values and returns the optimized pixel array.
+ * 
+ */
 function optimizeContrast(pixelArray) {
 
     const rescaleArray = (originalArray) => {

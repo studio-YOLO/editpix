@@ -1,19 +1,32 @@
 /**
- * Convert RGB color values to hexadecimal representation.
- * @param {number} r - The red value (0-255).
- * @param {number} g - The green value (0-255).
- * @param {number} b - The blue value (0-255).
+ * Converts RGB color values to hexadecimal representation.
+ * 
+ * @param {number} r - The red component value (0 to 255).
+ * @param {number} g - The green component value (0 to 255).
+ * @param {number} b - The blue component value (0 to 255).
  * @returns {string} The hexadecimal representation of the RGB color.
+ * 
+ * @description This function takes the red, green, and blue component values of a color in the range 
+ * of 0 to 255 and converts them into a hexadecimal color representation. 
+ * It concatenates the components into a single hexadecimal string with the format "#RRGGBB",
+ * where RR, GG, and BB represent the hexadecimal values of the red, green, and blue components respectively. 
+ * The function returns the hexadecimal representation of the RGB color.
+ * 
  */
 function rgbToHex(r, g, b) {
     return "#" + (1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1);
 }
 
 /**
- * Convert a hexadecimal color code to RGB color values.
- * @param {string} hexColor - The hexadecimal color code (e.g., "#rrggbb" or #rgb).
- * @returns {Object} An object containing the RGB color values.
+ * Converts a hexadecimal color representation to RGB color values.
+ * 
+ * @param {string} hexColor - The hexadecimal color representation (e.g., "#RRGGBB" or "#RGB").
+ * @returns {Object} An object containing the red, green, and blue component values of the RGB color.
+ * 
+ * @description This function takes a hexadecimal color representation, either in the format "#RRGGBB" or "#RGB", and converts it into its corresponding RGB color values. It first normalizes the input hexadecimal string to the format "#RRGGBB". Then, it extracts the red, green, and blue component values from the normalized string and converts them from hexadecimal to decimal. Finally, it returns an object containing the red (r), green (g), and blue (b) component values of the RGB color.
+ * 
  * @throws {Error} If the input hex color is invalid.
+ * 
  */
 function hexToRgb(hexColor) {
     hexColor = hexColor.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i, (m, r, g, b) => r + r + g + g + b + b);
@@ -29,11 +42,15 @@ function hexToRgb(hexColor) {
 }
 
 /**
- * Convert RGB color values to HSL (Hue, Saturation, Lightness) representation.
- * @param {number} r - The red value (0-255).
- * @param {number} g - The green value (0-255).
- * @param {number} b - The blue value (0-255).
- * @returns {Object} An object containing the HSL representation of the RGB color.
+ * Converts RGB color values to HSL (Hue, Saturation, Lightness) color model.
+ * 
+ * @param {number} r - The red component value (0 to 255).
+ * @param {number} g - The green component value (0 to 255).
+ * @param {number} b - The blue component value (0 to 255).
+ * @returns {Object} An object containing the hue (h), saturation (s), and lightness (l) values in the HSL color model.
+ * 
+ * @description This function takes RGB color values and converts them into the corresponding values in the HSL (Hue, Saturation, Lightness) color model. It first normalizes the RGB values to the range 0 to 1. Then, it determines the maximum (max) and minimum (min) values among the RGB components. Based on these values, it calculates the hue (h), saturation (s), and lightness (l) components of the HSL color model. Finally, it returns an object containing these values.
+ * 
  */
 function rgbToHsl(r, g, b) {
     r /= 255;
@@ -64,11 +81,15 @@ function rgbToHsl(r, g, b) {
 }
 
 /**
- * Convert HSL (Hue, Saturation, Lightness) color values to RGB representation.
- * @param {number} h - The hue value (0-360).
- * @param {number} s - The saturation value (0-100).
- * @param {number} l - The lightness value (0-100).
- * @returns {Object} An object containing the RGB representation of the HSL color.
+ * Converts HSL (Hue, Saturation, Lightness) color values to RGB color model.
+ * 
+ * @param {number} h - The hue component value (0 to 360).
+ * @param {number} s - The saturation component value (0 to 100).
+ * @param {number} l - The lightness component value (0 to 100).
+ * @returns {Object} An object containing the red (r), green (g), and blue (b) component values in the RGB color model (0 to 255).
+ * 
+ * @description This function takes HSL color values and converts them into the corresponding values in the RGB (Red, Green, Blue) color model. It first normalizes the hue (h), saturation (s), and lightness (l) values to the range 0 to 1. Then, it calculates intermediate values based on the HSL components to derive the RGB components. Finally, it returns an object containing the red, green, and blue component values in the RGB color model.
+ * 
  */
 function hslToRgb(h, s, l) {
     s /= 100;

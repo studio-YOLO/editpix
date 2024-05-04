@@ -1,9 +1,17 @@
 /**
- *  Function that, given an array in the format [R, G, B, alpha,..., R, G, B, alpha], rescales each of its color channels along an s-curve to change the contrast
- *  @param {number[]} pixelArray: image that has to be encrypted in the format [R, G, B, alpha,..., R, G, B, alpha]
- *  @param {number} factor: scale factor for the s-curve
- *  @returns {number[]} contrastArray: an array in the format [R, G, B, alpha,..., R, G, B, alpha]
- **/
+ * Changes the contrast of an RGBA pixel array.
+ * 
+ * @param {number[]} pixelArray - An array representing pixel data in RGBA format.
+ * @param {number} factor - The contrast adjustment factor.
+ * @returns {number[]} A pixel array with adjusted contrast.
+ * 
+ * @description This function changes the contrast of an RGBA pixel array by applying a contrast adjustment factor to each color channel. 
+ * It uses a sigmoid curve function to adjust the contrast, with the given factor determining the steepness of the curve. 
+ * A factor of 0 results in no change to the pixel array. 
+ * For non-zero factors, it applies the sigmoid curve transformation to each color channel except for the alpha channel. 
+ * Finally, it returns the pixel array with adjusted contrast.
+ * 
+ */
 function changeContrast(pixelArray, factor) {
     if (factor == 0)
         return pixelArray;

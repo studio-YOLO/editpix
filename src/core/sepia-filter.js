@@ -1,7 +1,11 @@
 /**
- *  Function that changes an array of pixels to the format [R, G, B, alfa,..., R, G, B, alfa] by applying a sepia tone
- *  @param {number[]} pixelArray: image that has to be encrypt in the format [R, G, B, alfa,..., R, G, B, alfa]
- *  @returns {number[]} sepiaPixelArray: pixel array of a sepia-toned image
+ * Converts an RGBA pixel array to a sepia-toned version.
+ * 
+ * @param {number[]} pixelArray - An array representing pixel data in RGBA format.
+ * @returns {number[]} A sepia-toned version of the input pixel array.
+ * 
+ * @description This function converts an RGBA pixel array to a sepia-toned version by applying a sepia filter to each pixel.
+ * 
  */
 function toSepia(pixelArray) {
     for (let i = 0; i < pixelArray.length; i += 4) {
