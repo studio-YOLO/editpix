@@ -3,7 +3,7 @@
  *  @param {number[]} pixelArray: Image pixel array in the format [R, G, B, alpha,..., R, G, B, alpha].
  *  @returns {number[]} array of black and white image pixels.
  */
-function convertToBW(pixelArray) {
+function toBlackWhite(pixelArray) {
     for (let i = 0; i < pixelArray.length; i += 4) {
         const grayValue =
             0.299 * pixelArray[i] +
@@ -22,4 +22,4 @@ function convertToBW(pixelArray) {
     return pixelArray;
 }
 
-export default convertToBW;
+export default toBlackWhite;

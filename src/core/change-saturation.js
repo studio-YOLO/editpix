@@ -1,4 +1,4 @@
-import utils from "../utils.js";
+import {rgbToHsl, hslToRgb} from "../core/colorspace-conversion.js";
 
 /**
  * Function to change the saturation of an image.
@@ -10,9 +10,9 @@ function changeSaturation(pixelArray, factor) {
     if (factor == 0)
         return pixelArray;
     for (let i = 0; i < pixelArray.length; i += 4) {
-        let hsl = utils.rgbToHsl(pixelArray[i], pixelArray[i + 1], pixelArray[i + 2]);
+        let hsl = rgbToHsl(pixelArray[i], pixelArray[i + 1], pixelArray[i + 2]);
         hsl.s = Math.max(0, Math.min(100, hsl.s += factor));
-        const rgb = utils.hslToRgb(hsl.h, hsl.s, hsl.l);
+        const rgb = hslToRgb(hsl.h, hsl.s, hsl.l);
 
         pixelArray[i] = rgb.r;
         pixelArray[i + 1] = rgb.g;

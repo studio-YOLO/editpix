@@ -12,7 +12,7 @@ container.classList.add("container")
 
 
 
-//waiting image load
+// waiting image load
 image.onload = () => {
     // image dimension before resizing
     console.log("Dimension before resizing: " + image.naturalWidth + "x" + image.naturalHeight);
