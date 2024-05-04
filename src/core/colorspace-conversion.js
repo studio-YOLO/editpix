@@ -1,7 +1,20 @@
+/**
+ * Convert RGB color values to hexadecimal representation.
+ * @param {number} r - The red value (0-255).
+ * @param {number} g - The green value (0-255).
+ * @param {number} b - The blue value (0-255).
+ * @returns {string} The hexadecimal representation of the RGB color.
+ */
 function rgbToHex(r, g, b) {
     return "#" + (1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1);
 }
 
+/**
+ * Convert a hexadecimal color code to RGB color values.
+ * @param {string} hexColor - The hexadecimal color code (e.g., "#rrggbb" or #rgb).
+ * @returns {Object} An object containing the RGB color values.
+ * @throws {Error} If the input hex color is invalid.
+ */
 function hexToRgb(hexColor) {
     hexColor = hexColor.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i, (m, r, g, b) => r + r + g + g + b + b);
     const match = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hexColor);
@@ -16,15 +29,13 @@ function hexToRgb(hexColor) {
 }
 
 /**
- * Function to convert RGB color to HSL
- * @param {number} r: Red value (0 to 255)
- * @param {number} g: Green value (0 to 255)
- * @param {number} b: Blue value (0 to 255)
- * @returns {number[]} HSL representation [Hue, Saturation, Lightness]
+ * Convert RGB color values to HSL (Hue, Saturation, Lightness) representation.
+ * @param {number} r - The red value (0-255).
+ * @param {number} g - The green value (0-255).
+ * @param {number} b - The blue value (0-255).
+ * @returns {Object} An object containing the HSL representation of the RGB color.
  */
 function rgbToHsl(r, g, b) {
-    if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-        throw new Error("RGB format is invalid.")
     r /= 255;
     g /= 255;
     b /= 255;
@@ -53,15 +64,13 @@ function rgbToHsl(r, g, b) {
 }
 
 /**
- * Function to convert HSL color to RGB
- * @param {number} h: Hue value (0 to 360)
- * @param {number} s: Saturation value (0 to 100)
- * @param {number} l: Lightness value (0 to 100)
- * @returns {number[]} RGB representation [Red, Green, Blue]
+ * Convert HSL (Hue, Saturation, Lightness) color values to RGB representation.
+ * @param {number} h - The hue value (0-360).
+ * @param {number} s - The saturation value (0-100).
+ * @param {number} l - The lightness value (0-100).
+ * @returns {Object} An object containing the RGB representation of the HSL color.
  */
 function hslToRgb(h, s, l) {
-    if (h < 0 || h > 360 || s < 0 || s > 100 || l < 0 || l > 100)
-        throw new Error("HSL format is invalid.")
     s /= 100;
     l /= 100;
     const k = n => (n + h / 30) % 12;
