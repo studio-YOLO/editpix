@@ -1,14 +1,15 @@
 /**
- *  Function that, given an array of pixels of an image in the format [R, G, B, alpha,..., R, G, B, alpha] adjusts 
- *  the red and blue levels to increase or decrease the temperature of the image.
+ * Changes the temperature of an RGBA pixel array.
  * 
- *  In particular:
- *  - if factor > 0: the image is heated.
+ * @param {number[]} pixelArray - An array representing pixel data in RGBA format.
+ * @param {number} factor - The temperature adjustment factor.
+ * @returns {number[]} A pixel array with adjusted temperature.
  * 
- *  - if factor < 0: the image is cooled.
+ * @description This function changes the temperature of an RGBA pixel array by adjusting the red and blue color channels. 
+ * A positive factor increases the "warmth" of the image by adding red and reducing blue, while a negative 
+ * factor increases the "coolness" by reducing red and adding blue. 
+ * Finally, it returns the pixel array with adjusted temperature.
  * 
- *  @param {number[]} pixelArray: image that has to be encrypt in the format [R, G, B, alpha,..., R, G, B, alpha]
- *  @returns {number[]} result: image pixel array after transformation
  */
 function changeTemperature(pixelArray, factor) {
     const clip = (value) => {

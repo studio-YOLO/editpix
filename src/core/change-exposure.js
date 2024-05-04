@@ -1,8 +1,16 @@
 /**
- * Function to change the exposure of an image.
- * @param {number[]} pixelArray: Image pixel array in the format [R, G, B, alpha,..., R, G, B, alpha].
- * @param {number} factor: Factor to adjust the exposure (-100 to 100).
- * @returns {number[]} Pixel array of the image with adjusted exposure.
+ * Changes the exposure of an RGBA pixel array.
+ * 
+ * @param {number[]} pixelArray - An array representing pixel data in RGBA format.
+ * @param {number} factor - The exposure adjustment factor.
+ * @returns {number[]} A pixel array with adjusted exposure.
+ * 
+ * @description This function changes the exposure of an RGBA pixel array by applying an exposure adjustment factor to each RGB channel of every pixel. 
+ * The factor determines the intensity of the exposure adjustment. 
+ * A positive factor increases the brightness of the image, while a negative factor decreases the brightness. 
+ * The factor is applied to each RGB channel independently.
+ * Finally, it returns the pixel array with adjusted exposure.
+ * 
  */
 function changeExposure(pixelArray, factor) {
     for (let i = 0; i < pixelArray.length; i += 4) {
