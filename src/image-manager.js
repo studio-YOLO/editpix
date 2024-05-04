@@ -5,6 +5,7 @@ export default class ImageManager {
         this.context = this.canvas.getContext("2d", { willReadFrequently: true });
     }
 
+
     async getPixelArray(image) {
         const bitmap = await createImageBitmap(image);
         this.canvas.width = bitmap.width;
@@ -14,8 +15,8 @@ export default class ImageManager {
     }
 
     async resizeByPercentage(image, percentage) {
-        const newWidth = image.naturalWidth * (percentage / 100);
-        const newHeight = image.naturalHeight * (percentage / 100);
+        const newWidth = image.naturalWidth + image.naturalWidth * (percentage / 100);
+        const newHeight = image.naturalHeight + image.naturalHeight * (percentage / 100);
         this.canvas.width = newWidth;
         this.canvas.height = newHeight;
         this.context.drawImage(image, 0, 0, newWidth, newHeight);

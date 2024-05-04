@@ -9,11 +9,11 @@ import changeSharpness from "./core/change-sharpness.js";
 import changeShadows from "./core/change-shadows.js";
 import changeTemperature from "./core/change-temperature.js";
 import changeTint from "./core/change-tint.js";
-import toBlackWhite from "./core/black-white-filter.js";
-import toGrayScale from "./core/gray-scale-filter.js";
 import higherColorContrast from "./core/higher-contrast.js";
 import init, { k_means, k_means_pp, median_cut } from "./core/editpix_wasm.js";
 import optimizeContrast from "./core/optimize-contrast.js";
+import toBlackWhite from "./core/black-white-filter.js";
+import toGrayScale from "./core/gray-scale-filter.js";
 import toSepia from "./core/sepia-filter.js";
 import utils from "./utils.js";
 import { hexToRgb, rgbToHex, rgbToHsl, hslToRgb } from "./core/colorspace-conversion.js"
@@ -43,7 +43,6 @@ export default class EditPix {
     }
 
     async resizeByPercentage(image, percentage) {
-        if (percentage < 1 || percentage > 100)
             throw new Error("The percentage value is incorrect: it must be between 1 and 100");
         return this.imageManager.resizeByPercentage(image, percentage);
     }
