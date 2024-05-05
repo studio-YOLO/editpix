@@ -22,7 +22,7 @@ import { hexToRgb, rgbToHex, rgbToHsl, hslToRgb } from "./core/colorspace-conver
  * A class for editing pixel-based images.
  * @class
  * @export
- */<script type="module" src="scripts/optimize-contrast-demo.js"></script>
+ */
 export default class EditPix {
 
     constructor() {
