@@ -22,7 +22,7 @@ import { hexToRgb, rgbToHex, rgbToHsl, hslToRgb } from "./core/colorspace-conver
  * A class for editing pixel-based images.
  * @class
  * @export
- */
+ */<script type="module" src="scripts/optimize-contrast-demo.js"></script>
 export default class EditPix {
 
     constructor() {
@@ -85,7 +85,7 @@ export default class EditPix {
      * @returns {Promise<HTMLImageElement>} A promise that resolves with the resized image element.
      * @throws {Error} Thrown if there are errors during the resizing process.
      * 
-     * @description This method delegates the resizing operation to the `resizeByPercentage` method of the image manager. 
+     * @description This method resizes the specified image element to the given percentage. 
      * It passes the specified image and percentage to the image manager, which asynchronously resizes the image by the 
      * given percentage and returns the resized image element within a Promise.
      * 
