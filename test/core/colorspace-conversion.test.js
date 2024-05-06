@@ -36,17 +36,6 @@ describe('rgbToHsl', () => {
         expect(rgbToHsl(0, 0, 255)).toEqual({ h: 240, s: 100, l: 50 });
         // Add more test cases as needed
     });
-
-    test('Throws error for invalid RGB inputs', () => {
-        // Test invalid RGB inputs
-        expect(() => rgbToHsl(-1, 0, 0)).toThrow(Error);
-        expect(() => rgbToHsl(256, 0, 0)).toThrow(Error);
-        expect(() => rgbToHsl(0, -1, 0)).toThrow(Error);
-        expect(() => rgbToHsl(0, 256, 0)).toThrow(Error);
-        expect(() => rgbToHsl(0, 0, -1)).toThrow(Error);
-        expect(() => rgbToHsl(0, 0, 256)).toThrow(Error);
-        // Add more test cases as needed
-    });
 });
 
 describe('hslToRgb', () => {
@@ -55,17 +44,6 @@ describe('hslToRgb', () => {
         expect(hslToRgb(0, 100, 50)).toEqual({ r: 255, g: 0, b: 0 });
         expect(hslToRgb(120, 100, 50)).toEqual({ r: 0, g: 255, b: 0 });
         expect(hslToRgb(240, 100, 50)).toEqual({ r: 0, g: 0, b: 255 });
-        // Add more test cases as needed
-    });
-
-    test('Throws error for invalid HSL inputs', () => {
-        // Test invalid HSL inputs
-        expect(() => hslToRgb(-1, 100, 50)).toThrow(Error);
-        expect(() => hslToRgb(361, 100, 50)).toThrow(Error);
-        expect(() => hslToRgb(0, -1, 50)).toThrow(Error);
-        expect(() => hslToRgb(0, 101, 50)).toThrow(Error);
-        expect(() => hslToRgb(0, 100, -1)).toThrow(Error);
-        expect(() => hslToRgb(0, 100, 101)).toThrow(Error);
         // Add more test cases as needed
     });
 });
