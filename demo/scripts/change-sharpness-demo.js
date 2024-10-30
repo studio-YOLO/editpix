@@ -7,12 +7,13 @@ const url = "images/img7.jpeg";
 var image = new Image();
 image.src = url;
 
-//waiting image load
+// waiting image load
 image.onload = () => {
-
+    document.body.appendChild(image);
+    // edit the image
     editpix.changeSharpness(image, 70)
         .then(resultImage => {
-            document.body.appendChild(image);
+            // render modified image
             document.body.appendChild(resultImage);
         })
         .catch(error => { console.log(error) })

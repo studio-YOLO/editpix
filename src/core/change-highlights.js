@@ -1,8 +1,15 @@
 /**
- *  Function that modifies the pixel array of an image by brightening or darkening the highlight areas by a given factor
- *  @param {number[]} pixelArray: image that has to be encoded in the format [R, G, B, alpha,..., R, G, B, alpha]
- *  @param {number[]} factor: the shadow brightening/darkening parameter that will be applied to the image
- *  @returns {number[]} outputArray: pixel array of the modified image
+ * Changes the highlights of an RGBA pixel array.
+ * 
+ * @param {number[]} pixelArray - An array representing pixel data in RGBA format.
+ * @param {number} factor - The highlights adjustment factor.
+ * @returns {number[]} A pixel array with adjusted highlights.
+ * 
+ * @description This function changes the highlights of an RGBA pixel array by adjusting the RGB values of pixels with a luminance above 128. 
+ * The factor determines the intensity of the highlights adjustment applied to those pixels. 
+ * A positive factor increases the brightness of highlights, while a negative factor decreases the brightness. 
+ * Finally, it returns the pixel array with adjusted highlights.
+ * 
  */
 function changeHighlights(pixelArray, factor) {
     for (let i = 0; i < pixelArray.length; i += 4) {

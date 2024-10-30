@@ -7,31 +7,14 @@ const url = "images/img8.jpeg";
 var image = new Image();
 image.src = url;
 
-//waiting image load
+// waiting image load
 image.onload = () => {
     document.body.appendChild(image);
-
-    editpix.adjustTemperature(image, 20)
-        .then(highContrastImage => {
-            document.body.appendChild(highContrastImage);
-        })
-        .catch(error => { console.log(error) })
-
-    editpix.adjustTemperature(image, 50)
-        .then(highContrastImage => {
-            document.body.appendChild(highContrastImage);
-        })
-        .catch(error => { console.log(error) })
-
-    editpix.adjustTemperature(image, -20)
-        .then(highContrastImage => {
-            document.body.appendChild(highContrastImage);
-        })
-        .catch(error => { console.log(error) })
-
-    editpix.adjustTemperature(image, -50)
-        .then(highContrastImage => {
-            document.body.appendChild(highContrastImage);
+    // edit the image
+    editpix.changeTemperature(image, 20)
+        .then(resultImage => {
+            // render modified image
+            document.body.appendChild(resultImage);
         })
         .catch(error => { console.log(error) })
 }

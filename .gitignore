@@ -4,3 +4,4 @@ coverage
 lib/target
 lib/pkg
 lib/Cargo.lock
+.vscode

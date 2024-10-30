@@ -7,14 +7,14 @@ const url = "images/img1.jpg";
 var image = new Image();
 image.src = url;
 
-//waiting image load
+// waiting image load
 image.onload = () => {
-
-    // convert image to black and white
+    document.body.appendChild(image);
+    // edit the image
     editpix.changeOpacity(image, 128)
-        .then(newImage => {
-            document.body.appendChild(image);
-            document.body.appendChild(newImage);
+        .then(resultImage => {
+            // render modified image
+            document.body.appendChild(resultImage);
         })
         .catch(error => { console.log(error) })
 };

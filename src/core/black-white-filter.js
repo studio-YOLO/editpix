@@ -1,9 +1,15 @@
 /**
- *  Function to convert an image from color to black and white.
- *  @param {number[]} pixelArray: Image pixel array in the format [R, G, B, alpha,..., R, G, B, alpha].
- *  @returns {number[]} array of black and white image pixels.
+ * Converts an RGBA pixel array to black and white.
+ * 
+ * @param {number[]} pixelArray - An array representing pixel data in RGBA format.
+ * @returns {number[]} A black and white version of the input pixel array.
+ * 
+ * @description This function converts an RGBA pixel array to black and white by calculating 
+ * the grayscale value of each pixel and setting the RGB values to either 0 (black) or 255 (white) based on a threshold. 
+ * Finally, it returns the black and white pixel array.
+ * 
  */
-function convertToBW(pixelArray) {
+function toBlackWhite(pixelArray) {
     for (let i = 0; i < pixelArray.length; i += 4) {
         const grayValue =
             0.299 * pixelArray[i] +
@@ -22,4 +28,4 @@ function convertToBW(pixelArray) {
     return pixelArray;
 }
 
-export default convertToBW;
+export default toBlackWhite;
