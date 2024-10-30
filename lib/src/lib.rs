@@ -1,6 +1,34 @@
 extern crate wasm_bindgen;
 use wasm_bindgen::prelude::*;
-use rand::prelude::*;
+
+pub struct Xorshift {
+    state: u32,
+}
+
+impl Xorshift {
+    pub fn new(seed: u32) -> Self {
+        Xorshift { state: seed }
+    }
+
+    pub fn next(&mut self) -> f64 {
+        self.state ^= self.state << 13;
+        self.state ^= self.state >> 17;
+        self.state ^= self.state << 5;
+        self.state as f64 / u32::MAX as f64
+    }
+
+    pub fn next_f64(&mut self) -> f64 {
+        let u1 = self.next() as u64;
+        let u2 = self.next() as u64;
+        let combined = (u1 << 32) | u2;
+        combined as f64 / u32::MAX as f64
+    }
+
+    pub fn gen_range(&mut self, min: usize, max: usize) -> usize {
+        let random_f64 = self.next();
+        min + (random_f64 * (max as f64 - min as f64)) as usize
+    }
+}
 
 #[inline]
 fn euclidean_distance(color1: &[u8; 3], color2: &[u8; 3]) -> f64 {
@@ -114,9 +142,9 @@ fn square_distance(color1: &[u8; 3], color2: &[u8; 3]) -> f64 {
 }
 
 fn initialize_centroids_pp(colors: &Vec<[u8; 3]>, color_number: usize) -> Vec<[u8; 3]> {
-    let mut rng = thread_rng();
+    let mut rng = Xorshift::new(12345);
     let mut centroids: Vec<[u8; 3]>  = Vec::new();
-    let first_centroid = colors[rng.gen_range(0..colors.len())];
+    let first_centroid = colors[rng.gen_range(0, colors.len())];
     centroids.push(first_centroid);
     
     for _i in 1..color_number {
@@ -126,7 +154,7 @@ fn initialize_centroids_pp(colors: &Vec<[u8; 3]>, color_number: usize) -> Vec<[u
         });
         let total_weight = distances.clone().fold(0.0, |a, b| a + b);
         let distances: Vec<_> = distances.collect();
-        let target = rng.gen::<f64>() * total_weight;
+        let target = rng.next_f64() * total_weight;
         let mut cumulative = 0.0;
         for i in 0..colors.len() {
             cumulative += distances[i];
