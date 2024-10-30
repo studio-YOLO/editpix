@@ -17,6 +17,8 @@ import changeExposure from "./core/change-exposure.js";
 import changeTint from "./core/change-tint.js"
 import changeHighlights from "./core/change-highlights.js";
 import changeSharpness from "./core/change-sharpness.js";
+import mirrorImageHorizontally from "./core/mirror.js";
+import rotateImage from "./core/rotate_image.js";
 
 var EditPix = function () { };
 
@@ -76,7 +78,7 @@ EditPix.prototype.toGrayScale = (image) => {
     return imageManager.convertToImage(convertToGrayScale(pixelArray), image.naturalWidth, image.naturalHeight, imageType);
 }
 
-EditPix.prototype.toBackWhite = (image) => {
+EditPix.prototype.toBlackWhite = (image) => {
     const pixelArray = imageManager.getPixelArray(image);
     const imageType = imageManager.getImageType(image.src);
     return imageManager.convertToImage(convertToBW(pixelArray), image.naturalWidth, image.naturalHeight, imageType);
@@ -218,6 +220,18 @@ EditPix.prototype.changeSharpness = (image, factor) => {
     const pixelArray = imageManager.getPixelArray(image);
     const imageType = imageManager.getImageType(image.src);
     return imageManager.convertToImage(changeSharpness(pixelArray, factor), image.naturalWidth, image.naturalHeight, imageType);
+}
+
+EditPix.prototype.mirrorImage = (image) => {
+    const pixelArray = imageManager.getPixelArray(image);
+    const imageType = imageManager.getImageType(image.src);
+    return imageManager.convertToImage(mirrorImageHorizontally(pixelArray, image.naturalWidth), image.naturalWidth, image.naturalHeight, imageType);
+}
+
+EditPix.prototype.rotateImage = (image, angle) => {
+    const pixelArray = imageManager.getPixelArray(image);
+    const imageType = imageManager.getImageType(image.src);
+    return imageManager.convertToImage(rotateImage(pixelArray, angle, image.naturalWidth, image.naturalHeight), image.naturalWidth, image.naturalHeight, imageType);
 }
 
 export default EditPix;

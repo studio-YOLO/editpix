@@ -14,6 +14,8 @@ import changeHighlights from "../src/core/change-highlights.js";
 import changeSharpness from "../src/core/change-sharpness.js"
 import utils from "../src/utils.js";
 import toSepia from "../src/core/sepia-filter.js";
+import rotateImage from "../src/core/rotate_image.js";
+import mirrorImageHorizontally from "../src/core/mirror.js";
 
 describe('convertToBW function', () => {
     test('converts pixel array to black and white correctly', () => {
@@ -382,4 +384,48 @@ describe('toSepia', () => {
         expect(toSepia(inputArray)).toBe(inputArray)
     });
 
+});
+
+describe('rotateImage', () => {
+    test('should return the same image after rotating by 360 degrees', () => {
+      const pixelArray = [255, 0, 0, 255, 0, 255, 0, 255, 0, 0, 255, 255];
+      const rotatedPixelArray = rotateImage(pixelArray, 360, 3, 1);
+      expect(rotatedPixelArray).toEqual(pixelArray);
+    });
+  
+    test('should return the same image after rotating by 720 degrees', () => {
+      const pixelArray = [255, 0, 0, 255, 0, 255, 0, 255, 0, 0, 255, 255];
+      const rotatedPixelArray = rotateImage(pixelArray, 720, 3, 1);
+      expect(rotatedPixelArray).toEqual(pixelArray);
+    });
+  
+    test('should return the same image after rotating by 1080 degrees', () => {
+      const pixelArray = [255, 0, 0, 255, 0, 255, 0, 255, 0, 0, 255, 255];
+      const rotatedPixelArray = rotateImage(pixelArray, 1080, 3, 1);
+      expect(rotatedPixelArray).toEqual(pixelArray);
+    });
+});
+
+describe('mirrorImageHorizontally', () => {
+  test('should mirror a 2x2 image correctly', () => {
+    const pixelArray = [255, 0, 0, 255, 0, 255, 0, 255, 0, 0, 255, 255, 255, 255, 255, 255];
+    const mirroredPixelArray = mirrorImageHorizontally(pixelArray, 2);
+    const expectedPixelArray = [0, 255, 0, 255, 255, 0, 0, 255, 255, 255, 255, 255, 0, 0, 255, 255];
+    expect(mirroredPixelArray).toEqual(expectedPixelArray);
+  });
+
+  test('should mirror a 3x3 image correctly', () => {
+    const pixelArray = [
+      255, 0, 0, 255, 0, 255, 0, 255, 0, 0, 255, 255,
+      255, 255, 255, 255, 0, 0, 0, 255, 0, 0, 0, 255,
+      0, 0, 255, 255, 255, 0, 0, 255, 255, 255, 0, 255,
+    ];
+    const mirroredPixelArray = mirrorImageHorizontally(pixelArray, 3);
+    const expectedPixelArray = [
+        0, 0, 255, 255, 0, 255, 0, 255, 255, 0, 0, 255,
+        0, 0, 0, 255, 0, 0, 0, 255, 255, 255, 255, 255,
+        255, 0, 0, 255, 255, 255, 0, 255, 0, 0, 255, 255,
+    ];
+    expect(mirroredPixelArray).toEqual(expectedPixelArray);
+  });
 });
